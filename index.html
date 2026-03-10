@@ -74,13 +74,13 @@
                         <div class="forecast-value">2,393.84</div>
                         <div class="forecast-range">+/- 222.31</div>
                     </div>
-                    <div class="forecast-arrow">&#10145;</div>
+                    <div class="forecast-arrow"><svg width="40" height="45" viewBox="0 0 40 45"><polygon points="0,14 25,14 25,5 40,22.5 25,40 25,31 0,31" fill="#4285f4"/></svg></div>
                     <div class="forecast-card forecast-card-mid">
                         <div class="forecast-label">Market Signal Enhanced Forecast</div>
                         <div class="forecast-value">1,915.20</div>
                         <div class="forecast-range">+/- 157.73</div>
                     </div>
-                    <div class="forecast-arrow">&#10145;</div>
+                    <div class="forecast-arrow"><svg width="40" height="45" viewBox="0 0 40 45"><polygon points="0,14 25,14 25,5 40,22.5 25,40 25,31 0,31" fill="#4285f4"/></svg></div>
                     <div class="forecast-card forecast-card-highlight">
                         <div class="forecast-label">News Enhanced Forecast</div>
                         <div class="forecast-value">1,953.50</div>
@@ -88,7 +88,27 @@
                     </div>
                 </div>
                 <div class="chart-container">
-                    <canvas id="forecastChart"></canvas>
+                    <div class="chart-legend">
+                        <div class="chart-legend-item">
+                            <span class="legend-line legend-line-blue"></span>
+                            Your Forecast
+                        </div>
+                        <div class="chart-legend-item">
+                            <span class="legend-line legend-line-green legend-line-dashed"></span>
+                            Market Signal Forecast
+                        </div>
+                        <div class="chart-legend-item">
+                            <span class="legend-line legend-line-purple"></span>
+                            News Forecast
+                        </div>
+                    </div>
+                    <svg viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet" width="100%" style="display:block;">
+                        <line x1="350" y1="20" x2="350" y2="180" stroke="#2e2e38" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="350" y="15" text-anchor="middle" fill="rgb(46,46,56)" font-size="12" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">NOW</text>
+                        <polyline points="350,100 400,125 450,90 500,135 550,85 600,140 650,80 700,90 750,70" fill="none" stroke="#4285f4" stroke-width="3"/>
+                        <polyline points="350,100 400,108 450,115 500,110 550,118 600,113 650,120 700,125 750,130" fill="none" stroke="#19cf86" stroke-width="3" stroke-dasharray="8,4"/>
+                        <polyline points="350,100 400,102 450,99 500,101 550,100 600,102 650,101 700,103 750,105" fill="none" stroke="#632ca6" stroke-width="4"/>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -361,8 +381,6 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
