@@ -316,7 +316,6 @@ p { margin-bottom: 16px; }
     letter-spacing: 0.5px;
     color: var(--gray-500);
     margin-bottom: 8px;
-    white-space: nowrap;
 }
 .forecast-value {
     font-size: 36px;
