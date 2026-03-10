@@ -56,11 +56,11 @@ h1 {
     font-size: 56px;
     line-height: 1.1;
     letter-spacing: -1px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 h2 {
     font-size: 44px;
-    line-height: 1.45;
+    line-height: 1.6;
     margin-bottom: 16px;
     text-align: center;
 }
@@ -110,7 +110,7 @@ p { margin-bottom: 16px; }
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    height: 80px;
 }
 .logo {
     font-size: 22.4px;
@@ -198,19 +198,19 @@ p { margin-bottom: 16px; }
 .section-light { background: var(--gray-bg); }
 .section-label {
     color: var(--purple-primary);
-    font-size: 14.4px;
+    font-size: 13.6px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 }
 .section-subtitle {
     color: var(--gray-500);
     text-align: center;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto 40px;
-    font-size: 1.05rem;
+    font-size: 19.2px;
 }
 .section-highlight {
     font-size: 28px;
@@ -224,15 +224,15 @@ p { margin-bottom: 16px; }
    ============================================ */
 .hero {
     background: var(--gray-bg);
-    padding: 80px 0 60px;
+    padding: 40px 0 60px;
     text-align: center;
 }
 .hero h1 { font-size: 56px; line-height: 1.1; letter-spacing: -1px; }
 .hero-subtitle {
-    font-size: 18px;
+    font-size: 21.6px;
     color: var(--gray-500);
-    max-width: 580px;
-    margin: 0 auto 36px;
+    max-width: 700px;
+    margin: 0 auto 40px;
     line-height: 1.6;
 }
 .hero-buttons {
@@ -370,7 +370,7 @@ p { margin-bottom: 16px; }
     height: 48px;
     background: var(--purple-primary);
     color: var(--white);
-    border-radius: 8px;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -410,23 +410,25 @@ p { margin-bottom: 16px; }
 .value-prop strong { color: var(--white); }
 
 /* ============================================
-   Use Cases - Section 5: pt=100, pb=60 on white
+   Use Cases - Section 5: pt=60, pb=100 on gray
    ============================================ */
 .section-usecases {
-    background: var(--white);
-    padding: 100px 0 60px;
+    background: var(--gray-bg);
+    padding: 60px 0 100px;
 }
 .section-usecases h2 { font-size: 44px; }
 .use-case-card {
-    background: var(--gray-bg);
+    background: var(--white);
     border: 1px solid var(--gray-200);
-    border-radius: 8px;
-    padding: 40px 36px;
-    margin-bottom: 28px;
+    border-radius: 4px;
+    padding: 40px;
+}
+.use-case-card + .use-case-card {
+    margin-top: 32px;
 }
 .use-case-tag {
     display: inline-block;
-    padding: 4px 14px;
+    padding: 6px 12px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: 700;
@@ -434,9 +436,7 @@ p { margin-bottom: 16px; }
     letter-spacing: 0.5px;
     margin-bottom: 16px;
 }
-.tag-green { background: var(--green-50); color: var(--green-600); }
-.tag-purple { background: #F3E8FF; color: var(--purple-primary); }
-.tag-blue { background: #EFF6FF; color: var(--blue-600); }
+.tag-green, .tag-purple, .tag-blue { background: rgb(243, 229, 245); color: var(--purple-primary); }
 .use-case-card h3 {
     font-size: 24px;
     font-weight: 700;
@@ -451,15 +451,15 @@ p { margin-bottom: 16px; }
     margin-bottom: 20px;
 }
 .impact-box {
-    background: var(--green-50);
-    border-left: 4px solid var(--green-600);
-    padding: 12px 20px;
+    background: rgb(232, 245, 233);
+    border-left: 4px solid rgb(76, 175, 80);
+    padding: 16px;
     margin-top: 20px;
     border-radius: 0 4px 4px 0;
     font-size: 0.95rem;
 }
 .impact-label {
-    color: var(--green-600);
+    color: rgb(46, 125, 50);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.85rem;
@@ -470,7 +470,7 @@ p { margin-bottom: 16px; }
    ============================================ */
 .section-innovation {
     background: var(--white);
-    padding: 60px 0 80px;
+    padding: 100px 0 60px;
 }
 .section-innovation h2 { font-size: 44px; }
 .paradigm-box {
@@ -493,8 +493,8 @@ p { margin-bottom: 16px; }
    Mobile App
    ============================================ */
 .section-mobile {
-    background: var(--gray-bg);
-    padding: 80px 0;
+    background: var(--white);
+    padding: 60px 0 80px;
 }
 .section-mobile h2 { font-size: 44px; }
 .mobile-mockups {
@@ -511,6 +511,8 @@ p { margin-bottom: 16px; }
     display: inline-block;
     border-radius: 50px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 80px 0px;
+    background: linear-gradient(145deg, rgb(26, 26, 26) 0%, rgb(42, 42, 42) 100%);
+    padding: 20px;
 }
 .mockup-phone-inner {
     overflow: hidden;
@@ -518,6 +520,7 @@ p { margin-bottom: 16px; }
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 2px inset;
     width: 400px;
     max-width: 100%;
+    background: #fff;
 }
 .mockup img {
     width: 100%;
@@ -562,13 +565,13 @@ p { margin-bottom: 16px; }
 .features-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 32px;
     margin-top: 40px;
 }
 .feature-card {
     background: var(--white);
-    padding: 28px 24px;
-    border-radius: 8px;
+    padding: 32px;
+    border-radius: 4px;
     border: 1px solid var(--gray-200);
 }
 .feature-icon {
@@ -578,18 +581,18 @@ p { margin-bottom: 16px; }
 }
 .feature-card h4 {
     margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 17.6px;
     font-weight: 700;
     color: var(--purple-primary);
 }
-.feature-card p { color: var(--gray-600); font-size: 0.95rem; margin-bottom: 0; }
+.feature-card p { color: var(--gray-500); font-size: 0.95rem; margin-bottom: 0; }
 
 /* ============================================
-   About / Team - Section: on white
+   About / Team - Section: on gray
    ============================================ */
 .section-about {
-    background: var(--white);
-    padding: 100px 0 100px;
+    background: var(--gray-bg);
+    padding: 100px 0;
 }
 .section-about h2 { font-size: 44px; }
 .team-journey {
@@ -616,10 +619,10 @@ p { margin-bottom: 16px; }
 .team-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 48px;
 }
 .team-member {
-    padding-bottom: 32px;
+    padding-bottom: 48px;
     border-bottom: 1px solid var(--gray-200);
 }
 .team-member:last-child { border-bottom: none; }
@@ -630,21 +633,21 @@ p { margin-bottom: 16px; }
 /* Testimonial */
 .testimonial {
     background: var(--gray-bg);
-    border-radius: 8px;
-    padding: 40px;
-    text-align: center;
-    margin-top: 48px;
+    border-radius: 4px;
+    padding: 32px;
+    text-align: left;
+    margin-top: 60px;
+    border-left: 4px solid var(--purple-primary);
 }
 .testimonial blockquote {
-    font-size: 1.15rem;
+    font-size: 19.2px;
     font-style: italic;
-    color: var(--gray-700);
-    max-width: 700px;
-    margin: 0 auto 16px;
+    color: var(--heading-color);
+    margin: 0 0 16px;
     line-height: 1.7;
 }
 .testimonial cite {
-    color: var(--gray-500);
+    color: var(--purple-primary);
     font-style: normal;
     font-weight: 600;
 }
@@ -653,7 +656,7 @@ p { margin-bottom: 16px; }
    CTA Section
    ============================================ */
 .cta-section {
-    background: var(--gray-bg);
+    background: var(--white);
     padding: 100px 0;
 }
 .cta-section h2 { font-size: 44px; }
@@ -698,7 +701,7 @@ p { margin-bottom: 16px; }
 }
 .footer-col a:hover { color: var(--white); }
 .footer-bottom {
-    background: rgba(0,0,0,0.15);
+    background: rgb(74, 34, 112);
     margin: 0 -40px;
     padding: 20px 40px;
     text-align: center;
@@ -815,7 +818,7 @@ p { margin-bottom: 16px; }
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 64px;
+        top: 80px;
         left: 0;
         right: 0;
         background: var(--white);
