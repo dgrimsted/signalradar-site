@@ -868,107 +868,128 @@ p { margin-bottom: 16px; }
     line-height: 1.6;
 }
 
+/* Contact Form Section - white background like original */
 .contact-form-section {
-    background: rgb(250, 245, 255);
-    padding: 80px 0;
+    background: var(--white);
+    padding: 60px 0 80px;
 }
 
 .contact-form-wrapper {
-    max-width: 700px;
+    max-width: 750px;
     margin: 0 auto;
+    text-align: center;
 }
 
+/* "We'd love to hear from you" - matches original ~26px purple italic */
 .contact-form-title {
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 400;
     color: var(--purple-primary);
     text-align: center;
-    margin-bottom: 24px;
-    line-height: 1.3;
+    margin-bottom: 16px;
+    line-height: 1.4;
+    font-style: italic;
 }
 
 .contact-form-subtitle {
     text-align: center;
-    color: var(--gray-600);
-    font-size: 15.2px;
+    color: var(--gray-500);
+    font-size: 14px;
     line-height: 1.7;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+/* "To contact the SignalRadar team" - bold, large, dark */
 .form-heading {
-    font-size: 18px;
+    font-size: 26px;
     font-weight: 700;
     color: var(--heading-color);
-    margin-bottom: 24px;
+    margin-bottom: 28px;
     text-align: center;
+    letter-spacing: -0.5px;
 }
 
 .contact-form {
     max-width: 100%;
+    text-align: left;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
+.form-group-half {
+    max-width: 50%;
+}
+
+/* Form inputs - thick purple left bar, subtle shadow, matching original */
 .contact-form input[type="text"],
 .contact-form input[type="email"],
-.contact-form input[type="number"],
 .contact-form textarea {
     width: 100%;
-    padding: 14px 16px;
-    border: 2px solid var(--gray-200);
-    border-left: 4px solid var(--purple-primary);
-    border-radius: 4px;
-    font-size: 0.95rem;
+    padding: 16px 18px;
+    border: 1px solid #ddd;
+    border-left: 5px solid var(--purple-primary);
+    border-radius: 0;
+    font-size: 13px;
     font-family: var(--font-family);
     transition: all 0.2s ease;
     background: var(--white);
     color: var(--heading-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .contact-form input[type="text"]:focus,
 .contact-form input[type="email"]:focus,
-.contact-form input[type="number"]:focus,
 .contact-form textarea:focus {
     outline: none;
-    border-color: var(--purple-primary);
+    border-color: #ccc;
     border-left-color: var(--purple-primary);
-    box-shadow: 0 0 0 3px rgba(99, 44, 166, 0.08);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
     text-transform: uppercase;
     font-size: 12px;
-    letter-spacing: 0.5px;
-    color: var(--gray-400);
+    letter-spacing: 1px;
+    color: #aaa;
+    font-weight: 400;
 }
 
+/* Captcha row - right aligned, matching original layout */
 .captcha-row {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 10px;
+    margin-top: 24px;
+    margin-bottom: 12px;
 }
 
 .captcha-equation {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--purple-primary);
     white-space: nowrap;
+    font-style: italic;
 }
 
+/* Small circular captcha input matching original */
 .captcha-input {
-    width: 60px;
-    padding: 8px 12px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     border: 2px solid var(--gray-300);
     border-radius: 50%;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
     font-family: var(--font-family);
     outline: none;
+    background: var(--white);
     -moz-appearance: textfield;
 }
 .captcha-input::-webkit-outer-spin-button,
@@ -976,47 +997,41 @@ p { margin-bottom: 16px; }
     -webkit-appearance: none;
     margin: 0;
 }
+.captcha-input:focus {
+    border-color: var(--purple-primary);
+}
 
+/* Send Message button - rounded purple outline, matching original */
 .captcha-submit {
-    font-size: 12px;
-    letter-spacing: 1.5px;
+    font-size: 11px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
-    padding: 10px 24px;
+    padding: 12px 28px;
     border: 2px solid var(--purple-primary);
     border-radius: 24px;
     color: var(--purple-primary);
     background: transparent;
     cursor: pointer;
     white-space: nowrap;
+    font-family: var(--font-family);
 }
 .captcha-submit:hover {
     background: var(--purple-primary);
     color: var(--white);
 }
 
+/* Captcha note - purple text in subtle pill, centered */
 .captcha-note {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 14px;
     color: var(--purple-primary);
-    margin-bottom: 24px;
     font-weight: 600;
-    background: rgba(99, 44, 166, 0.06);
-    padding: 10px 24px;
-    border-radius: 24px;
+    border: 2px solid var(--purple-primary);
+    padding: 10px 32px;
+    border-radius: 28px;
     display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-}
-
-.contact-form-wrapper .captcha-note {
-    display: block;
-    text-align: center;
-}
-
-.form-group-half {
-    max-width: 50%;
+    margin-top: 8px;
 }
 
 .form-submit .btn {
