@@ -56,12 +56,12 @@
 
                 <h4 class="form-heading">To contact the SignalRadar team please complete the form</h4>
 
-                <form class="contact-form" action="https://formspree.io/f/placeholder" method="POST">
+                <form class="contact-form" id="contactForm" onsubmit="return handleContactSubmit(event)">
                     <div class="form-group">
                         <input type="text" name="name" placeholder="Name" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group form-group-half">
                         <input type="email" name="email" placeholder="Email Address" required>
                     </div>
 
@@ -69,16 +69,13 @@
                         <textarea name="message" placeholder="Please tell us how we can help" rows="6" required></textarea>
                     </div>
 
-                    <div class="form-group form-captcha">
-                        <label for="captcha">Simple math equation: 11 + 7 = </label>
-                        <input type="number" id="captcha" name="captcha" placeholder="" required>
+                    <div class="captcha-row">
+                        <span class="captcha-equation" id="captchaEquation"></span>
+                        <input type="number" id="captchaAnswer" class="captcha-input" required>
+                        <button type="submit" class="btn btn-outline captcha-submit">Send Message</button>
                     </div>
 
                     <p class="captcha-note">Please complete the Captcha simple math equation, thanks!</p>
-
-                    <div class="form-submit">
-                        <button type="submit" class="btn btn-outline">Send Message</button>
-                    </div>
                 </form>
             </div>
         </div>
@@ -158,5 +155,34 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        // Generate random captcha
+        let captchaA, captchaB;
+        function generateCaptcha() {
+            captchaA = Math.floor(Math.random() * 15) + 1;
+            captchaB = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('captchaEquation').textContent = captchaA + ' + ' + captchaB + ' =';
+        }
+        generateCaptcha();
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const answer = parseInt(document.getElementById('captchaAnswer').value);
+            if (answer !== captchaA + captchaB) {
+                alert('Please check your math and try again.');
+                generateCaptcha();
+                document.getElementById('captchaAnswer').value = '';
+                return false;
+            }
+            // Build mailto link with form data
+            const name = e.target.elements.name.value;
+            const email = e.target.elements.email.value;
+            const message = e.target.elements.message.value;
+            const subject = encodeURIComponent('SignalRadar Contact Form - ' + name);
+            const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
+            window.location.href = 'mailto:info@signalradar.ai?subject=' + subject + '&body=' + body;
+            return false;
+        }
+    </script>
 </body>
 </html>
