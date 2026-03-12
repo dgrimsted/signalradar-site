@@ -851,10 +851,14 @@ p { margin-bottom: 16px; }
     text-align: center;
 }
 
-/* White panels inside the gray form section - matching original Divi rows */
+/* Title area sits on gray background - no white panel */
+.contact-title-area {
+    padding: 27px 0;
+}
+
+/* White panel for form content only */
 .contact-panel {
     background: var(--white);
-    padding: 27px 40px;
     margin-bottom: 0;
 }
 
@@ -862,24 +866,24 @@ p { margin-bottom: 16px; }
     padding: 15px 40px 27px;
 }
 
-/* "We'd love to hear from you" - matches original ~26px purple italic */
+/* "We'd love to hear from you" - 35px bold purple, matching original exactly */
 .contact-form-title {
-    font-size: 26px;
-    font-weight: 400;
+    font-size: 35px;
+    font-weight: 700;
     color: var(--purple-primary);
     text-align: center;
-    margin-bottom: 16px;
-    line-height: 1.4;
+    margin-bottom: 0;
+    line-height: 1.3;
     font-style: italic;
 }
 
 .contact-form-subtitle {
     text-align: center;
-    color: var(--gray-500);
-    font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 40px;
-    max-width: 650px;
+    color: rgb(149, 155, 175);
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 0;
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -1130,8 +1134,8 @@ p { margin-bottom: 16px; }
     .footer { padding: 40px 20px 0; }
     .footer-bottom { margin: 0 -20px; padding: 16px 20px; }
     .contact-form-section { padding: 40px 0; }
-    .contact-form-title { font-size: 24px; margin-bottom: 16px; }
-    .contact-form-subtitle { font-size: 14px; margin-bottom: 32px; }
+    .contact-form-title { font-size: 26px; }
+    .contact-form-subtitle { font-size: 15px; }
     .form-heading { font-size: 18px; margin-bottom: 20px; }
     .contact-info-section { padding: 40px 0; }
     .form-field-half { max-width: 100%; }
