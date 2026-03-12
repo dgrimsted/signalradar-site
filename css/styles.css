@@ -888,14 +888,15 @@ p { margin-bottom: 16px; }
     margin-right: auto;
 }
 
-/* "To contact the SignalRadar team" - bold, large, dark */
+/* "To contact the SignalRadar team" - 36px bold dark, matching original H1 */
 .form-heading {
-    font-size: 26px;
+    font-size: 36px;
     font-weight: 700;
-    color: var(--heading-color);
+    color: rgb(51, 51, 51);
     margin-bottom: 28px;
     text-align: center;
-    letter-spacing: -0.5px;
+    letter-spacing: normal;
+    line-height: 1.3;
 }
 
 .contact-form {
