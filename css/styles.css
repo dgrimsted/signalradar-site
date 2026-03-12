@@ -760,36 +760,7 @@ p { margin-bottom: 16px; }
 .info-card h3 { font-size: 20px; margin-bottom: 8px; text-align: center; }
 .info-card p { color: var(--gray-600); font-size: 0.95rem; margin: 0; }
 
-/* Contact Form */
-.form-heading { margin: 40px 0 24px; font-size: 24px; }
-.contact-form { max-width: 600px; margin: 0 auto; }
-.form-group { margin-bottom: 16px; }
-.form-group-half { max-width: 50%; }
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form textarea {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid var(--gray-200);
-    border-left: 4px solid var(--purple-primary);
-    border-radius: 4px;
-    font-size: 0.95rem;
-    font-family: var(--font-family);
-    transition: border-color 0.2s;
-    background: var(--white);
-}
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border-color: var(--purple-primary);
-}
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    color: var(--gray-400);
-}
+/* Contact Form - placeholder replaced by enhanced styles below */
 .form-submit { text-align: center; margin-top: 24px; }
 
 /* FAQ */
@@ -868,14 +839,14 @@ p { margin-bottom: 16px; }
     line-height: 1.6;
 }
 
-/* Contact Form Section - white background like original */
+/* Contact Form Section - light blue-gray background matching original rgb(248,251,254) */
 .contact-form-section {
-    background: var(--white);
-    padding: 60px 0 80px;
+    background: rgb(248, 251, 254);
+    padding: 52px 0 27px;
 }
 
 .contact-form-wrapper {
-    max-width: 750px;
+    max-width: 1100px;
     margin: 0 auto;
     text-align: center;
 }
@@ -897,7 +868,7 @@ p { margin-bottom: 16px; }
     font-size: 14px;
     line-height: 1.7;
     margin-bottom: 40px;
-    max-width: 550px;
+    max-width: 650px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -917,46 +888,50 @@ p { margin-bottom: 16px; }
     text-align: left;
 }
 
-.form-group {
-    margin-bottom: 16px;
+/* Purple-background wrapper that creates the thick purple left block */
+.form-field-wrap {
+    background: var(--purple-primary);
+    padding: 0 0 0 33px;
+    margin-bottom: 20px;
+    border-radius: 4px;
 }
 
-.form-group-half {
+.form-field-half {
     max-width: 50%;
 }
 
-/* Form inputs - thick purple left bar, subtle shadow, matching original */
+/* Form inputs - blue border, strong shadow, matching original exactly */
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
     width: 100%;
-    padding: 16px 18px;
-    border: 1px solid #ddd;
-    border-left: 5px solid var(--purple-primary);
-    border-radius: 0;
-    font-size: 13px;
+    padding: 16px;
+    border: 1px solid rgb(12, 113, 195);
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 2px;
     font-family: var(--font-family);
     transition: all 0.2s ease;
     background: var(--white);
     color: var(--heading-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: rgba(0, 0, 0, 0.3) 6px 6px 18px 0px;
+    display: block;
 }
 
 .contact-form input[type="text"]:focus,
 .contact-form input[type="email"]:focus,
 .contact-form textarea:focus {
     outline: none;
-    border-color: #ccc;
-    border-left-color: var(--purple-primary);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    border-color: rgb(12, 113, 195);
+    box-shadow: rgba(0, 0, 0, 0.35) 6px 6px 20px 0px;
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
     text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 1px;
-    color: #aaa;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--gray-400);
     font-weight: 400;
 }
 
@@ -965,27 +940,26 @@ p { margin-bottom: 16px; }
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 12px;
     margin-top: 24px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .captcha-equation {
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 600;
-    color: var(--purple-primary);
+    color: rgb(131, 0, 233);
     white-space: nowrap;
-    font-style: italic;
 }
 
-/* Small circular captcha input matching original */
+/* Captcha input - rounded square matching original 50x51px */
 .captcha-input {
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 2px solid var(--gray-300);
-    border-radius: 50%;
-    font-size: 15px;
+    width: 50px;
+    height: 51px;
+    padding: 16px 4px;
+    border: 1px solid rgb(224, 224, 234);
+    border-radius: 6px;
+    font-size: 14px;
     text-align: center;
     font-family: var(--font-family);
     outline: none;
@@ -1001,27 +975,29 @@ p { margin-bottom: 16px; }
     border-color: var(--purple-primary);
 }
 
-/* Send Message button - rounded purple outline, matching original */
+/* Send Message button - 10px thick border pill, matching original exactly */
 .captcha-submit {
-    font-size: 11px;
-    letter-spacing: 2px;
+    font-size: 13px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    font-weight: 700;
-    padding: 12px 28px;
-    border: 2px solid var(--purple-primary);
-    border-radius: 24px;
-    color: var(--purple-primary);
-    background: transparent;
+    font-weight: 800;
+    padding: 4px 13px;
+    border: 10px solid var(--purple-primary);
+    border-radius: 999px;
+    color: rgb(131, 0, 233);
+    background: var(--white);
     cursor: pointer;
     white-space: nowrap;
     font-family: var(--font-family);
+    min-width: 160px;
+    height: 51px;
 }
 .captcha-submit:hover {
     background: var(--purple-primary);
     color: var(--white);
 }
 
-/* Captcha note - purple text in subtle pill, centered */
+/* Captcha note - purple text in pill outline, centered */
 .captcha-note {
     text-align: center;
     font-size: 14px;
@@ -1133,7 +1109,7 @@ p { margin-bottom: 16px; }
     .value-prop p { font-size: 16px; }
     .paradigm-box p { font-size: 16px; }
     .cta-section { padding: 60px 0; }
-    .form-group-half { max-width: 100%; }
+    .form-field-half { max-width: 100%; }
     .section-highlight { font-size: 22px; }
     .mobile-mockups { gap: 20px; }
     .mockup-phone-inner { width: 280px; }
@@ -1142,11 +1118,13 @@ p { margin-bottom: 16px; }
     .navbar { padding: 0 20px; }
     .footer { padding: 40px 20px 0; }
     .footer-bottom { margin: 0 -20px; padding: 16px 20px; }
-    .contact-form-section { padding: 60px 0; }
+    .contact-form-section { padding: 40px 0; }
     .contact-form-title { font-size: 24px; margin-bottom: 16px; }
     .contact-form-subtitle { font-size: 14px; margin-bottom: 32px; }
-    .form-heading { font-size: 16px; margin-bottom: 20px; }
+    .form-heading { font-size: 18px; margin-bottom: 20px; }
     .contact-info-section { padding: 40px 0; }
+    .form-field-half { max-width: 100%; }
+    .form-field-wrap { padding-left: 20px; }
     .faq-section { padding: 60px 0; }
     .faq-title { font-size: 32px; }
 }
