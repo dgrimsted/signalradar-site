@@ -851,6 +851,17 @@ p { margin-bottom: 16px; }
     text-align: center;
 }
 
+/* White panels inside the gray form section - matching original Divi rows */
+.contact-panel {
+    background: var(--white);
+    padding: 27px 40px;
+    margin-bottom: 0;
+}
+
+.contact-panel-form {
+    padding: 15px 40px 27px;
+}
+
 /* "We'd love to hear from you" - matches original ~26px purple italic */
 .contact-form-title {
     font-size: 26px;
