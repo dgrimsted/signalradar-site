@@ -173,16 +173,31 @@
         generateCaptcha();
 
         function handleContactSubmit(e) {
+            e.preventDefault();
             const answer = parseInt(document.getElementById('captchaAnswer').value);
             if (answer !== captchaA + captchaB) {
-                e.preventDefault();
                 alert('Please check your math and try again.');
                 generateCaptcha();
                 document.getElementById('captchaAnswer').value = '';
                 return false;
             }
-            // Captcha passed — allow native form submission to Formspree
-            return true;
+            // Captcha passed — submit to Formspree via AJAX, then redirect to our thanks page
+            const form = document.getElementById('contactForm');
+            const data = new FormData(form);
+            fetch('https://formspree.io/f/mvzwkqoe', {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(function(response) {
+                if (response.ok) {
+                    window.location.href = 'thanks.html';
+                } else {
+                    alert('There was a problem sending your message. Please try again.');
+                }
+            }).catch(function() {
+                alert('There was a problem sending your message. Please try again.');
+            });
+            return false;
         }
     </script>
 </body>
