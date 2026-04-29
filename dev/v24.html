@@ -83,17 +83,13 @@
     background:#ded4c4;
     box-shadow: inset 0 0 0 1px rgba(91,72,45,.08);
     position:relative;
+    background-size:100% 100% !important;
+    background-repeat:no-repeat;
+    background-position:center center;
+    filter:saturate(1.02) contrast(1.03);
   }
   .heroImg img{
-    display:block;
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:fill !important;
-    object-position:center center;
-    filter:saturate(1.02) contrast(1.03);
-    border-radius:18px;
+    display:none !important;
   }
 
   .brand{
@@ -1774,12 +1770,13 @@ async function loadImages(measureCode){
   if(hero){
     hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
     hero.removeAttribute('src');
-    if(CONFIG.BLOB_SAS_TOKEN && heroFile){
-      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429f`;
-      hero.onerror = ()=>{ hero.onerror = null; if (embeddedHero) hero.src = embeddedHero; };
-      hero.src = heroUrl;
-    } else if (embeddedHero) {
-      hero.src = embeddedHero;
+    const heroBox = hero.parentElement;
+    if(heroBox && CONFIG.BLOB_SAS_TOKEN && heroFile){
+      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429g`;
+      // Set as background-image so we can force background-size:100% 100% (true stretch).
+      heroBox.style.backgroundImage = `url("${heroUrl}")`;
+    } else if (heroBox && embeddedHero) {
+      heroBox.style.backgroundImage = `url("${embeddedHero}")`;
     }
   }
 
