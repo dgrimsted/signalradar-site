@@ -1764,7 +1764,7 @@ async function loadImages(measureCode){
     hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
     hero.removeAttribute('src');
     if(CONFIG.BLOB_SAS_TOKEN && heroFile){
-      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260423a`;
+      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429a`;
       hero.onerror = ()=>{ hero.onerror = null; if (embeddedHero) hero.src = embeddedHero; };
       hero.src = heroUrl;
     } else if (embeddedHero) {
