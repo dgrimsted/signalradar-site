@@ -1226,7 +1226,11 @@ const HERO_FILE_MAP = {
   'HRC=F':          'hrc_steel_hero.png',
   'RB=F':           'gasoline_hero.png',
   'GASREGCOVW':     'gasoline_hero.png',
-  'NG=F':           'natural_gas_hero.png'
+  'NG=F':           'natural_gas_hero.png',
+  'S&PCOMMODITY16': 'S&PCOMMODITY16.png',
+  'BALTIC_DRY':     'BALTIC_DRY.png',
+  'GASDESW':        'GASDESW.png',
+  'LIT-US':         'LIT-US.png'
   // Any DT_CODE not in this map falls back to meta.hero_image_file,
   // then to the embedded hero in getEmbeddedHero().
 };
@@ -1767,7 +1771,7 @@ async function loadImages(measureCode){
     hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
     hero.removeAttribute('src');
     if(CONFIG.BLOB_SAS_TOKEN && heroFile){
-      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429c`;
+      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429d`;
       hero.onerror = ()=>{ hero.onerror = null; if (embeddedHero) hero.src = embeddedHero; };
       hero.src = heroUrl;
     } else if (embeddedHero) {
