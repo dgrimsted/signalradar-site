@@ -82,12 +82,15 @@
     overflow:hidden;
     background:#ded4c4;
     box-shadow: inset 0 0 0 1px rgba(91,72,45,.08);
+    position:relative;
   }
   .heroImg img{
     display:block;
+    position:absolute;
+    inset:0;
     width:100%;
     height:100%;
-    object-fit:fill;
+    object-fit:fill !important;
     object-position:center center;
     filter:saturate(1.02) contrast(1.03);
     border-radius:18px;
@@ -1765,13 +1768,14 @@ async function loadImages(measureCode){
   const map = document.getElementById('mapImg');
   const embeddedHero = getEmbeddedHero(code);
   const heroFile = HERO_FILE_MAP[code] || meta.hero_image_file || '';
-  const mapFile = meta.map_image_file || `map_${code}.png`;
+  // Per-measure maps (map_<DT_CODE>.png) have oversized baked-in markers; force the static fallback.
+  const mapFile = 'signal-origin-map-fixed.png';
 
   if(hero){
     hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
     hero.removeAttribute('src');
     if(CONFIG.BLOB_SAS_TOKEN && heroFile){
-      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429e`;
+      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429f`;
       hero.onerror = ()=>{ hero.onerror = null; if (embeddedHero) hero.src = embeddedHero; };
       hero.src = heroUrl;
     } else if (embeddedHero) {
