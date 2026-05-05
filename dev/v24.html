@@ -197,9 +197,9 @@
     margin:0 0 10px;
   }
   .mapBox{
-    background:rgba(255,253,248,.85); /* same as canvas */
+    background:transparent; /* let the page background show through letterbox bands */
     border-radius:16px;
-    border:1px solid rgba(91,72,45,.08);
+    border:0;
     overflow:hidden;
     min-height:245px;
     display:flex;
@@ -211,7 +211,7 @@
     width:100%;
     height:100%;
     object-fit:contain;
-    background:var(--bg); /* fallback */
+    background:transparent;
   }
 
   .events h3{
@@ -1764,8 +1764,11 @@ async function loadImages(measureCode){
   const map = document.getElementById('mapImg');
   const embeddedHero = getEmbeddedHero(code);
   const heroFile = HERO_FILE_MAP[code] || meta.hero_image_file || '';
-  // Per-measure maps (map_<DT_CODE>.png) have oversized baked-in markers; force the static fallback.
-  const mapFile = 'signal-origin-map-fixed.png';
+  // Per-measure map: prefer an explicit MAP_FILE_MAP entry, otherwise the
+  // canonical map_<DT_CODE>.png that v24_no_insights.py uploads to blob.
+  // The map.onerror handler below falls back to FALLBACK_MAP for any DT_CODE
+  // whose per-measure file isn't in blob yet.
+  const mapFile = MAP_FILE_MAP[code] || meta.map_image_file || `map_${code}.png`;
 
   if(hero){
     hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
@@ -1783,7 +1786,7 @@ async function loadImages(measureCode){
   if(map){
     map.alt = `${meta.display_name || meta.measure_name || code} signal origin map`;
     if(CONFIG.BLOB_SAS_TOKEN && mapFile){
-      const mapUrl = `${CONFIG.BLOB_BASE_URL}/${mapFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260317e`;
+      const mapUrl = `${CONFIG.BLOB_BASE_URL}/${mapFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260505b`;
       map.onerror = ()=>{ map.onerror = null; if(typeof FALLBACK_MAP !== 'undefined') map.src = FALLBACK_MAP; };
       map.src = mapUrl;
     } else if(typeof FALLBACK_MAP !== 'undefined') {
@@ -2101,14 +2104,4 @@ window.__SR_DISRUPTION_ROWS__ = [{"id": "1", "location_name": "Washington DC", "
     });
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(renderDisruptionsGuaranteed, 250);
-    });
-  } else {
-    setTimeout(renderDisruptionsGuaranteed, 250);
-  }
-})();
-</script>
-
-</body>
-</html>
+    document.addEventListene
