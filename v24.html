@@ -102,21 +102,23 @@
   .brand h1{
     display:none;
   }
+  /* Report title — prominent headline serif */
   .brand .sub1{
     margin-top:0;
-    font-size:13px;
+    font-family:'Playfair Display', 'Noto Serif Display', Georgia, serif;
+    font-size:28px;
+    line-height:1.1;
     font-weight:800;
-    color:#7b6b55;
-    letter-spacing:.9px;
-    text-transform:uppercase;
+    color:#1a1a1a;
+    letter-spacing:.02px;
+    text-transform:none;
   }
-  /* "External Pressure Intelligence" is now the primary brand headline */
+  /* Measure name — smaller, muted, steps back */
   .brand .sub2{
-    margin-top:4px;
-    font-size:32px;
-    line-height:1.05;
-    font-weight:900;
-    color:var(--brand);
+    margin-top:6px;
+    font-size:14px;
+    font-weight:500;
+    color:#888;
     letter-spacing:.1px;
   }
 
@@ -2103,5 +2105,4 @@ window.__SR_DISRUPTION_ROWS__ = [{"id": "1", "location_name": "Washington DC", "
     });
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(renderDisruptionsGuaranteed, 250
+    document.addEventLis
