@@ -102,24 +102,24 @@
   .brand h1{
     display:none;
   }
-  /* Report title — prominent headline serif */
+  /* Report title — prominent headline serif, SignalRadar brand brown */
   .brand .sub1{
     margin-top:0;
     font-family:'Playfair Display', 'Noto Serif Display', Georgia, serif;
     font-size:28px;
     line-height:1.1;
     font-weight:800;
-    color:#1a1a1a;
+    color:var(--brand);
     letter-spacing:.02px;
     text-transform:none;
   }
-  /* Measure name — smaller, muted, steps back */
+  /* Measure name — bold, readable, clearly subordinate */
   .brand .sub2{
     margin-top:6px;
-    font-size:14px;
-    font-weight:500;
-    color:#888;
-    letter-spacing:.1px;
+    font-size:20px;
+    font-weight:700;
+    color:#333;
+    letter-spacing:.05px;
   }
 
   .pill{
@@ -166,6 +166,8 @@
     display:none;
   }
   .narrativeInlineMore{
+    display:inline-block;
+    margin-top:1.4em;
     color:#8a6a2f;
     font-size:inherit;
     font-weight:900;
@@ -2101,8 +2103,4 @@ window.__SR_DISRUPTION_ROWS__ = [{"id": "1", "location_name": "Washington DC", "
       const li = document.createElement('li');
       li.style.setProperty('--bullet', r.map_marker_color || '#666');
       li.innerHTML = '<b>' + (r.location_name || '') + ':</b> ' + (r.event_details || '');
-      ul.appendChild(li);
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventLis
+      ul.appendCh
