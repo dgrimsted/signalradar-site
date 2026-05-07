@@ -1454,9 +1454,12 @@ function setPanelText(id, html){
   el.dataset.fulltext = s;
 }
 function applyPanelClips(){
-  const mapEl = document.getElementById('mapImg') || document.querySelector('.mapBox');
+  /* Prefer the mapBox container (always has min-height) over the img element */
+  const mapEl = document.querySelector('.mapBox') || document.getElementById('mapImg');
   if (!mapEl) return;
-  const mapBottom = mapEl.getBoundingClientRect().bottom;
+  const mapRect = mapEl.getBoundingClientRect();
+  if (mapRect.height < 10) return; /* not laid out yet, bail */
+  const mapBottom = mapRect.bottom;
   ['panel1','panel2','panel3'].forEach(pid => {
     const panel = document.getElementById(pid);
     if (!panel) return;
@@ -1964,7 +1967,18 @@ function renderMeasure(measureCode){
   const change = parsePct(ch['16weektrend'] ?? '0');
   updateArrow(change, ch);
   applyOverviewFromChannel(ch);
-  requestAnimationFrame(() => requestAnimationFrame(applyPanelClips));
+  /* Run clips once map image is definitely laid out */
+  (function scheduleClips(){
+    const mapImg = document.getElementById('mapImg');
+    if (mapImg && mapImg.complete && mapImg.naturalHeight > 0) {
+      requestAnimationFrame(() => requestAnimationFrame(applyPanelClips));
+    } else if (mapImg) {
+      mapImg.addEventListener('load', function(){ requestAnimationFrame(applyPanelClips); }, {once:true});
+      setTimeout(applyPanelClips, 800); /* belt-and-suspenders fallback */
+    } else {
+      setTimeout(applyPanelClips, 800);
+    }
+  })();
   loadImages(code);
 }
 
@@ -2022,6 +2036,7 @@ async function loadAll(){
   renderMeasure(APP.currentMeasureCode);
 }
 document.addEventListener('DOMContentLoaded', loadAll);
+window.addEventListener('load', function(){ setTimeout(applyPanelClips, 100); });
 
 </script>
 
@@ -2094,27 +2109,4 @@ window.__SR_FALLBACK_DRIVERS__ = [{"id": "1", "driver_category": "Tariffs", "per
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
-      if (CONFIG.ALLOW_EMBEDDED_FALLBACK) setTimeout(renderFallbackDrivers, 180);
-    });
-  } else {
-    if (CONFIG.ALLOW_EMBEDDED_FALLBACK) setTimeout(renderFallbackDrivers, 180);
-  }
-})();
-</script>
-
-
-<script>
-/* Force 16-week trend wiring from channels.csv */
-(function() {
-  function parsePctFixed(v) {
-    const s = String(v == null ? "" : v).replace(/[‐‑‒–—−]/g, "-");
-    const m = s.match(/[-+]?\d+(?:\.\d+)?/);
-    return m ? parseFloat(m[0]) : 0;
-  }
-
-  async function forceTrendBinding() {
-    try {
-      const channels = (window.APP && window.APP.all && window.APP.all.channels) ? window.APP.all.channels : [];
-      const currentCode = (window.APP && window.APP.currentMeasureCode)
-        ? String(window.APP.currentMeasureCode).trim().toUpperCase()
-        : (typeof CONFIG !==
+      if (CONFIG.ALLOW_EMBEDDED_FALLBACK) setTimeout(renderFallbackDr
