@@ -1490,8 +1490,12 @@ function applyInlineNarrative(fullText){
     return;
   }
 
+  /* Preserve paragraph breaks from MySQL \n separators */
+  const htmlFull = raw.replace(/\n+/g, '<br><br>');
+  /* Split into tokens preserving <br><br> as a unit */
+  const tokens = raw.split(/(\n+|\s+)/).filter(t => t && !/^[\s\n]+$/.test(t));
+
   const moreHtml = ' <a href="#" class="narrativeInlineMore" data-mode="expand">(MORE)</a>';
-  const words = raw.split(/\s+/);
   const lineHeight = parseFloat(getComputedStyle(detailsEl).lineHeight) || 22;
   /* Compute height dynamically so text fills to hero image bottom */
   let maxHeight = Math.max(220, lineHeight * 11.8);
@@ -1504,16 +1508,39 @@ function applyInlineNarrative(fullText){
   }
 
   // Does the full text fit?
-  detailsEl.textContent = raw;
+  detailsEl.innerHTML = htmlFull;
   if (detailsEl.scrollHeight <= maxHeight + 2) return;
 
-  let lo = 1;
-  let hi = words.length;
-  let best = '';
+  /* Binary search on tokens, rebuilding HTML with paragraph breaks */
+  function tokensToHtml(toks) {
+    return toks.map((t, i) => {
+      const prev = toks[i - 1] || '';
+      const next = toks[i + 1] || '';
+      if (/\n/.test(t)) return '<br><br>';
+      return t;
+    }).join(' ').replace(/ <br><br> /g, '<br><br>');
+  }
 
+  /* Flatten to words-only array (dropping \n tokens) for binary search */
+  const words = raw.split(/\s+/);
+  /* Track cumulative char positions to know if a paragraph break falls
+     before a given word index */
+  const paragraphs = raw.split(/\n+/);
+
+  let lo = 1, hi = words.length, best = '';
   while (lo <= hi) {
     const mid = Math.floor((lo + hi) / 2);
-    const candidate = words.slice(0, mid).join(' ') + '…' + moreHtml;
+    /* Rebuild HTML up to word[mid], re-inserting <br><br> at paragraph ends */
+    let wordIdx = 0;
+    let html = '';
+    for (let pi = 0; pi < paragraphs.length; pi++) {
+      const pWords = paragraphs[pi].split(/\s+/).filter(Boolean);
+      const take = Math.min(pWords.length, mid - wordIdx);
+      if (take > 0) html += (html ? '<br><br>' : '') + pWords.slice(0, take).join(' ');
+      wordIdx += pWords.length;
+      if (wordIdx >= mid) break;
+    }
+    const candidate = html + '…' + moreHtml;
     detailsEl.innerHTML = candidate;
     if (detailsEl.scrollHeight <= maxHeight + 2) {
       best = candidate;
@@ -1529,7 +1556,7 @@ function applyInlineNarrative(fullText){
   if (moreLink) {
     moreLink.addEventListener('click', (ev) => {
       ev.preventDefault();
-      detailsEl.innerHTML = raw + ' <a href="#" class="narrativeInlineMore" data-mode="collapse">(LESS)</a>';
+      detailsEl.innerHTML = htmlFull + ' <a href="#" class="narrativeInlineMore" data-mode="collapse">(LESS)</a>';
       const lessLink = detailsEl.querySelector('.narrativeInlineMore[data-mode="collapse"]');
       if (lessLink) {
         lessLink.addEventListener('click', (ev2) => {
@@ -2077,31 +2104,4 @@ window.__SR_FALLBACK_DRIVERS_V6__ = [{"id": "1", "driver_category": "Tariffs", "
         <div class="dirArrow" style="color:${accent};">${arrow}</div>
         <div class="desc">${cleanDesc6}</div>`;
       wrap.appendChild(card);
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(renderDriverFallbackV6, 300);
-    });
-  } else {
-    setTimeout(renderDriverFallbackV6, 300);
-  }
-})();
-</script>
-
-
-
-<div class="errorOverlay" id="errorOverlay">
-  <div class="errorPanel">
-    <h2>SignalRadar Blob Load Failure</h2>
-    <p>The dashboard is configured to require fresh Blob CSV data. Embedded fallback is disabled.</p>
-    <pre id="errorDetails">No details available.</pre>
-  </div>
-</div>
-
-
-<script>
-window.__SR_DISRUPTION_ROWS__ = [{"id": "1", "location_name": "Washington DC", "event_details": "Tariffs escalation", "map_marker_color": "#cc3300"}, {"id": "2", "location_name": "Beijing", "event_details": "PMI contraction & demand softening", "map_marker_color": "#0033cc"}, {"id": "3", "location_name": "Santiago Chile", "event_details": "Mine supply output revised", "map_marker_color": "#cc9900"}, {"id": "4", "location_name": "London", "event_details": "LME 14-month inventory high", "map_marker_color": "#333"}, {"id": "5", "location_name": "Lima Peru", "event_details": "Output disruptions", "map_marker_color": "#333"}];
-(function() {
-  function renderDisruptionsGuara
+    }
