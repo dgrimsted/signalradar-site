@@ -178,6 +178,18 @@
     white-space:nowrap;
     cursor:pointer;
   }
+  .panelInlineMore{
+    display:inline;
+    color:#8a6a2f;
+    font-size:inherit;
+    font-weight:900;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+    text-decoration:none;
+    white-space:nowrap;
+    cursor:pointer;
+  }
+  .panelInlineMore:hover{ text-decoration:underline; }
   .narrativeInlineMore:hover{
     text-decoration:underline;
   }
@@ -789,6 +801,7 @@
     box-shadow: var(--cardShadow);
     padding:14px 14px 16px;
     min-height:138px;
+    overflow:hidden;
   }
   .overview .oLabel{
     font-family:"Helvetica Neue", Arial, sans-serif;
@@ -1432,6 +1445,71 @@ function metricByLabel(metrics, label){
 }
 function setHtml(id, value){ const el=document.getElementById(id); if(el&&value!=null) el.innerHTML=String(value); }
 function nl2br(text){ return String(text||'').replace(/\n+/g, '<br><br>'); }
+/* Store full HTML on an element so applyPanelClips can re-truncate on resize */
+function setPanelText(id, html){
+  const el = document.getElementById(id);
+  if (!el) return;
+  const s = String(html||'');
+  el.innerHTML = s;
+  el.dataset.fulltext = s;
+}
+function applyPanelClips(){
+  const mapEl = document.getElementById('mapImg') || document.querySelector('.mapBox');
+  if (!mapEl) return;
+  const mapBottom = mapEl.getBoundingClientRect().bottom;
+  ['panel1','panel2','panel3'].forEach(pid => {
+    const panel = document.getElementById(pid);
+    if (!panel) return;
+    /* Reset any prior clamping */
+    panel.style.maxHeight = '';
+    const lineEl = document.getElementById(pid + 'Line1');
+    if (lineEl && lineEl.dataset.fulltext) lineEl.innerHTML = lineEl.dataset.fulltext;
+    /* Compute available height for this panel */
+    const panelTop = panel.getBoundingClientRect().top;
+    const available = mapBottom - panelTop - 6;
+    if (available < 80) return;
+    if (panel.scrollHeight <= available + 2) return; /* already fits */
+    /* Cap the panel */
+    panel.style.maxHeight = available + 'px';
+    if (!lineEl || !lineEl.dataset.fulltext) return;
+    const fullHtml = lineEl.dataset.fulltext;
+    /* Strip html tags to get plain words for binary search */
+    const plainText = fullHtml.replace(/<br><br>/g, '\n\n').replace(/<[^>]+>/g, '');
+    const paragraphs = plainText.split(/\n\n+/);
+    const words = plainText.split(/\s+/).filter(Boolean);
+    if (!words.length) return;
+    const moreHtml = ' <a href="#" class="panelInlineMore" data-pid="'+pid+'">(MORE)</a>';
+    let lo = 1, hi = words.length, best = '';
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      /* Rebuild with paragraph breaks */
+      let wordIdx = 0, html = '';
+      for (let pi = 0; pi < paragraphs.length; pi++) {
+        const pWords = paragraphs[pi].split(/\s+/).filter(Boolean);
+        const take = Math.min(pWords.length, mid - wordIdx);
+        if (take > 0) html += (html ? '<br><br>' : '') + pWords.slice(0, take).join(' ');
+        wordIdx += pWords.length;
+        if (wordIdx >= mid) break;
+      }
+      const candidate = html + '…' + moreHtml;
+      lineEl.innerHTML = candidate;
+      if (panel.scrollHeight <= available + 2) { best = candidate; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    lineEl.innerHTML = best || (words.slice(0,12).join(' ') + '…' + moreHtml);
+    /* Wire the MORE click */
+    const moreLink = lineEl.querySelector('.panelInlineMore');
+    if (moreLink) {
+      moreLink.addEventListener('click', ev => {
+        ev.preventDefault();
+        panel.style.maxHeight = '';
+        lineEl.innerHTML = fullHtml + ' <a href="#" class="panelInlineMore" data-pid="'+pid+'" data-mode="collapse">(LESS)</a>';
+        const lessLink = lineEl.querySelector('[data-mode="collapse"]');
+        if (lessLink) lessLink.addEventListener('click', ev2 => { ev2.preventDefault(); applyPanelClips(); });
+      });
+    }
+  });
+}
 function normalizeDtCode(value){
   return String(value == null ? '' : value).trim().toUpperCase();
 }
@@ -1661,17 +1739,17 @@ function applyOverviewFromChannel(ch){
 
   setHtml('panel1Label', 'HIGH RISK NEWS');
   setHtml('panel1Title', headline || 'Latest headline');
-  setHtml('panel1Line1', nl2br(summary));
+  setPanelText('panel1Line1', nl2br(summary));
   setHtml('panel1Line2', '');
 
   setHtml('panel2Label', 'KEY INSIGHT');
   setHtml('panel2Title', keyInsightsHeadline);
-  setHtml('panel2Line1', nl2br(keyInsightsText));
+  setPanelText('panel2Line1', nl2br(keyInsightsText));
   setHtml('panel2Line2', '');
 
   setHtml('panel3Label', 'WHAT THIS MEANS FOR YOU');
   setHtml('panel3Title', whatThisMeansHeadline);
-  setHtml('panel3Line1', nl2br(whatThisMeansText));
+  setPanelText('panel3Line1', nl2br(whatThisMeansText));
   setHtml('panel3Line2', '');
 }
 
@@ -1734,7 +1812,7 @@ function renderPanels(rows, change16w){
     setHtml(prefix+'Label', p.panel_label || defaultLabel);
     setHtml(prefix+'Title', p.panel_title || '');
     const lines = String(p.panel_details||'').split(/\r?\n/);
-    setHtml(prefix+'Line1', nl2br(lines[0] || ''));
+    setPanelText(prefix+'Line1', nl2br(lines[0] || ''));
     setHtml(prefix+'Line2', nl2br(lines.slice(1).join('\n')) || '');
   };
   mapPanel(p1,'panel1','HIGH RISK NEWS');
@@ -1742,7 +1820,7 @@ function renderPanels(rows, change16w){
   setHtml('panel2Label', p2.panel_label || 'KEY INSIGHT');
   setHtml('panel2Title', p2.panel_title || '');
   let lines2 = String(p2.panel_details||'').split(/\r?\n/);
-  setHtml('panel2Line1', nl2br(lines2[0] || ''));
+  setPanelText('panel2Line1', nl2br(lines2[0] || ''));
   const pctEl = document.getElementById('panel2Pct');
   if(pctEl) pctEl.textContent = (change16w<0?'‑':'') + Math.abs(change16w).toFixed(1) + '%';
   const l2 = document.getElementById('panel2Line2');
@@ -1886,6 +1964,7 @@ function renderMeasure(measureCode){
   const change = parsePct(ch['16weektrend'] ?? '0');
   updateArrow(change, ch);
   applyOverviewFromChannel(ch);
+  requestAnimationFrame(() => requestAnimationFrame(applyPanelClips));
   loadImages(code);
 }
 
@@ -2038,66 +2117,4 @@ window.__SR_FALLBACK_DRIVERS__ = [{"id": "1", "driver_category": "Tariffs", "per
       const channels = (window.APP && window.APP.all && window.APP.all.channels) ? window.APP.all.channels : [];
       const currentCode = (window.APP && window.APP.currentMeasureCode)
         ? String(window.APP.currentMeasureCode).trim().toUpperCase()
-        : (typeof CONFIG !== 'undefined' ? String(CONFIG.DEFAULT_DT_CODE || '').trim().toUpperCase() : '');
-      const row = (channels || []).find(x => String((x && (x.DT_CODE || x.dt_code)) || '').trim().toUpperCase() === currentCode) || {};
-      const change = parsePctFixed(row['16weektrend'] ?? '0');
-      window.SIGNALRADAR = { change16w: change };
-      if (typeof initTrendArrow === 'function') initTrendArrow();
-      const pctEl = document.getElementById('panel2Pct');
-      if (pctEl) {
-        pctEl.textContent = (change < 0 ? '‑' : '') + Math.abs(change).toFixed(1) + '%';
-        pctEl.style.color = change >= 0 ? '#146B2E' : '#a3321f';
-      }
-    } catch (e) {
-      console.error('Trend binding failed:', e);
-    }
-  }
-
-  window.forceTrendBinding = forceTrendBinding;
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { setTimeout(forceTrendBinding, 0); });
-  } else {
-    setTimeout(forceTrendBinding, 0);
-  }
-})();
-</script>
-
-
-<script>
-/* Guaranteed driver fallback patch (v6) */
-window.__SR_FALLBACK_DRIVERS_V6__ = [{"id": "1", "driver_category": "Tariffs", "percentage": "42", "status_text": "▼ Bearish", "header_color": "#ff0000", "driver_details": "88% of 139 articles bearish; Trump escalation; import uncertainty", "ordering_key": "1"}, {"id": "2", "driver_category": "Mine Supply", "percentage": "25", "status_text": "▼ Bearish", "header_color": "#cc6600", "driver_details": "Chile & Peru output revised; LME 14-month high", "ordering_key": "2"}, {"id": "3", "driver_category": "China Demand", "percentage": "25", "status_text": "░░░░░░ Mixed", "header_color": "#333333", "driver_details": "54% bearish; PMI contraction; imports 8% below prior year", "ordering_key": "3"}, {"id": "4", "driver_category": "Dollar & Macro", "percentage": "5", "status_text": "▼ Bearish", "header_color": "#333333", "driver_details": "Fed cautious; USD reduces buying power", "ordering_key": "4"}, {"id": "5", "driver_category": "Geopolitical", "percentage": "3", "status_text": "▼ Bearish", "header_color": "#333333", "driver_details": "Regional tensions; limited direct impact", "ordering_key": "5"}];
-
-(function() {
-  function cleanStatusTextV6(s) {
-    return String(s || '')
-      .replace(/^\s*[▲▼]\s*/, '')
-      .replace(/^\s*░+\s*/, '')
-      .trim();
-  }
-
-  function renderDriverFallbackV6() {
-    const wrap = document.getElementById('newsGrid');
-    if (!wrap) return;
-    if (wrap.children.length > 0) return;
-
-    const rows = (window.__SR_FALLBACK_DRIVERS_V6__ || [])
-      .sort((a,b)=>(+a.ordering_key||999)-(+b.ordering_key||999))
-      .slice(0,5);
-
-    rows.forEach(function(d) {
-      const accent = d.header_color || '#666';
-      const status = cleanStatusTextV6(d.status_text);
-      const arrow = /bullish/i.test(status) ? '▲' : '▼';
-
-      const card = document.createElement('div');
-      card.className = 'newsCard';
-      card.style.setProperty('--accent', accent);
-      const cleanDesc6 = nl2br((d.driver_details || '').replace(/^Importance\s+\d+[\.\s]+/i,''));
-      card.innerHTML = `
-        <div class="tagRow">
-          <div class="tag">${d.driver_category || ''}</div>
-
-        </div>
-        <div class="pct" style="color:${accent};">${d.percentage || ''}%</div>
-        <div class="dirArrow" style="color:${accent};">${arrow}</div>
-        <div class="desc">${cleanDesc6
+        : (typeof CONFIG !==
