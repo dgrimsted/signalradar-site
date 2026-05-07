@@ -153,11 +153,11 @@
     margin:10px 0 0;
     font-size:14px;
     color:#222;
-    max-width:46ch;
+    max-width:62ch;
   }
   .narrative.is-collapsed{
-    max-height:10.2em;
     overflow:hidden;
+    /* max-height set dynamically by alignNarrativeToHero() */
   }
   .narrativeMoreWrap{
     display:none;
@@ -166,8 +166,8 @@
     display:none;
   }
   .narrativeInlineMore{
-    display:inline-block;
-    margin-top:1.4em;
+    display:inline;
+    margin-top:0;
     color:#8a6a2f;
     font-size:inherit;
     font-weight:900;
@@ -972,7 +972,7 @@
 </div>
 <div class="brand">
 <h1 id="brandName">SignalRadar</h1>
-<div class="sub1" id="sub1">External Pressure Intelligence Report</div>
+<div class="sub1" id="sub1">External Pressure Intelligence</div>
 <div class="sub2" id="sub2">Copper — Global Spot Price</div>
 <div class="pill" id="signalPill">SIGNAL — UNDER PRESSURE</div>
 
@@ -1493,7 +1493,15 @@ function applyInlineNarrative(fullText){
   const moreHtml = ' <a href="#" class="narrativeInlineMore" data-mode="expand">(MORE)</a>';
   const words = raw.split(/\s+/);
   const lineHeight = parseFloat(getComputedStyle(detailsEl).lineHeight) || 22;
-  const maxHeight = Math.max(220, lineHeight * 11.8);
+  /* Compute height dynamically so text fills to hero image bottom */
+  let maxHeight = Math.max(220, lineHeight * 11.8);
+  const heroImg = document.querySelector('.heroImg');
+  if (heroImg) {
+    const heroBottom = heroImg.getBoundingClientRect().bottom;
+    const narrativeTop = detailsEl.getBoundingClientRect().top;
+    const available = heroBottom - narrativeTop - 8;
+    if (available > 30) maxHeight = Math.max(available, 60);
+  }
 
   // Does the full text fit?
   detailsEl.textContent = raw;
@@ -1539,7 +1547,7 @@ function applyChannelContent(measureCode){
   const label = ch.CHANNEL || ch.channel || meta.display_name || meta.measure_name || measureCode;
   document.title = `External Pressure Intelligence — ${label}`;
   setHtml('brandName', '');
-  setHtml('sub1', 'External Pressure Intelligence Report');
+  setHtml('sub1', 'External Pressure Intelligence');
   setHtml('sub2', `${label}`);
   setHtml('signalPill', riskPillFromChannel(ch));
   setHtml('headline', ch.NewsHeadline || ch.newsheadline || '');
@@ -2096,11 +2104,4 @@ window.__SR_FALLBACK_DRIVERS_V6__ = [{"id": "1", "driver_category": "Tariffs", "
 <script>
 window.__SR_DISRUPTION_ROWS__ = [{"id": "1", "location_name": "Washington DC", "event_details": "Tariffs escalation", "map_marker_color": "#cc3300"}, {"id": "2", "location_name": "Beijing", "event_details": "PMI contraction & demand softening", "map_marker_color": "#0033cc"}, {"id": "3", "location_name": "Santiago Chile", "event_details": "Mine supply output revised", "map_marker_color": "#cc9900"}, {"id": "4", "location_name": "London", "event_details": "LME 14-month inventory high", "map_marker_color": "#333"}, {"id": "5", "location_name": "Lima Peru", "event_details": "Output disruptions", "map_marker_color": "#333"}];
 (function() {
-  function renderDisruptionsGuaranteed() {
-    const ul = document.getElementById('eventsList');
-    if (!ul || ul.children.length > 0) return;
-    (window.__SR_DISRUPTION_ROWS__ || []).forEach(function(r) {
-      const li = document.createElement('li');
-      li.style.setProperty('--bullet', r.map_marker_color || '#666');
-      li.innerHTML = '<b>' + (r.location_name || '') + ':</b> ' + (r.event_details || '');
-      ul.appendCh
+  function renderDisruptionsGuara
