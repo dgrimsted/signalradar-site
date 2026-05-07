@@ -1434,6 +1434,7 @@ function metricByLabel(metrics, label){
   return (metrics||[]).find(m => (m.metric_label||"").toUpperCase()===t) || null;
 }
 function setHtml(id, value){ const el=document.getElementById(id); if(el&&value!=null) el.innerHTML=String(value); }
+function nl2br(text){ return String(text||'').replace(/\n+/g, '<br><br>'); }
 function normalizeDtCode(value){
   return String(value == null ? '' : value).trim().toUpperCase();
 }
@@ -1663,18 +1664,17 @@ function applyOverviewFromChannel(ch){
 
   setHtml('panel1Label', 'HIGH RISK NEWS');
   setHtml('panel1Title', headline || 'Latest headline');
-  const parts = summary.split(/\n+/).filter(Boolean);
-  setHtml('panel1Line1', parts[0] || '');
+  setHtml('panel1Line1', nl2br(summary));
   setHtml('panel1Line2', '');
 
   setHtml('panel2Label', 'KEY INSIGHT');
   setHtml('panel2Title', keyInsightsHeadline);
-  setHtml('panel2Line1', keyInsightsText);
+  setHtml('panel2Line1', nl2br(keyInsightsText));
   setHtml('panel2Line2', '');
 
   setHtml('panel3Label', 'WHAT THIS MEANS FOR YOU');
   setHtml('panel3Title', whatThisMeansHeadline);
-  setHtml('panel3Line1', whatThisMeansText);
+  setHtml('panel3Line1', nl2br(whatThisMeansText));
   setHtml('panel3Line2', '');
 }
 
@@ -1714,7 +1714,7 @@ function renderDrivers(drivers){
       const card = document.createElement('div');
       card.className = 'newsCard';
       card.style.setProperty('--accent', stripColor);
-      const cleanDesc = (d.driver_details||'').replace(/^Importance\s+\d+[\.\s]+/i,'');
+      const cleanDesc = nl2br((d.driver_details||'').replace(/^Importance\s+\d+[\.\s]+/i,''));
       card.innerHTML = `
         <div class="tagRow">
           <div class="tag">${d.driver_category||''}</div>
@@ -1737,19 +1737,19 @@ function renderPanels(rows, change16w){
     setHtml(prefix+'Label', p.panel_label || defaultLabel);
     setHtml(prefix+'Title', p.panel_title || '');
     const lines = String(p.panel_details||'').split(/\r?\n/);
-    setHtml(prefix+'Line1', lines[0] || '');
-    setHtml(prefix+'Line2', lines.slice(1).join('<br/>') || '');
+    setHtml(prefix+'Line1', nl2br(lines[0] || ''));
+    setHtml(prefix+'Line2', nl2br(lines.slice(1).join('\n')) || '');
   };
   mapPanel(p1,'panel1','HIGH RISK NEWS');
   if(p2.background_color) document.getElementById('panel2').style.background=p2.background_color;
   setHtml('panel2Label', p2.panel_label || 'KEY INSIGHT');
   setHtml('panel2Title', p2.panel_title || '');
   let lines2 = String(p2.panel_details||'').split(/\r?\n/);
-  setHtml('panel2Line1', lines2[0] || '');
+  setHtml('panel2Line1', nl2br(lines2[0] || ''));
   const pctEl = document.getElementById('panel2Pct');
   if(pctEl) pctEl.textContent = (change16w<0?'‑':'') + Math.abs(change16w).toFixed(1) + '%';
   const l2 = document.getElementById('panel2Line2');
-  if(l2) l2.innerHTML = lines2.slice(1).join('<br/>');
+  if(l2) l2.innerHTML = nl2br(lines2.slice(1).join('\n'));
   mapPanel(p3,'panel3','WHAT THIS MEANS FOR YOU');
 }
 function renderDisruptions(rows){
@@ -2003,7 +2003,7 @@ window.__SR_FALLBACK_DRIVERS__ = [{"id": "1", "driver_category": "Tariffs", "per
       const card = document.createElement('div');
       card.className = 'newsCard';
       card.style.setProperty('--accent', accent);
-      const cleanDesc1 = (d.driver_details || '').replace(/^Importance\s+\d+[\.\s]+/i,'');
+      const cleanDesc1 = nl2br((d.driver_details || '').replace(/^Importance\s+\d+[\.\s]+/i,''));
       card.innerHTML = `
         <div class="tagRow">
           <div class="tag">${d.driver_category || ''}</div>
@@ -2095,13 +2095,11 @@ window.__SR_FALLBACK_DRIVERS_V6__ = [{"id": "1", "driver_category": "Tariffs", "
       const card = document.createElement('div');
       card.className = 'newsCard';
       card.style.setProperty('--accent', accent);
-      const cleanDesc6 = (d.driver_details || '').replace(/^Importance\s+\d+[\.\s]+/i,'');
+      const cleanDesc6 = nl2br((d.driver_details || '').replace(/^Importance\s+\d+[\.\s]+/i,''));
       card.innerHTML = `
         <div class="tagRow">
           <div class="tag">${d.driver_category || ''}</div>
 
         </div>
         <div class="pct" style="color:${accent};">${d.percentage || ''}%</div>
-        <div class="dirArrow" style="color:${accent};">${arrow}</div>
-        <div class="desc">${cleanDesc6}</div>`;
-      wr
+        <div class="dirArrow" style="color:${a
