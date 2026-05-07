@@ -1690,7 +1690,7 @@ function applyMetricCardsFromChannel(ch){
 
   const fmtMoney = (v) => {
     if (v === '' || v == null || isNaN(Number(v))) return String(v || '');
-    const n = Number(v), code = String(measureCode || '').toUpperCase();
+    const n = Number(v), code = String(ch.DT_CODE || ch.dt_code || APP.currentMeasureCode || '').toUpperCase();
     /* Grain/soft commodities quoted in cents — no $ prefix */
     const centsCodes = ['ZC=F','ZS=F','ZW=F','KC=F','SB=F','CT=F','OJ=F'];
     if (centsCodes.includes(code)) {
@@ -2109,5 +2109,4 @@ window.__SR_FALLBACK_DRIVERS__ = [{"id": "1", "driver_category": "Tariffs", "per
     rows.forEach(function(d) {
       const accent = d.header_color || '#666';
       const pctColor = accent;
-      const status = cleanStatusText(d.status_text);
-    
+      const status
