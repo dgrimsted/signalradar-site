@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Connect external signals to internal planning assumptions before the quarter forces the conversation. External intelligence for anticipatory planning.">
+<title>SignalRadar — The Signal-to-Planning Connection</title>
+<style>
+:root {
+  --purple:      #632ca6;
+  --purple-mid:  #9b6fd4;
+  --purple-pale: #f0eaf8;
+  --white:       #ffffff;
+  --off-white:   #f5f5f5;
+  --near-black:  #222222;
+  --gray:        #666666;
+  --light-gray:  #e0e0e0;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --radius: 5px;
+  --transition: all 0.2s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  color: var(--near-black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── ANNOUNCEMENT BAR ── */
+.announcement-bar {
+  background: var(--purple);
+  color: var(--white);
+  text-align: center;
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.announcement-bar a {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: var(--transition);
+}
+.announcement-bar a:hover { opacity: 0.85; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  padding: 0 40px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.wordmark .signal { color: var(--near-black); }
+.wordmark .radar  { color: var(--purple); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray);
+  letter-spacing: 0.03em;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.nav-link:hover { color: var(--purple); }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block;
+  background: var(--purple);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 11px 24px;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  border: 2px solid var(--purple);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--purple-mid);
+  border-color: var(--purple-mid);
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--purple);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 9px 22px;
+  border: 2px solid var(--purple);
+  border-radius: var(--radius);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background: var(--purple-pale);
+}
+
+/* ── LAYOUT ── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 52px 40px;
+}
+
+.bg-white { background: var(--white); }
+.bg-offwhite { background: var(--off-white); }
+
+/* ── TYPOGRAPHY ── */
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--near-black);
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.section-body {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 720px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--purple-pale) 0%, var(--white) 100%);
+  padding: 76px 40px 76px;
+  text-align: center;
+}
+
+.hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--near-black);
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 em {
+  color: var(--purple);
+  font-style: normal;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 36px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── PROBLEM SECTION ── */
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.problem-example {
+  background: var(--off-white);
+  border-left: 4px solid var(--purple);
+  padding: 24px 28px;
+  border-radius: 6px;
+  margin-top: 24px;
+}
+
+.problem-example-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+
+.problem-example-quote {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--near-black);
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.problem-example-context {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ── SOLUTION SECTION ── */
+.solution-statement {
+  background: var(--purple-pale);
+  border-radius: 8px;
+  padding: 32px 36px;
+  margin: 40px 0;
+  max-width: 800px;
+}
+
+.solution-statement p {
+  font-size: 18px;
+  color: var(--near-black);
+  line-height: 1.7;
+}
+
+.solution-statement strong {
+  color: var(--purple);
+  font-weight: 600;
+}
+
+/* ── HOW IT WORKS ── */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 48px;
+}
+
+.step-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  padding: 28px 24px;
+  transition: var(--transition);
+}
+
+.step-card:hover {
+  border-color: var(--purple);
+  box-shadow: 0 4px 16px rgba(99, 44, 166, 0.08);
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background: var(--purple);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.step-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.step-body {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.65;
+}
+
+/* ── FREE REPORTS ── */
+.reports-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.report-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.report-card:hover {
+  border-color: var(--purple);
+  box-shadow: 0 8px 24px rgba(99, 44, 166, 0.12);
+  transform: translateY(-2px);
+}
+
+.report-thumb {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: var(--off-white);
+}
+
+.report-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.report-card-body {
+  padding: 24px;
+}
+
+.report-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.report-desc {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.reports-launch {
+  text-align: center;
+  margin-top: 36px;
+  padding: 24px;
+  background: var(--purple-pale);
+  border-radius: 8px;
+}
+
+.reports-launch-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--purple);
+  letter-spacing: 0.02em;
+}
+
+/* ── SEE IT ON YOUR NUMBERS ── */
+.see-it-section {
+  background: var(--purple);
+  color: var(--white);
+  padding: 52px 40px;
+  text-align: center;
+}
+
+.see-it-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.see-it-section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.see-it-section p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.see-it-section .btn-primary {
+  background: var(--white);
+  color: var(--purple);
+  border-color: var(--white);
+}
+
+.see-it-section .btn-primary:hover {
+  background: var(--off-white);
+  border-color: var(--off-white);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--near-black);
+  padding: 48px 40px 28px;
+}
+
+.footer-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-wordmark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+
+.footer-col h4 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 9px;
+  transition: var(--transition);
+}
+
+.footer-col a:hover { color: var(--white); }
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 24px auto 0;
+  text-align: center;
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { gap: 20px; }
+  .section { padding: 56px 20px; }
+  .hero { padding: 64px 20px; }
+  .hero h1 { font-size: 40px; }
+  .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+  .steps-grid { grid-template-columns: 1fr; gap: 20px; }
+  .reports-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero-ctas { flex-direction: column; width: 100%; }
+  .hero-ctas .btn-primary,
+  .hero-ctas .btn-secondary { width: 100%; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .nav-link { display: none; }
+  .nav-link:last-child { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+  SignalRadar is now available to select partners —
+  <a href="https://signalradar.ai/contact.html">Request early adopter access</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="https://signalradar.ai" class="wordmark">
+    <span class="signal">Signal</span><span class="radar">Radar</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#how-it-works">How it works</a>
+    <a class="nav-link" href="#free-reports">Free Reports</a>
+    <a class="nav-link" href="https://signalradar.ai/blog.html">Blog</a>
+    <a class="btn-primary nav-link" href="https://signalradar.ai/contact.html">Talk to us</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">External Intelligence for Anticipatory Planning</span>
+    <h1>Connect external signals to internal assumptions <em>before missing the quarter forces the conversation.</em></h1>
+    <p class="hero-sub">
+      Every planning meeting should start from shared intelligence about what's changing in the world—not an investigation into how the forecast missed.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="https://signalradar.ai/contact.html">Schedule a conversation</a>
+      <a class="btn-secondary" href="#free-reports">See weekly intelligence reports</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     THE PROBLEM
+══════════════════════════════════════════════ -->
+<div class="bg-white">
+<div class="section">
+  
+  <div class="problem-grid">
+    <div>
+      <span class="eyebrow">The familiar pattern</span>
+      <h2 class="section-title">"We didn't see it coming" is no longer acceptable.</h2>
+      <p class="section-body">
+        Your plan was built on assumptions. Some of them changed this week. 
+        The signals existed—in commodity markets, customer earnings, regulatory filings. 
+        They pointed to the impact weeks before it showed up in your numbers.
+      </p>
+      
+      <div class="problem-example">
+        <div class="problem-example-label">Every quarter, somewhere</div>
+        <div class="problem-example-quote">"The supplier cost increase didn't appear in the P&L without warning."</div>
+        <div class="problem-example-context">
+          The supplier's cost pressures were building in commodity markets and trade data for weeks before the invoice price changed. The signals were there. They just weren't connected to your planning assumptions until after the fact.
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <span class="eyebrow">The signal-to-planning gap</span>
+      <p class="section-body" style="margin-bottom: 24px;">
+        Traditional planning infrastructure looks in the wrong direction. Your dashboards show what already happened inside your organization. Your forecasts are built from internal data that updates only <em>after</em> external conditions have shifted.
+      </p>
+      <p class="section-body" style="margin-bottom: 24px;">
+        The connection between external signals and internal assumptions—the bridge that makes early detection possible—typically doesn't exist until someone manually builds it. And by then, it's reactive rather than anticipatory.
+      </p>
+      <p class="section-body">
+        <strong>The question isn't whether you could see the signals. It's whether you will.</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="solution-statement">
+    <p>
+      <strong>We work with CFOs and FP&A teams</strong> to build the signal-to-planning connection systematically—connecting external movements to the specific variables you actually monitor, flagged when they cross the threshold into material relevance for your business.
+    </p>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════════════ -->
+<div class="bg-offwhite" id="how-it-works">
+<div class="section">
+
+  <span class="eyebrow">How it works</span>
+  <h2 class="section-title">Detection, connection, and intelligence—delivered early enough to matter.</h2>
+  <p class="section-body">
+    SignalRadar doesn't replace your planning tools. It provides the external intelligence layer 
+    that surfaces the signals your plan depends on before your internal metrics catch up to them.
+  </p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <div class="step-title">Detect external movements</div>
+      <div class="step-body">
+        Continuous monitoring of commodity markets, regulatory filings, customer earnings, 
+        supply chain signals, and monetary conditions. When external pressures build, 
+        you see it before it appears in your P&L.
+      </div>
+    </div>
+    
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <div class="step-title">Connect to your assumptions</div>
+      <div class="step-body">
+        External signals are mapped to the specific planning variables you monitor—not generic 
+        industry sentiment, but direct connections to your fuel costs, input prices, customer 
+        demand assumptions, and margin forecasts.
+      </div>
+    </div>
+    
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <div class="step-title">Surface before the quarter confirms</div>
+      <div class="step-body">
+        Intelligence arrives weekly, flagging when external movements cross your materiality 
+        thresholds. Planning meetings start from "here's what's changing" instead of 
+        "let's figure out what happened."
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     FREE INDUSTRY REPORTS
+══════════════════════════════════════════════ -->
+<div class="bg-white" id="free-reports">
+<div class="section">
+
+  <div class="reports-intro">
+    <div>
+      <span class="eyebrow">See SignalRadar in action</span>
+      <h2 class="section-title">Free weekly intelligence reports</h2>
+    </div>
+  </div>
+
+  <p class="section-body" style="margin-bottom: 40px;">
+    Each week, SignalRadar publishes free external intelligence across key commodity 
+    and cost categories. This is what the platform can do for your business—applied 
+    to the specific metrics that actually move your plan.
+  </p>
+
+  <div class="reports-grid">
+    
+    <!-- Energy Costs -->
+    <div class="report-card">
+      <div class="report-thumb">
+        <img src="images/energy-report-preview.jpg" alt="Energy Costs Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Energy Costs</div>
+        <div class="report-desc">
+          Crude oil, natural gas, and refined products impact on your operational costs
+        </div>
+      </div>
+    </div>
+
+    <!-- Industrial Metals -->
+    <div class="report-card">
+      <div class="report-thumb">
+        <img src="images/metals-report-preview.jpg" alt="Industrial Metals Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Industrial Metals</div>
+        <div class="report-desc">
+          Steel, copper, and aluminum price movements affecting your margin assumptions
+        </div>
+      </div>
+    </div>
+
+    <!-- Agricultural Commodities -->
+    <div class="report-card">
+      <div class="report-thumb">
+        <img src="images/agricultural-report-preview.jpg" alt="Agricultural Commodities Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Agricultural Commodities</div>
+        <div class="report-desc">
+          Corn, wheat, cocoa, and crop price signals driving your input costs
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="reports-launch">
+    <div class="reports-launch-text">Free weekly intelligence reports launching June 2026</div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SEE IT ON YOUR NUMBERS
+══════════════════════════════════════════════ -->
+<div class="see-it-section">
+  <div class="see-it-inner">
+    <h2>See it on your numbers.</h2>
+    <p>
+      The free reports show the concept. The real value is when we build this for your business—connected to your specific planning assumptions, your materiality thresholds, and the variables that actually move your forecast.
+    </p>
+    <a class="btn-primary" href="https://signalradar.ai/contact.html">Let's build one for you</a>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-wordmark">
+        <span class="signal">Signal</span><span class="radar" style="color: var(--purple-mid);">Radar</span>
+      </div>
+      <p class="footer-tagline">
+        External intelligence for anticipatory planning
+      </p>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#free-reports">Free Reports</a>
+      <a href="https://signalradar.ai/contact.html">Early Adopters</a>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="https://signalradar.ai/blog.html">Blog</a>
+      <a href="https://signalradar.ai/about.html">About</a>
+      <a href="https://signalradar.ai/contact.html">Contact</a>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p class="footer-copy">
+      © 2026 SignalRadar. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
