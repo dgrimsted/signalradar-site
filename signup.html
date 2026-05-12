@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sign up for free weekly intelligence reports from SignalRadar. Your first report arrives next week.">
+<title>Sign Up for Free Reports — SignalRadar</title>
+<style>
+:root {
+  --purple:      #632ca6;
+  --purple-mid:  #9b6fd4;
+  --purple-pale: #f0eaf8;
+  --white:       #ffffff;
+  --off-white:   #f5f5f5;
+  --near-black:  #222222;
+  --gray:        #666666;
+  --light-gray:  #e0e0e0;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --radius: 5px;
+  --transition: all 0.2s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  color: var(--near-black);
+  background: var(--off-white);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  padding: 0 40px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.wordmark .signal { color: var(--near-black); }
+.wordmark .radar  { color: var(--purple); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray);
+  letter-spacing: 0.03em;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.nav-link:hover { color: var(--purple); }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block;
+  background: var(--purple);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 11px 24px;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  border: 2px solid var(--purple);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--purple-mid);
+  border-color: var(--purple-mid);
+}
+
+.btn-submit {
+  background: var(--purple);
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 14px 32px;
+  border-radius: var(--radius);
+  border: 2px solid var(--purple);
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.btn-submit:hover {
+  background: var(--purple-mid);
+  border-color: var(--purple-mid);
+}
+
+/* ── SIGNUP CONTAINER ── */
+.signup-container {
+  max-width: 540px;
+  margin: 80px auto 80px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.signup-header {
+  background: linear-gradient(135deg, var(--purple-pale) 0%, var(--white) 100%);
+  padding: 48px 40px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.signup-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--near-black);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.signup-header p {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.signup-body {
+  padding: 40px;
+}
+
+/* ── FORM ── */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--near-black);
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-family: var(--font);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  transition: var(--transition);
+  background: var(--white);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px var(--purple-pale);
+}
+
+.form-note {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--near-black);
+  cursor: pointer;
+  padding: 10px 12px;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+
+.checkbox-label:hover {
+  border-color: var(--purple);
+  background: var(--purple-pale);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--purple);
+}
+
+.checkbox-label span {
+  font-weight: 500;
+}
+
+/* ── CONFIRMATION ── */
+.confirmation {
+  display: none;
+  text-align: center;
+  padding: 40px;
+}
+
+.confirmation.active {
+  display: block;
+}
+
+.confirmation-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--purple);
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: var(--white);
+}
+
+.confirmation h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 16px;
+}
+
+.confirmation p {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.confirmation-mosaic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 32px 0;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mosaic-tile {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--light-gray);
+}
+
+.mosaic-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.confirmation-back {
+  margin-top: 32px;
+}
+
+.confirmation-back a {
+  color: var(--purple);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.confirmation-back a:hover {
+  color: var(--purple-mid);
+  text-decoration: underline;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .signup-container {
+    margin: 40px 20px;
+  }
+  .signup-header {
+    padding: 36px 24px 28px;
+  }
+  .signup-header h1 {
+    font-size: 26px;
+  }
+  .signup-body {
+    padding: 32px 24px;
+  }
+  .confirmation {
+    padding: 32px 24px;
+  }
+  .confirmation-mosaic {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://signalradar.ai" class="wordmark">
+    <span class="signal">Signal</span><span class="radar">Radar</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="https://signalradar.ai#how-it-works">How it works</a>
+    <a class="nav-link" href="https://signalradar.ai/resources.html">Resources</a>
+    <a class="nav-link" href="https://signalradar.ai/blog.html">Blog</a>
+    <a class="btn-primary nav-link" href="https://signalradar.ai/contact.html">Talk to us</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     SIGNUP FORM
+══════════════════════════════════════════════ -->
+<div class="signup-container">
+  
+  <!-- FORM STATE -->
+  <div id="form-state">
+    <div class="signup-header">
+      <h1>Sign up for free weekly intelligence</h1>
+      <p>Get external intelligence reports delivered to your inbox every week.</p>
+    </div>
+
+    <div class="signup-body">
+      <form id="signup-form">
+        
+        <div class="form-group">
+          <label class="form-label" for="firstName">First Name</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            name="firstName" 
+            class="form-input" 
+            required
+            placeholder="Your first name"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            required
+            placeholder="you@company.com"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Which reports interest you?</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="reports" value="Energy">
+              <span>Energy</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="reports" value="Industrial Metals">
+              <span>Industrial Metals</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="reports" value="Agriculture">
+              <span>Agriculture</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Sign me up</button>
+
+        <p class="form-note">
+          We'll send you a confirmation email. Your first report will arrive next week. 
+          You can unsubscribe at any time.
+        </p>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION STATE -->
+  <div id="confirmation-state" class="confirmation">
+    <div class="confirmation-icon">✓</div>
+    <h2>You're all set!</h2>
+    <p>
+      Thanks for signing up. Your first free report will arrive next week.
+    </p>
+
+    <div class="confirmation-mosaic">
+      <div class="mosaic-tile">
+        <img src="images/energy-report-preview.jpg" alt="Energy Report">
+      </div>
+      <div class="mosaic-tile">
+        <img src="images/metals-report-preview.jpg" alt="Metals Report">
+      </div>
+      <div class="mosaic-tile">
+        <img src="images/agricultural-report-preview.jpg" alt="Agricultural Report">
+      </div>
+    </div>
+
+    <p style="font-size: 14px; color: var(--gray);">
+      Watch your inbox for a confirmation email from SignalRadar.
+    </p>
+
+    <div class="confirmation-back">
+      <a href="https://signalradar.ai">← Back to homepage</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Handle form submission
+document.getElementById('signup-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Get form data
+  const firstName = document.getElementById('firstName').value;
+  const email = document.getElementById('email').value;
+  
+  // Get selected reports
+  const checkboxes = document.querySelectorAll('input[name="reports"]:checked');
+  const selectedReports = Array.from(checkboxes).map(cb => cb.value);
+  
+  // Validate at least one report selected
+  if (selectedReports.length === 0) {
+    alert('Please select at least one report.');
+    return;
+  }
+  
+  // TODO: Send to your email service provider (Mailchimp, ConvertKit, etc.)
+  // Data structure: { firstName, email, reports: ['Energy', 'Industrial Metals'] }
+  console.log('Signup:', { 
+    firstName, 
+    email, 
+    reports: selectedReports 
+  });
+  
+  // Show confirmation
+  document.getElementById('form-state').style.display = 'none';
+  document.getElementById('confirmation-state').classList.add('active');
+  
+  // Scroll to top
+  window.scrollTo(0, 0);
+});
+</script>
+
+</body>
+</html>
