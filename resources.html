@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free weekly intelligence reports, variable reference guides, and insights on external intelligence for anticipatory planning.">
+<title>Resources — SignalRadar</title>
+<style>
+:root {
+  --purple:      #632ca6;
+  --purple-mid:  #9b6fd4;
+  --purple-pale: #f0eaf8;
+  --white:       #ffffff;
+  --off-white:   #f5f5f5;
+  --near-black:  #222222;
+  --gray:        #666666;
+  --light-gray:  #e0e0e0;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --radius: 5px;
+  --transition: all 0.2s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  color: var(--near-black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  padding: 0 40px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.wordmark .signal { color: var(--near-black); }
+.wordmark .radar  { color: var(--purple); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray);
+  letter-spacing: 0.03em;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.nav-link:hover { color: var(--purple); }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block;
+  background: var(--purple);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 11px 24px;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  border: 2px solid var(--purple);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--purple-mid);
+  border-color: var(--purple-mid);
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--purple);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 9px 22px;
+  border: 2px solid var(--purple);
+  border-radius: var(--radius);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background: var(--purple-pale);
+}
+
+/* ── LAYOUT ── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 52px 40px;
+}
+
+.bg-white { background: var(--white); }
+.bg-offwhite { background: var(--off-white); }
+
+/* ── TYPOGRAPHY ── */
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--near-black);
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.section-body {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--purple-pale) 0%, var(--white) 100%);
+  padding: 76px 40px;
+  text-align: center;
+}
+
+.hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--near-black);
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--gray);
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ── FREE REPORTS SECTION ── */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.report-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.report-card:hover {
+  border-color: var(--purple);
+  box-shadow: 0 8px 24px rgba(99, 44, 166, 0.12);
+  transform: translateY(-2px);
+}
+
+.report-thumb {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: var(--off-white);
+}
+
+.report-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.report-card-body {
+  padding: 24px;
+}
+
+.report-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.report-desc {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.report-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.report-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.report-link:hover {
+  color: var(--purple-mid);
+  text-decoration: underline;
+}
+
+.launch-badge {
+  display: inline-block;
+  background: var(--purple-pale);
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* ── BLOG POSTS SECTION ── */
+.blog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.blog-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  padding: 28px;
+  transition: var(--transition);
+}
+
+.blog-card:hover {
+  border-color: var(--purple);
+  box-shadow: 0 4px 16px rgba(99, 44, 166, 0.08);
+}
+
+.blog-category {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+
+.blog-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.blog-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.blog-title a:hover {
+  color: var(--purple);
+}
+
+.blog-excerpt {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.blog-date {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.blog-more {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--purple);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.blog-more:hover {
+  color: var(--purple-mid);
+  text-decoration: underline;
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+  text-align: center;
+  padding: 64px 40px;
+  background: var(--off-white);
+}
+
+.cta-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.cta-section p {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--near-black);
+  padding: 48px 40px 28px;
+}
+
+.footer-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-wordmark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+
+.footer-col h4 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 9px;
+  transition: var(--transition);
+}
+
+.footer-col a:hover { color: var(--white); }
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 24px auto 0;
+  text-align: center;
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { gap: 20px; }
+  .section { padding: 48px 20px; }
+  .hero { padding: 64px 20px; }
+  .hero h1 { font-size: 36px; }
+  .reports-grid { grid-template-columns: 1fr; gap: 24px; }
+  .blog-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .cta-buttons { flex-direction: column; width: 100%; }
+  .cta-buttons .btn-primary,
+  .cta-buttons .btn-secondary { width: 100%; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .nav-link { display: none; }
+  .nav-link:last-child { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://signalradar.ai" class="wordmark">
+    <span class="signal">Signal</span><span class="radar">Radar</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="https://signalradar.ai#how-it-works">How it works</a>
+    <a class="nav-link" href="https://signalradar.ai#free-reports">Free Reports</a>
+    <a class="nav-link" href="https://signalradar.ai/blog.html">Blog</a>
+    <a class="btn-primary nav-link" href="https://signalradar.ai/contact.html">Talk to us</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Resources</span>
+    <h1>Free weekly intelligence, variable guides, and insights</h1>
+    <p class="hero-sub">
+      Everything you need to understand how external signals connect to your planning assumptions.
+    </p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     FREE REPORTS
+══════════════════════════════════════════════ -->
+<div class="bg-white">
+<div class="section">
+
+  <span class="eyebrow">Free Weekly Intelligence</span>
+  <h2 class="section-title">Industry intelligence reports</h2>
+  <p class="section-body">
+    Each week, SignalRadar publishes free external intelligence across key commodity and cost categories. 
+    See what the platform can do for your business—applied to the specific metrics that actually move your plan.
+  </p>
+
+  <div class="reports-grid">
+    
+    <!-- Energy Costs -->
+    <div class="report-card">
+      <div class="report-thumb">
+        <img src="images/energy-report-preview.jpg" alt="Energy Costs Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Energy Costs</div>
+        <div class="report-desc">
+          Crude oil, natural gas, and refined products impact on your operational costs.
+        </div>
+        <div class="report-meta">
+          <a href="SignalRadar_FAQ_Energy_v3.html" class="report-link">Variable Reference Guide →</a>
+          <span class="launch-badge">Launching June 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Industrial Metals -->
+    <div class="report-card">
+      <div class="report-thumb">
+        <img src="images/metals-report-preview.jpg" alt="Industrial Metals Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Industrial Metals</div>
+        <div class="report-desc">
+          Steel, copper, and aluminum price movements affecting your margin assumptions.
+        </div>
+        <div class="report-meta">
+          <a href="SignalRadar_FAQ_IndustrialMetals_v2.html" class="report-link">Variable Reference Guide →</a>
+          <span class="launch-badge">Launching June 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agricultural Commodities -->
+    <div class="report-card">
+      <div class="report-thumb">
+        <img src="images/agricultural-report-preview.jpg" alt="Agricultural Commodities Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Agricultural Commodities</div>
+        <div class="report-desc">
+          Corn, wheat, cocoa, and crop price signals driving your input costs.
+        </div>
+        <div class="report-meta">
+          <a href="SignalRadar_FAQ_Agriculture_v2.html" class="report-link">Variable Reference Guide →</a>
+          <span class="launch-badge">Launching June 2026</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     RECENT BLOG POSTS
+══════════════════════════════════════════════ -->
+<div class="bg-offwhite">
+<div class="section">
+
+  <span class="eyebrow">Latest Insights</span>
+  <h2 class="section-title">Recent from the blog</h2>
+
+  <div class="blog-grid">
+    
+    <!-- Post 5 -->
+    <div class="blog-card">
+      <div class="blog-category">External Intelligence</div>
+      <h3 class="blog-title">
+        <a href="https://signalradar.ai/blog/the-signal-to-planning-connection.html">The Signal-to-Planning Connection</a>
+      </h3>
+      <p class="blog-excerpt">
+        Most organizations treat external intelligence and internal planning as separate functions. 
+        The result: signals arrive too late, assumptions drift unchecked, and the quarter miss 
+        starts weeks before anyone notices.
+      </p>
+      <span class="blog-date">April 24, 2026</span>
+      <span style="margin: 0 8px; color: var(--light-gray);">|</span>
+      <a href="https://signalradar.ai/blog/the-signal-to-planning-connection.html" class="blog-more">Read more →</a>
+    </div>
+
+    <!-- Post 4 -->
+    <div class="blog-card">
+      <div class="blog-category">For FP&A Teams</div>
+      <h3 class="blog-title">
+        <a href="https://signalradar.ai/blog/the-most-expensive-meeting-in-finance.html">The Most Expensive Meeting in Finance</a>
+      </h3>
+      <p class="blog-excerpt">
+        The most expensive meeting in finance isn't the one where executives decide strategy. 
+        It's the one where they discover the plan was already broken—and no one knew until the 
+        numbers came in.
+      </p>
+      <span class="blog-date">April 3, 2026</span>
+      <span style="margin: 0 8px; color: var(--light-gray);">|</span>
+      <a href="https://signalradar.ai/blog/the-most-expensive-meeting-in-finance.html" class="blog-more">Read more →</a>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     CTA SECTION
+══════════════════════════════════════════════ -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to get started?</h2>
+    <p>
+      Sign up for free weekly intelligence reports, or let's build a custom intelligence layer 
+      connected to the specific metrics that actually move your plan.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn-primary" href="https://signalradar.ai/signup.html">Sign up for reports</a>
+      <a class="btn-secondary" href="https://signalradar.ai/contact.html">Let's build one for you</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-wordmark">
+        <span class="signal">Signal</span><span class="radar" style="color: var(--purple-mid);">Radar</span>
+      </div>
+      <p class="footer-tagline">
+        External intelligence for anticipatory planning
+      </p>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="https://signalradar.ai#how-it-works">How It Works</a>
+      <a href="https://signalradar.ai#free-reports">Free Reports</a>
+      <a href="https://signalradar.ai/resources.html">Resources</a>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="https://signalradar.ai/blog.html">Blog</a>
+      <a href="https://signalradar.ai/about.html">About</a>
+      <a href="https://signalradar.ai/contact.html">Contact</a>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p class="footer-copy">
+      © 2026 SignalRadar. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
