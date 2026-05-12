@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalRadar — Energy Cost Intelligence · Variable Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --purple:       #632ca6;
+    --purple-mid:   #7d3fcb;
+    --purple-light: #f0eaf8;
+    --purple-pale:  #f8f4fd;
+    --near-black:   #1a1a2e;
+    --gray-dark:    #444455;
+    --gray-mid:     #777788;
+    --gray-light:   #e8e4f0;
+    --gray-pale:    #f5f4f8;
+    --amber:        #c8960a;
+    --amber-bg:     #fffaee;
+    --green:        #1a7f5a;
+    --green-bg:     #edf7f2;
+    --red:          #c0392b;
+    --red-bg:       #fdf0ee;
+    --energy-accent: #e05c1a;
+    --energy-bg:    #fff7f3;
+    --energy-border: #f5c4a8;
+    --white:        #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    background: var(--gray-pale);
+    color: var(--near-black);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── STANDALONE PAGE HEADER (remove when embedding in a landing page) ── */
+  .page-header {
+    background: var(--near-black);
+    color: white;
+    padding: 40px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,44,166,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,92,26,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .logo-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: white;
+    letter-spacing: 0.02em;
+  }
+  .page-header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--energy-accent);
+    margin-bottom: 8px;
+  }
+  .page-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .page-header-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    max-width: 620px;
+    line-height: 1.65;
+  }
+
+  /* ── EMBED WRAPPER (this is the component boundary) ── */
+  /* When embedding in a landing page, start from .faq-section down */
+  .faq-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+
+  /* ── SECTION INTRO ── */
+  .section-intro {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-left: 4px solid var(--energy-accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+  }
+  .section-intro-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--energy-accent);
+    margin-bottom: 8px;
+  }
+  .section-intro-text {
+    font-size: 14px;
+    color: var(--gray-dark);
+    line-height: 1.7;
+  }
+  .section-intro-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+
+  /* ── READING GUIDE ── */
+  .reading-guide {
+    background: var(--purple-light);
+    border: 1px solid rgba(99,44,166,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .reading-guide-icon {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .reading-guide-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+  .reading-guide-text {
+    font-size: 13px;
+    color: var(--gray-dark);
+    line-height: 1.65;
+  }
+
+  /* ── VARIABLE CARDS ── */
+  .variable-card {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+  .variable-card:hover {
+    box-shadow: 0 4px 20px rgba(99,44,166,0.08);
+  }
+
+  .var-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--gray-pale);
+  }
+  .var-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--near-black);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .var-also-known {
+    font-size: 12px;
+    color: var(--gray-mid);
+    font-style: italic;
+  }
+  .var-meta-chips {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .chip-ticker {
+    background: var(--near-black);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .chip-freq {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+  .chip-freq.weekly {
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+  .chip-source {
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    font-size: 10px;
+  }
+
+  .var-body {
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+  }
+
+  @media (max-width: 640px) {
+    .var-body { grid-template-columns: 1fr; }
+    .var-header { grid-template-columns: 1fr; }
+    .var-meta-chips { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    .faq-section { padding: 24px 16px 48px; }
+    .page-header { padding: 28px 24px; }
+  }
+
+  .var-field {}
+  .var-field-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 5px;
+  }
+  .var-field-text {
+    font-size: 13.5px;
+    color: var(--gray-dark);
+    line-height: 1.6;
+  }
+  .var-field-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+  .var-field.full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* Planning impact field gets visual emphasis */
+  .var-field.planning-impact {
+    grid-column: 1 / -1;
+    background: var(--energy-bg);
+    border: 1px solid var(--energy-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .var-field.planning-impact .var-field-label {
+    color: var(--energy-accent);
+  }
+  .var-field.planning-impact .var-field-text {
+    color: var(--near-black);
+    font-size: 13.5px;
+  }
+
+  /* ── SOURCES REFERENCE ── */
+  .sources-block {
+    margin-top: 36px;
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .sources-header {
+    background: var(--gray-pale);
+    border-bottom: 1px solid var(--gray-light);
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+  }
+  .sources-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .source-item {}
+  .source-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--near-black);
+    margin-bottom: 2px;
+  }
+  .source-item-desc {
+    font-size: 12px;
+    color: var(--gray-mid);
+    line-height: 1.5;
+  }
+  .source-item-url {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--purple);
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* ── DOC NOTE (embed instructions) ── */
+  .embed-note {
+    background: #fffaee;
+    border: 1px dashed #e0c060;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 12px;
+    color: #7a5c00;
+    line-height: 1.55;
+  }
+  .embed-note strong { font-weight: 600; }
+
+  /* ── CATEGORY BADGE ── */
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--energy-bg);
+    border: 1px solid var(--energy-border);
+    border-radius: 6px;
+    padding: 6px 14px 6px 10px;
+    margin-bottom: 28px;
+  }
+  .category-badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--energy-accent);
+    flex-shrink: 0;
+  }
+  .category-badge-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--energy-accent);
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin: 32px 0;
+  }
+
+  /* ── FOOTER NOTE ── */
+  .faq-footer {
+    margin-top: 40px;
+    font-size: 11.5px;
+    color: var(--gray-mid);
+    line-height: 1.6;
+    border-top: 1px solid var(--gray-light);
+    padding-top: 20px;
+  }
+  .faq-footer strong { color: var(--gray-dark); }
+
+  @media print {
+    body { background: white; }
+    .embed-note { display: none; }
+    .page-header { padding: 24px 32px; }
+    .variable-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- STANDALONE PAGE HEADER                              -->
+<!-- Remove this section when embedding in a page       -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="logo-row">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5"/>
+        <path d="M5 12 L8 8 L11 10 L15 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">SignalRadar</span>
+  </div>
+  <div class="page-header-eyebrow">Category Reference · Energy</div>
+  <div class="page-header-title">Energy Cost Intelligence<br>Variable Reference Guide</div>
+  <div class="page-header-desc">What every variable in the Energy report measures, where the data comes from, how often it updates, and what a move in each signal means for your business planning.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- EMBED START — .faq-section is the component root   -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="faq-section">
+
+  <!-- Embed note (internal working doc only — remove in production) -->
+
+  <div class="category-badge">
+    <div class="category-badge-dot"></div>
+    <span class="category-badge-text">Energy Cost Intelligence</span>
+  </div>
+
+  <!-- SECTION INTRO -->
+  <div class="section-intro">
+    <div class="section-intro-label">About This Report Category</div>
+    <div class="section-intro-text">
+      Energy is the cost that runs through everything. It heats your facilities, moves your freight, powers your processes, and feeds into the price of nearly every input you buy. When energy markets move, the effect doesn't stop at the utility bill — it travels through logistics costs, raw material costs, and ultimately into the margin assumptions baked into your operating plan.<br><br>
+      The SignalRadar <strong>Energy Cost Intelligence</strong> report tracks six publicly available energy market variables across crude oil, natural gas, gasoline, and diesel. Together they give you early visibility into where energy-driven cost pressure is building — before it shows up in your invoices or your re-forecast conversation.
+    </div>
+  </div>
+
+  <!-- READING GUIDE -->
+  <div class="reading-guide">
+    <div class="reading-guide-icon">📖</div>
+    <div>
+      <div class="reading-guide-label">How to read this guide</div>
+      <div class="reading-guide-text">Each variable below is described in plain terms — no commodities experience required. For each one you'll find: what it measures, who publishes the data, how often it updates, and most importantly, <strong>what a meaningful move in that variable likely means for planning assumptions based on cost structures and other impacted metrics</strong>. Use this as a reference when reading your weekly Energy report and want to understand the "so what" behind a signal.</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 1: WTI CRUDE OIL ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">WTI Crude Oil</div>
+        <div class="var-also-known">Also known as: West Texas Intermediate, US Crude, Light Sweet Crude</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">WTI is the primary benchmark price for crude oil produced in the United States. It represents the cost of a barrel of unrefined oil before it has been processed into gasoline, diesel, jet fuel, plastics, or any of the hundreds of petroleum-derived products. It is priced and traded on the New York Mercantile Exchange (NYMEX), and its price moves daily based on global supply, demand, geopolitical events, and inventory data.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">WTI is a market-determined price set through continuous futures trading on the <strong>New York Mercantile Exchange (NYMEX)</strong>, part of the CME Group. It is not published by a government agency; it reflects what buyers and sellers agree to pay for crude oil to be delivered at Cushing, Oklahoma, which is the main US oil storage and pipeline hub.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Prices update continuously during market trading hours (Sunday–Friday, approximately 6pm–5pm ET). The SignalRadar platform captures the daily settlement price.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Typical price range</div>
+        <div class="var-field-text">Historically ranging from under $20 to over $130 per barrel. A "normal" operating range in recent years has been roughly $60–$95/bbl. Moves of $5–$10 or more in a short period are notable; moves above $100 typically signal significant supply disruption or geopolitical stress.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">WTI is the upstream root signal for a wide range of cost lines. <strong>When WTI rises:</strong> expect fuel surcharges on inbound and outbound freight to increase within weeks; petrochemical and resin input costs will follow with a lag of weeks to months; energy-intensive manufacturing processes and utilities become more expensive to run. <strong>When WTI falls:</strong> freight cost relief and raw material easing typically follow, though suppliers often move prices down more slowly than they rose. For planning purposes, a sustained move of 10%+ in WTI warrants a review of freight assumptions, energy cost lines, and any petrochemical-derived inputs in your COGS.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 2: BRENT CRUDE OIL ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Brent Crude Oil</div>
+        <div class="var-also-known">Also known as: Brent Blend, North Sea Crude, International Crude Benchmark</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Brent is the global benchmark for crude oil pricing, originating from North Sea oil fields off the coasts of the UK and Norway. While WTI reflects North American supply conditions, Brent is the price reference used for approximately two-thirds of all internationally traded crude oil. Most oil-producing nations (including OPEC members) price their exports against Brent.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Brent futures are traded on the <strong>Intercontinental Exchange (ICE)</strong> in London. Like WTI, it is a market-determined price, not a government statistic. Data is widely available through financial data providers including Yahoo Finance.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">How it differs from WTI</div>
+        <div class="var-field-text">Brent typically trades at a slight premium to WTI (the "Brent-WTI spread"), reflecting shipping and logistics differences. When that spread widens, it often signals North American supply glut or global demand tightening. The two prices generally move together but diverge during geopolitical events or pipeline/logistics disruptions.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Continuous trading on ICE. Daily settlement price captured by SignalRadar.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Brent is the most direct signal for <strong>imported goods costs and global inflation transmission</strong>. If your supply chain sources materials, components, or finished goods from outside North America, Brent is the energy price your suppliers are paying, and it will show up in their pricing before it shows up in your contract discussions. A rising Brent-WTI spread can also signal tightening global supply conditions before they appear in US markets. For businesses with significant import exposure, Brent is the more relevant crude benchmark to watch.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 3: NATURAL GAS (HENRY HUB) ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Natural Gas — Henry Hub</div>
+        <div class="var-also-known">Also known as: Henry Hub Spot Price, NG Futures, NYMEX Natural Gas</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Henry Hub is the benchmark price for natural gas in the United States, named after a pipeline hub in Erath, Louisiana, where multiple interstate and intrastate pipelines converge. It is priced in dollars per million British Thermal Units (MMBtu). Natural gas is used as a heating fuel, an industrial process fuel (chemicals, fertilizers, glass, paper), and increasingly as a feedstock for electricity generation.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Natural gas futures are traded on the <strong>New York Mercantile Exchange (NYMEX)</strong>. The spot price at Henry Hub is also reported by the <strong>US Energy Information Administration (EIA)</strong>, a division of the Department of Energy, which publishes weekly natural gas storage and production data that significantly drives price moves.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily. Weekly EIA storage reports (released every Thursday morning) frequently cause notable price swings and are worth watching during periods of high price volatility.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Typical price range</div>
+        <div class="var-field-text">Historically ranging from under $2 to over $9 per MMBtu. It is one of the most volatile commodities in this report, capable of doubling or halving within a single season depending on weather, storage levels, and export demand.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Natural gas is a direct cost driver for <strong>utilities, process manufacturing, fertilizer economics, and facility operations</strong>. For companies running energy-intensive facilities (food processing, chemicals, glass, steel, paper, and others), a sustained rise in natural gas prices directly compresses operating margins. It also flows into electricity generation costs, meaning even non-manufacturing businesses see utility cost pressure when gas prices spike. In agriculture, natural gas is a critical input for nitrogen fertilizer production, so gas price moves ripple into crop input costs and food prices. For budget planning: a gas price that has risen significantly from the prior year's average warrants a line-item review of utility and process energy assumptions.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 4: RBOB GASOLINE ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">RBOB Gasoline</div>
+        <div class="var-also-known">Also known as: Reformulated Blendstock for Oxygenate Blending, Unleaded Gasoline Futures</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">RBOB is the futures contract for wholesale unleaded gasoline: the product that becomes pump gas after ethanol is blended in at the terminal. It is priced in dollars per gallon. While you won't see "RBOB" on a gas station sign, its price is the direct upstream driver of retail gasoline prices across the country. It tends to move ahead of pump prices by a few days to a couple of weeks.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">RBOB gasoline futures are traded on the <strong>New York Mercantile Exchange (NYMEX)</strong>. Retail gasoline price surveys are published weekly by the <strong>US Energy Information Administration (EIA)</strong> and provide a lagging confirmation of where wholesale prices have moved.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily during market hours. RBOB is also subject to seasonal "blend spec" changes (refineries switch between winter and summer formulations in spring and fall), which can cause temporary price spikes independent of crude oil moves.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Seasonal patterns</div>
+        <div class="var-field-text">Gasoline prices typically rise in late winter/spring as refineries switch to summer blends and demand picks up, then ease in fall. These seasonal patterns are largely predictable, making unexpected deviations from the seasonal norm especially informative.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">RBOB is a leading indicator of <strong>consumer disposable income pressure and transportation cost stress</strong>. When gasoline prices rise, household spending on fuel crowds out discretionary purchases, a signal relevant to any business serving consumers. For B2B businesses, rising gasoline feeds directly into fleet costs, field service costs, and sales team operating expenses. It also contributes to freight surcharge pressure alongside diesel. For planning purposes, watching RBOB alongside consumer sentiment data can give early warning of demand softening before it shows up in sales trends.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 5: HEATING OIL / ULSD DIESEL ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Heating Oil / ULSD Diesel Futures</div>
+        <div class="var-also-known">Also known as: Ultra-Low Sulfur Diesel, No. 2 Heating Oil, HO Futures</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">The NYMEX Heating Oil contract is used as the pricing proxy for Ultra-Low Sulfur Diesel (ULSD): the fuel that powers virtually all diesel trucks, trains, construction equipment, marine vessels, and many generators and heating systems. "Heating oil" and "diesel" are chemically nearly identical; they trade on the same futures contract. Priced in dollars per gallon, this is the single most important cost variable for logistics-intensive businesses.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Futures traded on the <strong>New York Mercantile Exchange (NYMEX)</strong>. Retail diesel prices are separately surveyed and published weekly by the <strong>US Energy Information Administration (EIA)</strong>, providing a real-world confirmation of where pump prices have moved for fleet and logistics operators.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily. Retail diesel price data from the EIA updates weekly (typically Monday releases for the prior week).</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Relationship to crude oil</div>
+        <div class="var-field-text">Diesel prices follow crude oil closely but with their own dynamics: refinery utilization rates, seasonal heating oil demand in the Northeast US, and export demand for distillates can cause diesel to diverge from crude. During periods of tight refinery capacity, diesel can spike significantly above what crude prices alone would suggest.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">This is the most direct fuel cost signal for <strong>freight surcharges, distribution costs, construction operations, and building heating budgets</strong>. Virtually every trucking and logistics rate includes a fuel surcharge indexed to diesel prices, meaning that when HO/diesel futures rise, freight costs follow within weeks regardless of whether your carrier contracts have been renegotiated. For companies with significant inbound or outbound freight spend, a 20%+ rise in diesel from your planning baseline can meaningfully erode assumed margins. It is also the dominant variable driving operating costs for construction, heavy equipment-dependent industries, and any business relying on diesel backup generation.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 6: US DIESEL RETAIL SALES PRICE ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">US Diesel Retail Sales Price</div>
+        <div class="var-also-known">Also known as: EIA Weekly Diesel Price, On-Highway Diesel Price, US Diesel Average</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq weekly">Weekly</span>
+        <span class="chip chip-source">FRED · EIA</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">This is the actual average retail price of diesel fuel at US gas stations and truck stops, as measured by a weekly survey. Unlike the HO=F futures contract (which is a forward-looking market price), this variable reflects what diesel is actually selling for right now at the pump: the number that directly drives freight surcharge calculations, fleet cost invoices, and transportation budget actuals. It is published as dollars per gallon.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Published every Monday by the <strong>US Energy Information Administration (EIA)</strong>, a division of the Department of Energy. The EIA surveys hundreds of fuel retailers nationwide to produce a national average and regional breakdowns. Data is available through the Federal Reserve Economic Data system (<strong>FRED</strong>) maintained by the St. Louis Federal Reserve.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text"><strong>Weekly</strong> — released every Monday for the prior week. This is the only weekly variable in the Energy category; all others are daily. The weekly cadence still provides timely planning signal, as diesel price changes propagate into freight costs with a similar one-to-two week lag.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">How it differs from HO=F</div>
+        <div class="var-field-text">HO=F (the futures contract) leads; this variable confirms. Futures traders are pricing expected future diesel costs; the retail price survey measures what's happening today at the pump. Together they give both forward visibility and current-actuals confirmation. During periods of rapid price change, watching both helps distinguish between a spike that has already hit the retail market versus one still working its way through the supply chain.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">This is the <strong>most direct proxy for freight surcharge and distribution cost actuals</strong>. Most carrier fuel surcharge tables are indexed to EIA's weekly on-highway diesel price, which is derived from this survey. When this number moves, freight invoices follow automatically, typically within one to two billing cycles. For any business with meaningful freight spend (inbound raw materials, outbound finished goods, or third-party logistics), this variable is the most operationally immediate cost signal in the entire Energy category. A sustained increase of $0.30/gallon or more from your planning baseline typically warrants a freight cost variance analysis.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SOURCES REFERENCE -->
+  <div class="sources-block">
+    <div class="sources-header">Data Sources Reference</div>
+    <div class="sources-body">
+      <div class="source-item">
+        <div class="source-item-name">New York Mercantile Exchange (NYMEX)</div>
+        <div class="source-item-desc">Part of CME Group. Primary exchange for WTI crude, natural gas, gasoline, and diesel futures traded in the US.</div>
+        <a class="source-item-url" href="https://www.cmegroup.com/markets/energy.html" target="_blank">cmegroup.com/markets/energy</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Intercontinental Exchange (ICE)</div>
+        <div class="source-item-desc">London-based exchange. Primary venue for Brent Crude Oil futures and the global crude benchmark.</div>
+        <a class="source-item-url" href="https://www.theice.com/products/219/Brent-Crude-Futures" target="_blank">theice.com</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">US Energy Information Administration (EIA)</div>
+        <div class="source-item-desc">Division of the US Dept. of Energy. Publishes weekly natural gas storage data and the weekly diesel retail price survey used by carrier surcharge tables.</div>
+        <a class="source-item-url" href="https://www.eia.gov" target="_blank">eia.gov</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Federal Reserve Economic Data (FRED)</div>
+        <div class="source-item-desc">Maintained by the St. Louis Fed. Hosts the GASDESW weekly diesel price series and thousands of other economic time-series used across SignalRadar's platform.</div>
+        <a class="source-item-url" href="https://fred.stlouisfed.org" target="_blank">fred.stlouisfed.org</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Yahoo Finance</div>
+        <div class="source-item-desc">Provides real-time and historical futures price data for all five exchange-traded energy contracts (CL=F, BZ=F, NG=F, RB=F, HO=F) used in this report.</div>
+        <a class="source-item-url" href="https://finance.yahoo.com" target="_blank">finance.yahoo.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER NOTE -->
+  <div class="faq-footer">
+    <strong>SignalRadar — Energy Cost Intelligence · Variable Reference</strong><br>
+    All variables in this report draw on publicly available, free data updated daily or weekly. SignalRadar's platform processes historical and current values to identify early-shift signals relative to defined planning baselines. The platform's analysis of individual variables does not constitute investment advice. Variable definitions and planning implications are provided for educational and planning context only. Last updated: April 2026.
+  </div>
+
+</div><!-- end .faq-section -->
+
+</body>
+</html>
