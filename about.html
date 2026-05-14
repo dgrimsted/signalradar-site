@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Meet the team behind SignalRadar. We're building external intelligence for executives who want to see what's coming before it forces the conversation.">
+<title>About Us — SignalRadar</title>
+<style>
+:root {
+  --purple:      #632ca6;
+  --purple-mid:  #9b6fd4;
+  --purple-pale: #f0eaf8;
+  --white:       #ffffff;
+  --off-white:   #f5f5f5;
+  --near-black:  #222222;
+  --gray:        #666666;
+  --light-gray:  #e0e0e0;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --radius: 5px;
+  --transition: all 0.2s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  color: var(--near-black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  padding: 0 40px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.wordmark .signal { color: var(--near-black); }
+.wordmark .radar  { color: var(--purple); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray);
+  letter-spacing: 0.03em;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.nav-link:hover { color: var(--purple); }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block;
+  background: var(--purple);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 11px 24px;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  border: 2px solid var(--purple);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--purple-mid);
+  border-color: var(--purple-mid);
+}
+
+/* ── LAYOUT ── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 52px 40px;
+}
+
+.bg-white { background: var(--white); }
+.bg-offwhite { background: var(--off-white); }
+
+/* ── TYPOGRAPHY ── */
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--near-black);
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.section-body {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--purple-pale) 0%, var(--white) 100%);
+  padding: 76px 40px;
+  text-align: center;
+}
+
+.hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--near-black);
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--gray);
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ── STORY SECTION ── */
+.story-text {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.story-text p {
+  font-size: 17px;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.story-text p.large {
+  font-size: 20px;
+  color: var(--near-black);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.story-text em {
+  font-style: italic;
+  color: var(--near-black);
+}
+
+.pullquote {
+  background: var(--purple-pale);
+  border-left: 4px solid var(--purple);
+  padding: 28px 32px;
+  margin: 36px 0;
+  border-radius: 6px;
+}
+
+.pullquote p {
+  font-size: 19px;
+  color: var(--near-black);
+  line-height: 1.6;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ── TEAM SECTION ── */
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  margin-top: 48px;
+}
+
+.team-member {
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.team-member:last-child {
+  border-bottom: none;
+}
+
+.team-bio h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 6px;
+}
+
+.team-role {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.team-bio p {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 16px;
+  max-width: 900px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--near-black);
+  padding: 48px 40px 28px;
+}
+
+.footer-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-wordmark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+
+.footer-col h4 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 9px;
+  transition: var(--transition);
+}
+
+.footer-col a:hover { color: var(--white); }
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 24px auto 0;
+  text-align: center;
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { gap: 20px; }
+  .section { padding: 48px 20px; }
+  .hero { padding: 64px 20px; }
+  .hero h1 { font-size: 36px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+@media (max-width: 600px) {
+  .nav-link { display: none; }
+  .nav-link:last-child { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://signalradar.ai" class="wordmark">
+    <span class="signal">Signal</span><span class="radar">Radar</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="https://signalradar.ai#how-it-works">How it works</a>
+    <a class="nav-link" href="https://signalradar.ai#free-reports">Free Reports</a>
+    <a class="nav-link" href="https://signalradar.ai/blog.html">Blog</a>
+    <a class="btn-primary nav-link" href="https://signalradar.ai/contact.html">Talk to us</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">About SignalRadar</span>
+    <h1>We're building what we've wanted to exist for decades.</h1>
+    <p class="hero-sub">
+      External intelligence that connects the signals to your plan—before the quarter miss forces the conversation.
+    </p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     OUR STORY
+══════════════════════════════════════════════ -->
+<div class="bg-white">
+<div class="section">
+
+  <span class="eyebrow">Our Story</span>
+  <h2 class="section-title">The pattern we kept seeing</h2>
+
+  <div class="story-text">
+    
+    <p>
+      Over our careers, we've each built systems that help executives see their businesses more clearly. Forecasting platforms. Analytics infrastructure. Decision support tools. We've worked with brilliant leaders at some of the world's most sophisticated companies.
+    </p>
+
+    <p>
+      These leaders made intelligent investments to allow them to see inside their operations with increasing precision. Every SKU. Every margin. Every trend in their own data. Yet when the real world shifted—a trade policy change, a commodity disruption, a competitive move—they were forced to guess at the impact.
+    </p>
+
+    <p>
+      Everyone reads the same news. But translating headlines into "what does this mean for my Q3?" remained more art than science. We kept watching executives spend their planning meetings listening to explanations and excuses about what happened instead of planning what to do next.
+    </p>
+
+    <div class="pullquote">
+      <p>The quarter miss had already started. The signals existed. They just weren't connected to the plan in time to matter.</p>
+    </div>
+
+    <p>
+      For years, the solution felt just out of reach. The technology wasn't quite there. The data wasn't accessible enough. Predictive models couldn't understand business context the way executives do.
+    </p>
+
+    <p>
+      Then something shifted. AI allows us to process millions of external signals and intelligently connect them to specific business models. Real-time data became ubiquitous. The pieces came together.
+    </p>
+
+    <p class="large">
+      That's when we realized: the problem we'd been circling individually for decades could finally be solved. Not by any one of us alone, but by bringing together everything we'd learned across analytics, forecasting, enterprise systems, and business intelligence.
+    </p>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     WHAT WE'RE BUILDING
+══════════════════════════════════════════════ -->
+<div class="bg-offwhite">
+<div class="section">
+
+  <span class="eyebrow">What we're building</span>
+  <h2 class="section-title">External intelligence for anticipatory planning</h2>
+
+  <div class="story-text">
+    
+    <p>
+      SignalRadar connects external movements to the specific variables you monitor—your raw material costs, your customer demand assumptions, your margin forecasts. Not generic industry sentiment. Direct connections to what actually moves your plan.
+    </p>
+
+    <p>
+      When external pressures build, you see it before it appears in your P&L. Intelligence arrives flagged when it crosses your materiality thresholds. Planning meetings start from "here's what's changing" instead of "let's figure out what happened."
+    </p>
+
+    <p class="large">
+      We're building this because we believe the future of business strategy shouldn't be about reacting faster to surprises—it should be about seeing them coming and having time to act while outcomes can still be influenced.
+    </p>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     TEAM
+══════════════════════════════════════════════ -->
+<div class="bg-white">
+<div class="section">
+
+  <span class="eyebrow">Meet the Team</span>
+  <h2 class="section-title">The people behind SignalRadar</h2>
+
+  <div class="team-grid">
+
+    <!-- Doug Grimsted -->
+    <div class="team-member">
+      <div class="team-bio">
+        <h3>Doug Grimsted</h3>
+        <div class="team-role">Chief Executive Officer</div>
+        <p>
+          Doug is an industry pioneer whose career has been marked by using data and analytics to revolutionize how businesses compete. From his early days at Micro Database Systems (MDBS), creators of the world's first client-server relational database, Doug has always been at the forefront of technological innovation.
+        </p>
+        <p>
+          In the 90s, he collaborated with a team to form an ANSI committee aimed at standardizing Xbase. As CEO of Geneer, he led development of software delivery analytics tools for many of Nielsen's data products.
+        </p>
+        <p>
+          At Aginity, Doug transformed business forecasting. Under his guidance, the team developed DemandView, a pioneering demand signal system used by Kroger for inventory forecasting and supplier collaboration. Aginity also introduced their Analytics Management Platform (AMP), sold globally by IBM and now deployed in enterprises like Kroger, Catalina Marketing, Kohl's, and Coca-Cola.
+        </p>
+        <p>
+          Doug's accolades include the KPMG Illinois High Tech Award, induction into the Chicago/NW Indiana Entrepreneurship Hall of Fame, and being a finalist for the E&Y Entrepreneur of the Year Award. He holds a degree in Industrial Management with a minor in Industrial Engineering and Finance from Purdue University.
+        </p>
+      </div>
+    </div>
+
+    <!-- Wayne Levy -->
+    <div class="team-member">
+      <div class="team-bio">
+        <h3>Wayne Levy</h3>
+        <div class="team-role">Strategic Advisor</div>
+        <p>
+          Wayne's career in big data and analytics extends back to the last century. At the University of Chicago, Wayne specialized in quantitative methods and Just In Time supply chains. He then moved to Needham Harper and Steers (later DDB Needham) where he developed media tracking, market allocation, and media optimization models.
+        </p>
+        <p>
+          Wayne co-founded Efficient Market Services (EMS), where he served as CTO and later CEO. EMS pioneered the first daily reporting system for sales, covering over 4,000 grocery stores across the US. Under his leadership, EMS saw its annual revenue from CPG customers reach $24 million.
+        </p>
+        <p>
+          Wayne's entrepreneurial spirit led him to co-found Market6, which became the hub for store, division, and chain sales information for Kroger and its 1,500 suppliers. As CTO and CEO at Market6, Wayne oversaw creation of daily updated forecasts and actuals for all 2,600+ Kroger stores, a system subsequently acquired by Kroger.
+        </p>
+        <p>
+          Beyond SignalRadar, Wayne advises Talinity, an AI-driven talent acquisition firm, and is working on a new grocery store concept aimed at serving underserved urban low-income markets.
+        </p>
+      </div>
+    </div>
+
+    <!-- Larry Burns -->
+    <div class="team-member">
+      <div class="team-bio">
+        <h3>Larry Burns</h3>
+        <div class="team-role">Chief Operating Officer</div>
+        <p>
+          Larry's expertise intersects Marketing Technology, Data Science, Human Behavior, and Practical Promotions. His hands-on experience with these disciplines started long before they became buzzwords.
+        </p>
+        <p>
+          As the long-serving CEO of pioneering digital marketing firm StartSampling, Inc., Larry led the company through substantial growth, earning a place on Inc. Magazine's fastest-growing companies list. His leadership contributed to creation of the first cross-retailer platform for online sample request activities, integrating major retailers including Walmart.
+        </p>
+        <p>
+          Prior to StartSampling, Larry served at Information Resources, Inc. (IRI), overseeing the InfoScan™ brand as head of the Product Management Group. Under his leadership, the brand experienced significant revenue growth, and he was instrumental in transitioning from a sample-based share tracking system to a census-based system in the United States.
+        </p>
+        <p>
+          Larry holds an undergraduate degree in Chemistry from Alfred University. His unique combination of scientific understanding and industry-specific knowledge makes him crucial to SignalRadar, where data-driven insights and practical application intersect.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-wordmark">
+        <span class="signal">Signal</span><span class="radar" style="color: var(--purple-mid);">Radar</span>
+      </div>
+      <p class="footer-tagline">
+        External intelligence for anticipatory planning
+      </p>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="https://signalradar.ai#how-it-works">How It Works</a>
+      <a href="https://signalradar.ai#free-reports">Free Reports</a>
+      <a href="https://signalradar.ai/resources.html">Resources</a>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="https://signalradar.ai/blog.html">Blog</a>
+      <a href="https://signalradar.ai/about.html">About</a>
+      <a href="https://signalradar.ai/contact.html">Contact</a>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p class="footer-copy">
+      © 2026 SignalRadar. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
