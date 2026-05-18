@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - SignalRadar.ai</title>
+    <meta name="description" content="Get in touch with the SignalRadar team. We'd love to hear from you.">
+    <link rel="stylesheet" href="css/styles.css?v=20260514">
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>SignalRadar is now available to select partners &mdash; <a href="contact.html">Request early adopter access</a></p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><span class="logo-signal">Signal</span><span class="logo-radar">Radar</span></a>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links">
+                <a href="index.html#about">About Us</a>
+                <a href="contact.html" class="active">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Info Cards Section -->
+    <section class="section section-white contact-info-section">
+        <div class="container">
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3>Launched</h3>
+                    <p>SignalRadar is accepting customers as of Q4 of 2025</p>
+                </div>
+                <div class="info-card">
+                    <h3>Contact Support</h3>
+                    <p>We are here to help.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Requests & Questions</h3>
+                    <p>SignalRadar: Put what's important to you 'On-The-Radar'</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="section contact-form-section">
+        <div class="container">
+            <div class="contact-form-wrapper">
+                <!-- Title and subtitle sit on gray background, no white panel -->
+                <div class="contact-title-area">
+                    <h2 class="contact-form-title">We'd love to hear from you – email us !!</h2>
+                    <p class="contact-form-subtitle">If you want more information about SignalRadar we'd love to hear from you.  In your message below please let us know how we can help or to set up a conversation to learn more, to ask us a question, or just make a comment.</p>
+                </div>
+
+                <!-- White panel starts here with form heading + form -->
+                <div class="contact-panel contact-panel-form">
+                    <h4 class="form-heading">To contact the SignalRadar team please complete the form</h4>
+
+                    <form class="contact-form" id="contactForm" onsubmit="return handleContactSubmit(event)">
+                        <div class="form-field-wrap">
+                            <input type="text" name="name" placeholder="Name" required>
+                        </div>
+
+                        <div class="form-field-wrap form-field-half">
+                            <input type="email" name="email" placeholder="Email Address" required>
+                        </div>
+
+                        <div class="form-field-wrap form-field-half">
+                            <input type="text" name="company" placeholder="Company Name">
+                        </div>
+
+                        <div class="form-field-wrap">
+                            <textarea name="message" placeholder="Please tell us how we can help" rows="6" required></textarea>
+                        </div>
+
+                        <div class="captcha-row">
+                            <span class="captcha-equation" id="captchaEquation"></span>
+                            <input type="number" id="captchaAnswer" class="captcha-input" required>
+                            <button type="submit" class="captcha-submit">Send Message</button>
+                        </div>
+
+                        <p class="captcha-note">Please complete the Captcha simple math equation, thanks! Read our <a href="privacy.html" style="color: #632ca6; text-decoration: underline;">Privacy Policy</a>.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section section-white faq-section">
+        <div class="container">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Here are some questions we are hearing and we hope these answers help you.</p>
+
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h4>What makes SignalRadar different from traditional forecasting tools?</h4>
+                    <p>Traditional planning tools concentrate on what's happening inside your business—sales, inventory, production—often with limited recognition of external forces. SignalRadar illuminates the key forces <em>outside</em> your business that will affect your plans before they show up in your internal numbers. We connect external signals (commodity prices, supplier earnings, regulatory changes) directly to your planning assumptions, so you see disruptions building weeks before they impact your quarterly results. This shifts your quarterly planning meeting from explaining what happened and seeking excuses to an anticipatory discussion: "Here's what's changing, here's what it means, and here's what we're going to do about it."</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4>How does SignalRadar connect signals to my plans?</h4>
+                    <p>Every plan rests on assumptions about external inputs—raw material costs, demand patterns, competitive dynamics. SignalRadar identifies the specific external signals that influence your key metrics, then monitors those signals continuously for trends and disruptions. When energy prices spike or a major customer reports declining sales, we show you which planning assumptions are affected and at what magnitude it becomes material. You get signal detection, not prediction—we tell you what's moving <em>now</em> that could affect your numbers <em>later</em>. SignalRadar updates continuously because the external context your business operates in is never static.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4>What does "detect not predict" mean?</h4>
+                    <p>We don't forecast the future. We detect changes happening right now in external signals that your planning assumptions depend on. When copper prices move or a supplier reports production issues, those aren't predictions—they're facts. What we provide is the connection between those facts and your plans: SignalRadar delivers an alternate short-term forecast so you can compare your existing plans to what the new detections suggest. Which assumptions are affected? How much movement matters? When does it cross from noise to something your FP&A team needs to address? Detection gives you time to act; prediction gives you a guess.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4>Do I need to replace my existing planning tools?</h4>
+                    <p>No. SignalRadar augments your existing tools—it doesn't replace them. Your ERP, financial planning platform, and BI dashboards handle internal data beautifully. SignalRadar adds the external layer: the commodity prices, supplier risks, and demand signals that your internal tools can't see. Think of it as an early warning system that feeds into your existing planning process, not a replacement for it.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4>What data sources does SignalRadar use?</h4>
+                    <p>We monitor hundreds of public data sources comprising millions of time series data trends—government economic indicators, commodity markets, industry reports, regulatory filings, earnings calls from key companies in your supply chain or customer base. Most are authoritative public sources (USDA, EIA, Federal Reserve, public company filings) that businesses already trust but don't systematically connect to their planning assumptions. We curate the signals that matter for your business and filter out the noise. For premium engagements, we can also integrate proprietary and purchased data sources to expand the scope and precision of SignalRadar's value to your unique situation.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4>How do I get started?</h4>
+                    <p>Start with one key metric you suspect is influenced by external factors—revenue, COGS, gross margin, or one of the key components driving those KPIs. It should be a time series you track weekly or monthly (daily is possible but rare) with at least 2-3 years of history. We work from a simple CSV (date, value) representing that data, and we ask that you tell us what you think drives it. We'll run your data through the SignalRadar platform to identify which external signals actually move your metric, show you the structural relationships, and deliver weekly intelligence on what's changing. Most clients see value in the first report.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4>How often is SignalRadar updated?</h4>
+                    <p>Our data pipelines update continuously as new information becomes available. Most signals refresh daily, weekly, or monthly depending on the source (government data, industry reports, financial filings). We monitor trend changes in real-time and deliver weekly intelligence reports showing what moved and what it means for your plans. Your external environment doesn't pause between quarters—neither do we.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4>How long does it take to see results?</h4>
+                    <p>First value: within the first weekly report. You'll see which external signals are moving and which of your planning assumptions they affect. Full integration into planning workflows typically happens progressively, within weeks, not months, as your FP&A team learns to incorporate external intelligence into their standard processes. The goal isn't to add work—it's to shift the conversation from "what happened?" to "what's building?" during your planning cycles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo"><span class="logo-signal-light">Signal</span><span class="logo-radar-light">Radar</span></div>
+                <p>External intelligence for anticipatory planning</p>
+            </div>
+            <div class="footer-col">
+                <h5>Product</h5>
+                <a href="index.html#how-it-works">How It Works</a>
+                <a href="resources.html">Free Reports</a>
+                <a href="resources.html">Resources</a>
+            </div>
+            <div class="footer-col">
+                <h5>Company</h5>
+                <a href="blog.html">Blog</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SignalRadar. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Generate random captcha
+        let captchaA, captchaB;
+        function generateCaptcha() {
+            captchaA = Math.floor(Math.random() * 15) + 1;
+            captchaB = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('captchaEquation').textContent = captchaA + ' + ' + captchaB + ' =';
+        }
+        generateCaptcha();
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const answer = parseInt(document.getElementById('captchaAnswer').value);
+            if (answer !== captchaA + captchaB) {
+                alert('Please check your math and try again.');
+                generateCaptcha();
+                document.getElementById('captchaAnswer').value = '';
+                return false;
+            }
+            // Captcha passed — submit to Formspree via AJAX, then redirect to our thanks page
+            const form = document.getElementById('contactForm');
+            const data = new FormData(form);
+            fetch('https://formspree.io/f/mwvydqka', {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(function(response) {
+                if (response.ok) {
+                    window.location.href = 'thanks.html';
+                } else {
+                    alert('There was a problem sending your message. Please try again.');
+                }
+            }).catch(function() {
+                alert('There was a problem sending your message. Please try again.');
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>
