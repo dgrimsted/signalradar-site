@@ -311,39 +311,39 @@
   .projswap-shell{
     width:100%;
     display:grid;
-    grid-template-columns:48% 52%;
+    grid-template-columns:42% 58%;
     grid-template-rows:auto auto;
     gap:0;
     padding:clamp(6px,1.2cqi,12px) clamp(12px,2cqi,18px) clamp(4px,0.8cqi,8px) clamp(16px,2.8cqi,28px);
     background:#F5F1E8;
     container-type:inline-size;
   }
-  /* Floating confidence — anchored upper-right inside projswap-left */
+  /* Confidence widget — upper-right corner of .chart card */
   .confFloat{
     position:absolute;
-    top:0;
-    right:clamp(12px,2.5cqi,28px);
+    top:clamp(10px,1.4cqi,18px);
+    right:clamp(12px,1.8cqi,22px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     text-align:center;
-    background:transparent;
-    border:none;
-    z-index:3;
-    min-width:clamp(60px,9cqi,84px);
+    z-index:4;
   }
   .cfLabel{
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
-    font-size:clamp(7px,1.2cqi,10px);
-    letter-spacing:.7px;
+    font-size:clamp(7px,1.0cqi,9px);
+    letter-spacing:.6px;
     font-weight:700;
-    color:#5f5446;
+    color:#7a6f62;
     text-transform:uppercase;
-    line-height:1.25;
-    margin-bottom:clamp(3px,0.6cqi,6px);
+    line-height:1.2;
+    margin-bottom:2px;
   }
-  .confFloat .sun{ width:20px; height:20px; }
-  .confFloat .cloud{ width:30px; height:16px; }
-  .confFloat .cloud:before{ width:14px; height:14px; left:4px; top:-7px; }
-  .confFloat .condRow{ gap:5px; margin-top:4px; }
-  .confFloat .condText{ font-size:clamp(9px,1.6cqi,12px); margin-top:4px; letter-spacing:.3px; }
+  .confFloat .sun{ width:18px; height:18px; }
+  .confFloat .cloud{ width:26px; height:14px; }
+  .confFloat .cloud:before{ width:12px; height:12px; left:4px; top:-6px; }
+  .confFloat .condRow{ gap:4px; margin-top:3px; }
+  .confFloat .condText{ font-size:clamp(8px,1.1cqi,10px); margin-top:3px; letter-spacing:.2px; }
 
   .projswap-left,
   .projswap-right{
@@ -355,7 +355,6 @@
   }
 
   .projswap-left{
-    position:relative;
     padding:0 clamp(12px,2.5cqi,28px) 0 0;
     display:flex;
     flex-direction:column;
@@ -390,7 +389,7 @@
   .projswap-header-row{
     grid-column:1 / -1;
     display:grid;
-    grid-template-columns:48% 52%;
+    grid-template-columns:42% 58%;
     border-bottom:1px solid rgba(0,0,0,.12);
     margin-bottom:clamp(6px,1.2cqi,14px);
     padding-bottom:clamp(6px,1.2cqi,14px);
@@ -410,7 +409,8 @@
     text-overflow:ellipsis;
   }
   .projswap-headright{
-    text-align:center;
+    display:flex;
+    align-items:center;
     padding-left:clamp(4px,0.8cqi,12px);
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
     font-size:clamp(11px,2.2cqi,22px);
@@ -420,6 +420,11 @@
     color:#2C3E50;
     text-transform:uppercase;
     border-left:1px solid rgba(0,0,0,.10);
+    overflow:hidden;
+  }
+  .projswap-headright-title{
+    flex:1;
+    text-align:center;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -563,12 +568,26 @@
 
   /* === PRICE BRIDGE === */
   .pbridge{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:clamp(3px,0.6cqi,6px);
+    width:100%;
+    margin:clamp(6px,1.2cqi,14px) 0 0;
+  }
+  /* Top row: badge centered */
+  .pbridge-badge-row{
+    display:flex;
+    justify-content:center;
+    width:100%;
+  }
+  /* Bottom row: left price | arrow | right price */
+  .pbridge-prices{
     display:grid;
     grid-template-columns:1fr auto 1fr;
     align-items:center;
-    gap:clamp(4px,1cqi,10px);
+    gap:clamp(6px,1.2cqi,14px);
     width:100%;
-    margin:clamp(8px,1.6cqi,18px) 0 0;
   }
   .pbridge-col{
     display:flex;
@@ -581,16 +600,16 @@
     text-align:right;
   }
   .pbridge-label{
-    font-size:clamp(10px,1.75cqi,15px);
+    font-size:clamp(9px,1.5cqi,13px);
     color:#8a7f72;
     font-weight:400;
     line-height:1.3;
     white-space:normal;
-    margin-bottom:clamp(3px,0.5cqi,6px);
+    margin-bottom:clamp(2px,0.4cqi,4px);
   }
   .pbridge-value{
     font-family:inherit;
-    font-size:clamp(22px,5.5cqi,50px);
+    font-size:clamp(20px,4.8cqi,44px);
     font-weight:900;
     color:#2C3E50;
     line-height:1.0;
@@ -600,19 +619,11 @@
     text-overflow:ellipsis;
     max-width:100%;
   }
-  .pbridge-mid{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:clamp(4px,0.8cqi,7px);
-    flex-shrink:0;
-    min-width:clamp(52px,10cqi,100px);
-  }
   .pbridge-badge{
     color:white;
     border-radius:clamp(10px,1.8cqi,18px);
-    padding:clamp(4px,0.7cqi,8px) clamp(9px,1.7cqi,16px);
-    font-size:clamp(14px,3.2cqi,30px);
+    padding:clamp(3px,0.6cqi,7px) clamp(10px,2cqi,20px);
+    font-size:clamp(13px,2.8cqi,26px);
     font-weight:900;
     white-space:nowrap;
     line-height:1.2;
@@ -626,18 +637,18 @@
   .pbridge-track{
     display:flex;
     align-items:center;
-    width:100%;
+    flex-shrink:0;
   }
   .pbridge-line{
-    flex:1;
-    height:clamp(3px,0.5cqi,5px);
+    width:clamp(14px,2.5cqi,26px);
+    height:clamp(3px,0.5cqi,4px);
     background:#A89878;
     border-radius:2px 0 0 2px;
   }
   .pbridge-head{
-    border-top:clamp(6px,1.2cqi,11px) solid transparent;
-    border-bottom:clamp(6px,1.2cqi,11px) solid transparent;
-    border-left:clamp(9px,1.8cqi,16px) solid #A89878;
+    border-top:clamp(5px,1cqi,9px) solid transparent;
+    border-bottom:clamp(5px,1cqi,9px) solid transparent;
+    border-left:clamp(8px,1.5cqi,13px) solid #A89878;
     flex-shrink:0;
   }
 
@@ -1476,6 +1487,11 @@
 <div class="chartWrap">
 <div class="chart">
 <div class="trendTitle" id="trendTitle">COPPER 16 WEEK TREND PROJECTION</div>
+<div class="confFloat">
+  <div class="cfLabel" id="m3Label">FORECAST<br>CONFIDENCE</div>
+  <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+  <div class="condText" id="m3Value">PARTLY SUNNY</div>
+</div>
 <div class="grid">
 <div class="projswap-shell">
   <div class="projswap-header-row">
@@ -1483,27 +1499,24 @@
     <div class="projswap-headright">TOP FORCES BEHIND THE PROJECTION</div>
   </div>
   <div class="projswap-left">
-    <div class="confFloat">
-      <div class="cfLabel" id="m3Label">FORECAST<br>CONFIDENCE</div>
-      <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
-      <div class="condText" id="m3Value">PARTLY SUNNY</div>
-    </div>
     <div class="projswap-main">
       <div class="pbridge">
-        <div class="pbridge-col">
-          <div class="pbridge-label">Current Price</div>
-          <div class="pbridge-value" id="projCurrentPrice">—</div>
-        </div>
-        <div class="pbridge-mid">
+        <div class="pbridge-badge-row">
           <div class="pbridge-badge" id="projBigPct"><span class="pctMain">—</span><span class="pctPercent">%</span></div>
+        </div>
+        <div class="pbridge-prices">
+          <div class="pbridge-col">
+            <div class="pbridge-label">Current Price</div>
+            <div class="pbridge-value" id="projCurrentPrice">—</div>
+          </div>
           <div class="pbridge-track">
             <div class="pbridge-line"></div>
             <div class="pbridge-head"></div>
           </div>
-        </div>
-        <div class="pbridge-col pbridge-col-right">
-          <div class="pbridge-label">Projected 16-Week Average Price</div>
-          <div class="pbridge-value" id="projAvgPrice">—</div>
+          <div class="pbridge-col pbridge-col-right">
+            <div class="pbridge-label">Projected 16-Week Average Price</div>
+            <div class="pbridge-value" id="projAvgPrice">—</div>
+          </div>
         </div>
       </div>
       <div class="projswap-meta">
@@ -2591,10 +2604,4 @@ async function loadImages(measureCode){
   // Per-measure map: prefer an explicit MAP_FILE_MAP entry, otherwise use the
   // canonical map_<DT_CODE>.png convention that v24_no_insights.py writes to
   // blob. The map.onerror handler below falls back to FALLBACK_MAP
-  // (signal-origin-map-fixed.png) for any DT_CODE whose per-measure file
-  // doesn't exist yet, so this is safe.
-  const mapFile = MAP_FILE_MAP[code] || meta.map_image_file || `map_${code}.png`;
-
-  if(hero){
-    hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
-    he
+  // (signal-origin-map-
