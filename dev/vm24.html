@@ -254,7 +254,7 @@
   /* RIGHT SIDE */
   .right{
     display:grid;
-    grid-template-columns: minmax(0, 1fr) 112px;
+    grid-template-columns: 1fr;
     gap:22px;
     align-items:start;
     padding-right:16px;
@@ -312,13 +312,39 @@
     position:relative;
     width:100%;
     display:grid;
-    grid-template-columns:52% 48%;
+    grid-template-columns:56% 44%;
     grid-template-rows:auto auto;
     gap:0;
     padding:clamp(6px,1.2cqi,12px) clamp(12px,2cqi,18px) clamp(4px,0.8cqi,8px) clamp(16px,2.8cqi,28px);
     background:#F5F1E8;
     container-type:inline-size;
   }
+  /* Floating confidence — no background, upper-right corner of shell */
+  .confFloat{
+    position:absolute;
+    top:clamp(30px,5.5cqi,54px);
+    right:clamp(10px,1.8cqi,18px);
+    text-align:center;
+    background:transparent;
+    border:none;
+    z-index:3;
+    min-width:clamp(70px,11cqi,96px);
+  }
+  .cfLabel{
+    font-family:'Oswald','Arial Narrow',Arial,sans-serif;
+    font-size:clamp(7px,1.2cqi,10px);
+    letter-spacing:.7px;
+    font-weight:700;
+    color:#5f5446;
+    text-transform:uppercase;
+    line-height:1.25;
+    margin-bottom:clamp(3px,0.6cqi,6px);
+  }
+  .confFloat .sun{ width:20px; height:20px; }
+  .confFloat .cloud{ width:30px; height:16px; }
+  .confFloat .cloud:before{ width:14px; height:14px; left:4px; top:-7px; }
+  .confFloat .condRow{ gap:5px; margin-top:4px; }
+  .confFloat .condText{ font-size:clamp(9px,1.6cqi,12px); margin-top:4px; letter-spacing:.3px; }
 
   .projswap-left,
   .projswap-right{
@@ -330,7 +356,7 @@
   }
 
   .projswap-left{
-    padding:0 clamp(4px,1cqi,12px) 0 0;
+    padding:0 clamp(12px,2.5cqi,28px) 0 0;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -364,7 +390,7 @@
   .projswap-header-row{
     grid-column:1 / -1;
     display:grid;
-    grid-template-columns:52% 48%;
+    grid-template-columns:56% 44%;
     border-bottom:1px solid rgba(0,0,0,.12);
     margin-bottom:clamp(6px,1.2cqi,14px);
     padding-bottom:clamp(6px,1.2cqi,14px);
@@ -723,12 +749,7 @@
     white-space:nowrap;
   }
 /* Metrics column */
-  .metricsCol{
-    grid-column:2 / 3;
-    border-left:none;
-    padding-left:8px;
-    align-self:center;
-  }
+  .metricsCol{ display:none; }
   .metric{
     border-radius:16px;
     overflow:hidden;
@@ -1496,6 +1517,11 @@
       <div class="projswap-row"><div class="projswap-label">Nontheresis's Demand</div><div class="projswap-barbg"><div class="projswap-bar" style="width:8%"></div></div><div class="projswap-pct">2%</div></div>
     </div>
   </div>
+  <div class="confFloat">
+    <div class="cfLabel" id="m3Label">FORECAST<br>CONFIDENCE</div>
+    <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+    <div class="condText" id="m3Value">PARTLY SUNNY</div>
+  </div>
 </div>
 <script>
 function formatProjectionRange(pctRaw){
@@ -1642,9 +1668,9 @@ if (document.readyState === 'loading') {
 <div class="mBear" id="m2Trend">▼ Bearish</div>
 </div>
 <div class="metricBot">
-<div class="mLabel" id="m3Label">FORECAST CONFIDENCE</div>
+<div class="mLabel" id="m3Label_old">FORECAST CONFIDENCE</div>
 <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
-<div class="condText" id="m3Value">PARTLY SUNNY</div>
+<div class="condText" id="m3Value_old">PARTLY SUNNY</div>
 </div>
 </div>
 </aside>
@@ -2570,29 +2596,4 @@ async function loadImages(measureCode){
   const mapFile = MAP_FILE_MAP[code] || meta.map_image_file || `map_${code}.png`;
 
   if(hero){
-    hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
-    hero.removeAttribute('src');
-    const heroBox = hero.parentElement;
-    if(heroBox && CONFIG.BLOB_SAS_TOKEN && heroFile){
-      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429g`;
-      // Set as background-image so we can force background-size:100% 100% (true stretch).
-      heroBox.style.backgroundImage = `url("${heroUrl}")`;
-    } else if (heroBox && embeddedHero) {
-      heroBox.style.backgroundImage = `url("${embeddedHero}")`;
-    }
-  }
-
-  if(map){
-    map.alt = `${meta.display_name || meta.measure_name || code} signal origin map`;
-    if(CONFIG.BLOB_SAS_TOKEN && mapFile){
-      const mapUrl = `${CONFIG.BLOB_BASE_URL}/${mapFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260505b`;
-      map.onerror = ()=>{ map.onerror = null; if(typeof FALLBACK_MAP !== 'undefined') map.src = FALLBACK_MAP; };
-      map.src = mapUrl;
-    } else if(typeof FALLBACK_MAP !== 'undefined') {
-      map.src = FALLBACK_MAP;
-    }
-  }
-}
-
-function bindMeasureControls(){
-  const sel = document.getElementById('measureSe
+    hero.alt = `${meta.display_name || meta.measure_name || code} hero 
