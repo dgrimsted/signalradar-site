@@ -498,31 +498,41 @@
   }
   .projswap-fromto-label{
     font-family:inherit;
-    font-size:clamp(9px,1.5cqi,12px);
+    font-size:clamp(9px,1.5cqi,13px);
     color:#8a7f72;
     font-weight:400;
-    line-height:1.2;
-    white-space:nowrap;
-    margin-bottom:clamp(1px,0.3cqi,4px);
+    line-height:1.3;
+    white-space:normal;
+    text-align:center;
+    margin-bottom:clamp(3px,0.5cqi,6px);
   }
   .projswap-fromto-value{
     font-family:inherit;
-    font-size:clamp(17px,4cqi,38px);
+    font-size:clamp(24px,5.8cqi,54px);
     font-weight:900;
     color:#2C3E50;
-    line-height:1.05;
-    letter-spacing:-0.01em;
+    line-height:1.0;
+    letter-spacing:-0.02em;
     white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width:100%;
   }
   .projswap-fromto-arrow{
-    font-size:clamp(14px,2.8cqi,26px);
-    color:#B5A88E;
     flex-shrink:0;
-    line-height:1;
-    padding-top:clamp(12px,2.4cqi,22px);
+    padding-top:clamp(18px,3.5cqi,32px);
+    display:flex;
+    align-items:center;
+    gap:0;
+  }
+  .projswap-fromto-arrow-line{
+    width:clamp(14px,2.8cqi,28px);
+    height:clamp(3px,0.5cqi,5px);
+    background:#A89878;
+    border-radius:2px 0 0 2px;
+  }
+  .projswap-fromto-arrow-head{
+    border-top:clamp(7px,1.4cqi,13px) solid transparent;
+    border-bottom:clamp(7px,1.4cqi,13px) solid transparent;
+    border-left:clamp(11px,2.1cqi,19px) solid #A89878;
+    flex-shrink:0;
   }
 
   .projswap-midline{
@@ -647,15 +657,10 @@
   }
   .metric + .metric{ margin-top:14px; }
   .metricTop{ display:none; }
-  .metricMid{
-    display:block;
-    background:var(--bg);
-    padding:14px 14px 16px;
-    text-align:center;
-  }
+  .metricMid{ display:none; }
   .metricBot{
     background:var(--panel2);
-    padding:10px 10px 12px;
+    padding:clamp(12px,2cqi,22px) clamp(10px,1.8cqi,16px);
     text-align:center;
   }
   .mLabel{
@@ -696,22 +701,58 @@
   .cloud{ display:none; }
   .condText{ display:none; }
   .confidenceSuffix{ display:none; }
-  .confPill{
+  /* Forecast confidence block */
+  .confBlock{
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:2px;
+    gap:clamp(4px,0.8cqi,8px);
   }
-  .confPill-icon{
-    font-size:clamp(18px,3cqi,26px);
-    line-height:1.1;
+  .confBlock-header{
+    font-family:'Oswald','Arial Narrow',Arial,sans-serif;
+    font-size:clamp(10px,1.8cqi,14px);
+    letter-spacing:.7px;
+    font-weight:700;
+    color:#5f5446;
+    text-transform:uppercase;
+    border-bottom:1px solid rgba(0,0,0,.14);
+    width:100%;
+    text-align:center;
+    padding-bottom:clamp(5px,0.9cqi,10px);
+    margin-bottom:clamp(2px,0.4cqi,4px);
   }
-  .confPill-label{
-    font-size:clamp(9px,1.5cqi,11px);
+  .confBlock-emoji{
+    font-size:clamp(30px,5cqi,46px);
+    line-height:1.05;
+  }
+  .confBlock-word{
+    font-size:clamp(12px,2.2cqi,18px);
+    font-weight:700;
+    color:#5f5446;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    margin-top:clamp(2px,0.3cqi,4px);
+  }
+  .confBlock-range{
+    border-top:1px solid rgba(0,0,0,.12);
+    width:100%;
+    padding-top:clamp(6px,1cqi,10px);
+    margin-top:clamp(2px,0.4cqi,4px);
+    text-align:center;
+  }
+  .confBlock-range-label{
+    font-size:clamp(8px,1.3cqi,10px);
+    color:#8a7f72;
     text-transform:uppercase;
     letter-spacing:.6px;
     font-weight:600;
-    color:#8a7f72;
+  }
+  .confBlock-range-value{
+    font-size:clamp(12px,2.2cqi,18px);
+    font-weight:700;
+    color:#2C3E50;
+    margin-top:clamp(2px,0.3cqi,4px);
+    letter-spacing:-0.01em;
   }
 
   /* News cards row spans across chart + metrics width */
@@ -1312,13 +1353,16 @@
           <div class="projswap-fromto-label">Current Price</div>
           <div class="projswap-fromto-value" id="projCurrentPrice">—</div>
         </div>
-        <div class="projswap-fromto-arrow">→</div>
+        <div class="projswap-fromto-arrow">
+          <div class="projswap-fromto-arrow-line"></div>
+          <div class="projswap-fromto-arrow-head"></div>
+        </div>
         <div class="projswap-fromto-col">
-          <div class="projswap-fromto-label">16-Week Projected</div>
+          <div class="projswap-fromto-label">Projected 16-Week Average Price</div>
           <div class="projswap-fromto-value" id="projAvgPrice">—</div>
         </div>
       </div>
-      <div class="projswap-meta">
+      <div class="projswap-meta" style="display:none">
         <span class="projswap-meta-label">Range:</span>
         <span class="projswap-meta-value" id="projRange">—</span>
       </div>
@@ -1439,21 +1483,24 @@ function initTrendProjection(){
     }
   }
 
-  if (rangeEl) {
-    const rawCp = String(ch.currentprice || '').trim();
-    const currentPriceRaw = parseFloat(rawCp.replace(/[^0-9.\-]/g, ''));
-    const code = String(ch.DT_CODE || ch.dt_code || '');
-    if (!isNaN(currentPriceRaw) && currentPriceRaw > 0 && Math.abs(pctRaw) > 0) {
-      const abs = Math.abs(pctRaw);
-      const spread = abs >= 15 ? 0.33 : (abs >= 8 ? 0.28 : 0.22);
-      const dir = pctRaw < 0 ? -1 : 1;
-      const loPrice = currentPriceRaw * (1 + dir * abs * (1 - spread) / 100);
-      const hiPrice = currentPriceRaw * (1 + dir * abs * (1 + spread) / 100);
-      rangeEl.textContent = fmtPriceByCode(loPrice, code) + ' to ' + fmtPriceByCode(hiPrice, code);
-    } else {
-      rangeEl.textContent = formatProjectionRange(pctRaw);
-    }
+  /* Compute range and push to both hidden projRange and the confidence block */
+  const rawCp = String(ch.currentprice || '').trim();
+  const currentPriceRaw = parseFloat(rawCp.replace(/[^0-9.\-]/g, ''));
+  const priceCode = String(ch.DT_CODE || ch.dt_code || '');
+  let rangeStr = '—';
+  if (!isNaN(currentPriceRaw) && currentPriceRaw > 0 && Math.abs(pctRaw) > 0) {
+    const abs = Math.abs(pctRaw);
+    const spread = abs >= 15 ? 0.33 : (abs >= 8 ? 0.28 : 0.22);
+    const dir = pctRaw < 0 ? -1 : 1;
+    const loPrice = currentPriceRaw * (1 + dir * abs * (1 - spread) / 100);
+    const hiPrice = currentPriceRaw * (1 + dir * abs * (1 + spread) / 100);
+    rangeStr = fmtPriceByCode(loPrice, priceCode) + ' – ' + fmtPriceByCode(hiPrice, priceCode);
+  } else if (Math.abs(pctRaw) > 0) {
+    rangeStr = formatProjectionRange(pctRaw);
   }
+  if (rangeEl) rangeEl.textContent = rangeStr;
+  const confRangeEl = document.getElementById('confRangeDisplay');
+  if (confRangeEl) confRangeEl.textContent = rangeStr;
   if (confEl) confEl.textContent = confidenceFromChannel(ch);
 }
 if (document.readyState === 'loading') {
@@ -1480,9 +1527,14 @@ if (document.readyState === 'loading') {
 <div class="mBear" id="m2Trend">▼ Bearish</div>
 </div>
 <div class="metricBot">
-<div class="confPill">
-  <span class="confPill-icon" id="confIcon">⛅</span>
-  <span class="confPill-label" id="m3Value">PARTLY SUNNY</span>
+<div class="confBlock">
+  <div class="confBlock-header">Forecast Confidence</div>
+  <div class="confBlock-emoji" id="confIcon">⛅</div>
+  <div class="confBlock-word" id="m3Value">PARTLY SUNNY</div>
+  <div class="confBlock-range">
+    <div class="confBlock-range-label">Price Range</div>
+    <div class="confBlock-range-value" id="confRangeDisplay">—</div>
+  </div>
 </div>
 </div>
 </div>
@@ -2492,47 +2544,4 @@ function renderMeasure(measureCode){
   const change = parsePct(ch['16weektrend'] ?? '0');
   updateArrow(change, ch);
   applyOverviewFromChannel(ch);
-  /* Update hero and map for this measure */
-  loadImages(code).catch(() => {});
-
-  /* Run clips once map image is definitely laid out */
-  (function scheduleClips(){
-    const mapImg = document.getElementById('mapImg');
-    if (mapImg && mapImg.complete && mapImg.naturalHeight > 0) {
-      requestAnimationFrame(() => requestAnimationFrame(applyPanelClips));
-    } else if (mapImg) {
-      mapImg.addEventListener('load', function(){ requestAnimationFrame(applyPanelClips); }, {once:true});
-      setTimeout(applyPanelClips, 800);
-    }
-  })();
-}
-
-async function loadDashboard() {
-  try {
-    // Five CSVs; dashboard_measures.csv is inert but fetched for compatibility
-    const [channels, drivers, disruptions, executivePredictors, predictorsRaw] = await Promise.all([
-      fetchCsv('channels.csv'),
-      fetchCsv('dashboard_news_drivers.csv').catch(() => []),
-      fetchCsv('dashboard_disruption_events.csv').catch(() => []),
-      fetchCsv('executive_predictors.csv').catch(() => []),
-      fetchCsv('predictors.csv').catch(() => [])
-    ]);
-
-    // Normalize predictors.csv rows to the same shape as executive_predictors rows
-    const predictors_fallback = (predictorsRaw || []).map(r => Object.assign({}, r, {
-      dt_code: r.dt_code || r.DT_CODE || r.Y_DT_CODE || r.y_dt_code,
-      coefficient: (r.coefficient !== undefined && r.coefficient !== '') ? r.coefficient : r.impact,
-      variable: r.variable || r.category
-    }));
-    const data = { channels, drivers, disruptions, executive_predictors: executivePredictors, predictors_fallback };
-    APP.all = data;
-    const channelMeasures = [];
-    const seenDt = new Set();
-    (data.channels || []).forEach(ch => {
-      const dt = normalizeDtCode(ch.DT_CODE || ch.dt_code);
-      if (!dt || seenDt.has(dt)) return;
-      seenDt.add(dt);
-      channelMeasures.push({
-        dt_code: dt,
-        measure_name: ch.CHANNEL || ch.channel || dt,
-  
+  /* Update hero and 
