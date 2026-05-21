@@ -315,22 +315,22 @@
     flex:1;
     min-width:0;
     display:grid;
-    grid-template-columns:42% 58%;
+    grid-template-columns:50% 50%;
     grid-template-rows:auto auto;
     gap:0;
     padding:clamp(6px,1.2cqi,12px) clamp(12px,2cqi,18px) clamp(4px,0.8cqi,8px) clamp(16px,2.8cqi,28px);
     background:#F5F1E8;
     container-type:inline-size;
   }
-  /* Confidence widget — outside the trend box, to its right */
+  /* Confidence widget — outside the trend box, sibling of projswap-shell in .grid */
   .confFloat{
     display:flex;
     flex-direction:column;
     align-items:center;
     text-align:center;
     flex-shrink:0;
-    width:72px;
-    padding:14px 10px 0 4px;
+    width:86px;
+    padding:16px 8px 0 6px;
   }
   .cfLabel{
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
@@ -393,7 +393,7 @@
   .projswap-header-row{
     grid-column:1 / -1;
     display:grid;
-    grid-template-columns:42% 58%;
+    grid-template-columns:50% 50%;
     border-bottom:1px solid rgba(0,0,0,.12);
     margin-bottom:clamp(6px,1.2cqi,14px);
     padding-bottom:clamp(6px,1.2cqi,14px);
@@ -712,7 +712,7 @@
 
   .projswap-row{
     display:grid;
-    grid-template-columns:clamp(165px,22cqi,215px) 1fr 36px;
+    grid-template-columns:1fr clamp(70px,10cqi,110px) 36px;
     column-gap:clamp(4px,1cqi,8px);
     align-items:center;
     min-height:clamp(26px,4cqi,36px);
@@ -2611,4 +2611,4 @@ async function loadImages(measureCode){
   const embeddedHero = getEmbeddedHero(code);
   const heroFile = HERO_FILE_MAP[code] || meta.hero_image_file || '';
   // Per-measure map: prefer an explicit MAP_FILE_MAP entry, otherwise use the
-  // canonical map_<DT_CODE>.png
+  // canonic
