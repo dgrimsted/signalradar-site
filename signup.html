@@ -15,6 +15,15 @@
 <meta name="description" content="Sign up for free weekly intelligence reports from SignalRadar. External intelligence for anticipatory planning.">
 <title>Sign Up for Free Reports — SignalRadar</title>
 
+<!-- MailerLite Universal Script -->
+<script>
+(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+.push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+ml('account', '2369662');
+</script>
+      
 <style>
 :root {
   --purple:      #632ca6;
@@ -361,14 +370,14 @@ nav {
     </div>
 
     <div class="signup-body">
-      <form id="signup-form" action="https://formspree.io/f/mwvydqka" method="POST">
+      <form id="signup-form" action="https://assets.mailerlite.com/jsonp/2369662/forms/188118374336693767/subscribe" method="POST">
         
         <div class="form-group">
           <label class="form-label" for="name">First Name</label>
           <input 
             type="text" 
             id="name" 
-            name="name" 
+            name="fields[name]"
             class="form-input" 
             required
             placeholder="Your first name"
@@ -380,7 +389,7 @@ nav {
           <input 
             type="email" 
             id="email" 
-            name="email" 
+            name="fields[email]"
             class="form-input" 
             required
             placeholder="you@company.com"
@@ -391,20 +400,22 @@ nav {
           <label class="form-label">Which reports interest you?</label>
           <div class="checkbox-group">
             <label class="checkbox-label">
-              <input type="checkbox" name="reports" value="Energy">
+              <input type="checkbox" name="fields[country][]" value="Energy">
               <span>Energy</span>
             </label>
             <label class="checkbox-label">
-              <input type="checkbox" name="reports" value="Industrial Metals">
+              <input type="checkbox" name="fields[country][]" value="Industrial Metals">
               <span>Industrial Metals</span>
             </label>
             <label class="checkbox-label">
-              <input type="checkbox" name="reports" value="Agriculture">
+              <input type="checkbox" name="fields[country][]" value="Agriculture">
               <span>Agriculture</span>
             </label>
           </div>
         </div>
-
+            
+        <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="anticsrf" value="true">
         <button type="submit" class="btn-submit">Sign me up</button>
 
         <p class="form-note">
@@ -448,47 +459,34 @@ nav {
 </div>
 
 <script>
-// Handle form submission
+// MailerLite form submission handler
 document.getElementById('signup-form').addEventListener('submit', function(e) {
   e.preventDefault();
   
   // Validate at least one report selected
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+  const checkboxes = document.querySelectorAll('input[name="fields[country][]"]:checked');
   
   if (checkboxes.length === 0) {
     alert('Please select at least one report.');
     return;
   }
   
-  // Submit to Formspree
+  // Submit to MailerLite
   const formData = new FormData(this);
   
   fetch(this.action, {
     method: 'POST',
     body: formData,
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(response => {
-    if (response.ok) {
-      // Show confirmation
-      document.getElementById('form-state').style.display = 'none';
-      document.getElementById('confirmation-state').classList.add('active');
-      window.scrollTo(0, 0);
-    } else {
-      return response.json().then(data => {
-        if (data.errors) {
-          alert('There was a problem with your submission. Please try again.');
-        } else {
-          alert('Oops! There was a problem submitting your form.');
-        }
-      });
-    }
+    mode: 'no-cors'
+  }).then(() => {
+    // Show confirmation
+    document.getElementById('form-state').style.display = 'none';
+    document.getElementById('confirmation-state').classList.add('active');
+    window.scrollTo(0, 0);
   }).catch(error => {
     alert('Oops! There was a problem submitting your form. Please try again.');
   });
 });
 </script>
-
 </body>
 </html>
