@@ -473,7 +473,7 @@
   .projswap-move{
     margin:0;
     text-align:center;
-    font-family:'Playfair Display',Georgia,serif;
+    font-family:inherit;
     font-size:clamp(11px,2cqi,17px);
     line-height:1.15;
     color:#333333;
@@ -483,7 +483,7 @@
 
   .projswap-avgprice-value{
     margin:clamp(1px,0.2cqi,3px) 0 0 0;
-    font-family:'Noto Serif Display','Playfair Display',Georgia,serif;
+    font-family:inherit;
     font-size:clamp(22px,5cqi,46px);
     font-weight:900;
     line-height:1.1;
@@ -504,7 +504,7 @@
     align-items:baseline;
     justify-content:center;
     gap:clamp(5px,0.9cqi,9px);
-    font-family:'Open Sans',Arial,sans-serif;
+    font-family:inherit;
     line-height:1.3;
   }
 
@@ -557,7 +557,7 @@
   }
 
   .projswap-label{
-    font-family:'Open Sans',Arial,sans-serif;
+    font-family:inherit;
     font-size:clamp(9px,1.7cqi,12px);
     line-height:1.3;
     font-weight:400;
@@ -591,7 +591,7 @@
   }
 
   .projswap-pct{
-    font-family:'Open Sans',Arial,sans-serif;
+    font-family:inherit;
     font-size:clamp(8px,1.28cqi,11px);
     line-height:1;
     font-weight:400;
@@ -2081,7 +2081,7 @@ function applyChannelContent(measureCode){
   applyInlineNarrative(ch.NewsSummary || ch.newssummary || '');
   setHtml('footerLabel', 'SIGNALRADAR INTELLIGENCE');
   setHtml('footerText', `${label} <small>is one signal. Your business has dozens. Connect this intelligence to your margins and reforecast cycle.</small>`);
-  setHtml('btn1', `See how ${label.toLowerCase()} hits your margins →`);
+  setHtml('btn1', `See how this signal hits your margins →`);
   setHtml('btn2', '5‑min audit');
   setHtml('trendTitle', `${label.toUpperCase()} 16 WEEK TREND PROJECTION`);
   setHtml('projCardTitle', '16 WEEK TREND PROJECTION');
