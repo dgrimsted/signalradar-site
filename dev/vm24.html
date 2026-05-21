@@ -660,8 +660,16 @@
   .metricMid{ display:none; }
   .metricBot{
     background:var(--panel2);
-    padding:clamp(12px,2cqi,22px) clamp(10px,1.8cqi,16px);
+    padding:10px 8px 14px;
     text-align:center;
+  }
+  #m3Label{
+    font-size:10px;
+    letter-spacing:.7px;
+    line-height:1.3;
+    white-space:normal;
+    max-width:80px;
+    margin:0 auto;
   }
   .mLabel{
     font-size:12px;
@@ -696,11 +704,47 @@
     font-size:42px;
   }
 
-  .condRow{ display:none; }
-  .sun{ display:none; }
-  .cloud{ display:none; }
-  .condText{ display:none; }
-  .confidenceSuffix{ display:none; }
+  .condRow{
+    margin-top:8px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+  }
+  .sun{
+    width:26px;height:26px;border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #ffe49b, #f3b63c);
+    border:1px solid rgba(0,0,0,.12);
+    flex-shrink:0;
+  }
+  .cloud{
+    width:38px;height:20px;border-radius:10px;
+    background:#98A8BE;
+    position:relative;
+    flex-shrink:0;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
+  }
+  .cloud:before{
+    content:"";
+    position:absolute;
+    width:18px;height:18px;border-radius:50%;
+    left:5px; top:-8px;
+    background:#98A8BE;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
+  }
+  .condText{
+    margin-top:8px;
+    font-weight:700;
+    font-size:clamp(11px,1.9cqi,15px);
+    color:#7b6b55;
+    letter-spacing:.4px;
+    white-space:nowrap;
+  }
+  .confidenceSuffix{
+    font-size:0.8em;
+    white-space:nowrap;
+    display:inline;
+  }
   /* Forecast confidence block */
   .confBlock{
     display:flex;
@@ -1362,7 +1406,7 @@
           <div class="projswap-fromto-value" id="projAvgPrice">—</div>
         </div>
       </div>
-      <div class="projswap-meta" style="display:none">
+      <div class="projswap-meta">
         <span class="projswap-meta-label">Range:</span>
         <span class="projswap-meta-value" id="projRange">—</span>
       </div>
@@ -1494,7 +1538,9 @@ function initTrendProjection(){
     const dir = pctRaw < 0 ? -1 : 1;
     const loPrice = currentPriceRaw * (1 + dir * abs * (1 - spread) / 100);
     const hiPrice = currentPriceRaw * (1 + dir * abs * (1 + spread) / 100);
-    rangeStr = fmtPriceByCode(loPrice, priceCode) + ' – ' + fmtPriceByCode(hiPrice, priceCode);
+    const minPrice = Math.min(loPrice, hiPrice);
+    const maxPrice = Math.max(loPrice, hiPrice);
+    rangeStr = fmtPriceByCode(minPrice, priceCode) + ' to ' + fmtPriceByCode(maxPrice, priceCode);
   } else if (Math.abs(pctRaw) > 0) {
     rangeStr = formatProjectionRange(pctRaw);
   }
@@ -1527,15 +1573,9 @@ if (document.readyState === 'loading') {
 <div class="mBear" id="m2Trend">▼ Bearish</div>
 </div>
 <div class="metricBot">
-<div class="confBlock">
-  <div class="confBlock-header">Forecast Confidence</div>
-  <div class="confBlock-emoji" id="confIcon">⛅</div>
-  <div class="confBlock-word" id="m3Value">PARTLY SUNNY</div>
-  <div class="confBlock-range">
-    <div class="confBlock-range-label">Price Range</div>
-    <div class="confBlock-range-value" id="confRangeDisplay">—</div>
-  </div>
-</div>
+<div class="mLabel" id="m3Label">FORECAST CONFIDENCE</div>
+<div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+<div class="condText" id="m3Value">PARTLY SUNNY</div>
 </div>
 </div>
 </aside>
@@ -2226,16 +2266,16 @@ function applyMetricCardsFromChannel(ch){
   }
   setHtml('m2Trend', metricTrendText(Number(threeWeek || 0), 'change'));
 
-  /* Confidence: emoji icon + plain weather label */
-  const rel = String(reliability || '').toUpperCase();
-  let confIcon = '🌤️';
-  if (rel.includes('PARTLY') && rel.includes('SUNNY')) confIcon = '⛅';
-  else if (rel.includes('SUNNY')) confIcon = '☀️';
-  else if (rel.includes('CLOUDY')) confIcon = '☁️';
-  else if (rel.includes('WIND')) confIcon = '🌪️';
-  const confIconEl = document.getElementById('confIcon');
-  if (confIconEl) confIconEl.textContent = confIcon;
-  setHtml('m3Value', rel || 'MODERATE');
+  setHtml('m3Label', 'FORECAST CONFIDENCE');
+  const mapeRaw = ch.MarketSignalForecastMAPE ?? ch.marketsignalforecastmape ?? ch.MarketSignalMAPE ?? ch.marketsignalmape ?? '';
+  const mapeNum = Number(mapeRaw);
+  let confidenceText = String(reliability || '').toUpperCase();
+  if (!Number.isNaN(mapeNum) && mapeNum !== 0) {
+    const half = mapeNum / 2;
+    const pct = Math.abs(half) <= 1 ? half * 100 : half;
+    confidenceText += ` <span class="confidenceSuffix">+/- ${Math.abs(pct).toFixed(1)}%</span>`;
+  }
+  setHtml('m3Value', confidenceText.trim());
 }
 
 function metricTrendText(value, mode){
@@ -2526,22 +2566,4 @@ function bindMeasureControls(){
 function renderMeasure(measureCode){
   const code = normalizeDtCode(measureCode || APP.currentMeasureCode || CONFIG.DEFAULT_DT_CODE);
   APP.currentMeasureCode = code;
-  const sel = document.getElementById('measureSelect');
-  if (sel) sel.value = code;
-  const data = APP.all;
-  const drivers = filterByMeasure(data.drivers, code);
-  const disruptions = filterByMeasure(data.disruptions, code);
-  const ch = getChannelRow(code) || {};
-  // Use executive_predictors first; fall back to normalized predictors.csv when empty
-  let predictors = filterByMeasure(data.executive_predictors || [], code);
-  if (!predictors.length && data.predictors_fallback && data.predictors_fallback.length) {
-    predictors = filterByMeasure(data.predictors_fallback, code);
-  }
-  applyChannelContent(code);
-  renderDrivers(drivers);
-  renderDisruptions(disruptions);
-  renderPredictors(predictors);
-  const change = parsePct(ch['16weektrend'] ?? '0');
-  updateArrow(change, ch);
-  applyOverviewFromChannel(ch);
-  /* Update hero and 
+  const sel = do
