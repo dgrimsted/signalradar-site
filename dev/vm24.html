@@ -535,6 +535,86 @@
     flex-shrink:0;
   }
 
+  /* === PRICE BRIDGE === */
+  .pbridge{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:clamp(4px,1cqi,10px);
+    width:100%;
+    margin:clamp(8px,1.6cqi,18px) 0 0;
+  }
+  .pbridge-col{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    min-width:0;
+  }
+  .pbridge-col-right{
+    align-items:flex-end;
+    text-align:right;
+  }
+  .pbridge-label{
+    font-size:clamp(8px,1.4cqi,12px);
+    color:#8a7f72;
+    font-weight:400;
+    line-height:1.3;
+    white-space:normal;
+    margin-bottom:clamp(3px,0.5cqi,6px);
+  }
+  .pbridge-value{
+    font-family:inherit;
+    font-size:clamp(22px,5.5cqi,50px);
+    font-weight:900;
+    color:#2C3E50;
+    line-height:1.0;
+    letter-spacing:-0.02em;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:100%;
+  }
+  .pbridge-mid{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:clamp(4px,0.8cqi,7px);
+    flex-shrink:0;
+    min-width:clamp(52px,10cqi,100px);
+  }
+  .pbridge-badge{
+    color:white;
+    border-radius:clamp(10px,1.8cqi,18px);
+    padding:clamp(4px,0.7cqi,8px) clamp(9px,1.7cqi,16px);
+    font-size:clamp(14px,3.2cqi,30px);
+    font-weight:900;
+    white-space:nowrap;
+    line-height:1.2;
+    text-align:center;
+    letter-spacing:-0.01em;
+  }
+  .pbridge-badge .pctPercent{
+    font-size:0.62em;
+    vertical-align:0.12em;
+  }
+  .pbridge-track{
+    display:flex;
+    align-items:center;
+    width:100%;
+  }
+  .pbridge-line{
+    flex:1;
+    height:clamp(3px,0.5cqi,5px);
+    background:#A89878;
+    border-radius:2px 0 0 2px;
+  }
+  .pbridge-head{
+    border-top:clamp(6px,1.2cqi,11px) solid transparent;
+    border-bottom:clamp(6px,1.2cqi,11px) solid transparent;
+    border-left:clamp(9px,1.8cqi,16px) solid #A89878;
+    flex-shrink:0;
+  }
+
   .projswap-midline{
     border:none;
     margin:clamp(6px,1.1cqi,11px) 0;
@@ -1383,27 +1463,21 @@
   </div>
   <div class="projswap-left">
     <div class="projswap-main">
-      <div class="projswap-mainRow">
-        <div class="projswap-chevron" id="projChevron" aria-hidden="true"></div>
-        <div class="projswap-numgroup">
-          <div class="projswap-minus" aria-hidden="true">−</div>
-          <div class="projswap-bigPct" id="projBigPct"><span class="pctMain">18.3</span><span class="pctPercent">%</span></div>
+      <div class="pbridge">
+        <div class="pbridge-col">
+          <div class="pbridge-label">Current Price</div>
+          <div class="pbridge-value" id="projCurrentPrice">—</div>
         </div>
-        <div class="projswap-badge" id="projBadge">Down</div>
-      </div>
-      <hr class="projswap-midline">
-      <div class="projswap-fromto">
-        <div class="projswap-fromto-col">
-          <div class="projswap-fromto-label">Current Price</div>
-          <div class="projswap-fromto-value" id="projCurrentPrice">—</div>
+        <div class="pbridge-mid">
+          <div class="pbridge-badge" id="projBigPct"><span class="pctMain">—</span><span class="pctPercent">%</span></div>
+          <div class="pbridge-track">
+            <div class="pbridge-line"></div>
+            <div class="pbridge-head"></div>
+          </div>
         </div>
-        <div class="projswap-fromto-arrow">
-          <div class="projswap-fromto-arrow-line"></div>
-          <div class="projswap-fromto-arrow-head"></div>
-        </div>
-        <div class="projswap-fromto-col">
-          <div class="projswap-fromto-label">Projected 16-Week Average Price</div>
-          <div class="projswap-fromto-value" id="projAvgPrice">—</div>
+        <div class="pbridge-col pbridge-col-right">
+          <div class="pbridge-label">Projected 16-Week Average Price</div>
+          <div class="pbridge-value" id="projAvgPrice">—</div>
         </div>
       </div>
       <div class="projswap-meta">
@@ -1485,22 +1559,13 @@ function initTrendProjection(){
   const minusEl = document.querySelector('.projswap-minus');
 
   const trendColor = isPositive ? '#578157' : '#B9403F';
+  /* Badge: background = trendColor, sign embedded in text */
   if (pctEl) {
     const num = Math.abs(Number(pctRaw)).toFixed(1);
-    pctEl.style.color = trendColor;
-    pctEl.innerHTML = `<span class="pctMain">${num}</span><span class="pctPercent">%</span>`;
-  }
-  /* Show/hide the CSS minus-bar and toggle chevron direction */
-  if (minusEl) {
-    minusEl.style.display = pctRaw < 0 ? 'inline-block' : 'none';
-    minusEl.style.background = trendColor;
-  }
-  if (chevronEl) {
-    chevronEl.classList.toggle('is-up', isPositive);
-  }
-  if (badgeEl) {
-    badgeEl.textContent = isPositive ? 'Up' : 'Down';
-    badgeEl.style.color = isPositive ? '#1F6B3A' : '#7F8C8D';
+    const sign = pctRaw < 0 ? '−' : '+';
+    pctEl.style.background = trendColor;
+    pctEl.style.color = 'white';
+    pctEl.innerHTML = `${sign}<span class="pctMain">${num}</span><span class="pctPercent">%</span>`;
   }
   /* Current Price → Projected Price (from→to) */
   const cpEl = document.getElementById('projCurrentPrice');
@@ -1510,7 +1575,7 @@ function initTrendProjection(){
     const cpCode = String(ch.DT_CODE || ch.dt_code || '');
     cpEl.textContent = (!isNaN(cpNum) && cpNum > 0) ? fmtPriceByCode(cpNum, cpCode) : '—';
   }
-  /* Projected 16-Week Average Price */
+  /* Projected 16-Week Average Price — colored with trend */
   const avgPriceEl = document.getElementById('projAvgPrice');
   if (avgPriceEl) {
     const raw = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
@@ -1525,6 +1590,7 @@ function initTrendProjection(){
     } else {
       avgPriceEl.textContent = '—';
     }
+    avgPriceEl.style.color = trendColor;
   }
 
   /* Compute range and push to both hidden projRange and the confidence block */
@@ -2533,37 +2599,4 @@ function bindMeasureControls(){
 
   sel.innerHTML = '';
   (APP.measures || []).forEach((m, index) => {
-    const code = normalizeDtCode(m.dt_code);
-    const opt = document.createElement('option');
-    opt.value = code;
-    opt.textContent = m.display_name || m.measure_name || ((m.dt_code||'').charAt(0) + (m.dt_code||'').slice(1).toLowerCase());
-    opt.dataset.index = String(index);
-    sel.appendChild(opt);
-  });
-
-  sel.value = normalizeDtCode(APP.currentMeasureCode);
-  sel.onchange = () => {
-    APP.currentMeasureCode = normalizeDtCode(sel.value);
-    renderMeasure(APP.currentMeasureCode);
-  };
-
-  const step = (dir) => {
-    const codes = Array.from(sel.options).map(o => normalizeDtCode(o.value));
-    const current = normalizeDtCode(APP.currentMeasureCode || sel.value);
-    let idx = codes.indexOf(current);
-    if (idx < 0) idx = sel.selectedIndex >= 0 ? sel.selectedIndex : 0;
-    const nextIdx = (idx + dir + codes.length) % codes.length;
-    const code = codes[nextIdx];
-    sel.selectedIndex = nextIdx;
-    sel.value = code;
-    APP.currentMeasureCode = code;
-    renderMeasure(code);
-  };
-
-  if(prev) prev.onclick = () => step(-1);
-  if(next) next.onclick = () => step(1);
-}
-function renderMeasure(measureCode){
-  const code = normalizeDtCode(measureCode || APP.currentMeasureCode || CONFIG.DEFAULT_DT_CODE);
-  APP.currentMeasureCode = code;
-  const sel = do
+    const code = no
