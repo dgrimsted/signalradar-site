@@ -1125,15 +1125,17 @@
     opacity:.92;
   }
   .footText{
-    margin-top:6px;
-    font-size:26px;
-    font-weight:950;
-    line-height:1.1;
+    margin-top:4px;
+    font-size:15px;
+    font-weight:500;
+    line-height:1.2;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
   .footText small{
-    font-size:19px;
-    font-weight:650;
-    opacity:.85;
+    font-size:15px;
+    font-weight:500;
   }
 
   .footActions{
@@ -1474,7 +1476,7 @@ if (document.readyState === 'loading') {
 <footer class="footer">
 <div class="footLeft">
 <div class="footLabel" id="footerLabel">SIGNALRADAR INTELLIGENCE</div>
-<div class="footText" id="footerText">Copper <small>is one signal. Your business has dozens. Connect this intelligence to your margins and reforecast cycle.</small></div>
+<div class="footText" id="footerText">Copper is one signal. Your business has dozens. Connect this intelligence to your margins and reforecast cycle.</div>
 </div>
 <div class="footActions">
 <button class="btn" id="btn1">See how copper hits your margins →</button>
@@ -2080,7 +2082,7 @@ function applyChannelContent(measureCode){
   setHtml('mainDetails', '');
   applyInlineNarrative(ch.NewsSummary || ch.newssummary || '');
   setHtml('footerLabel', 'SIGNALRADAR INTELLIGENCE');
-  setHtml('footerText', `${label} <small>is one signal. Your business has dozens. Connect this intelligence to your margins and reforecast cycle.</small>`);
+  setHtml('footerText', `${label} is one signal. Your business has dozens. Connect this intelligence to your margins and reforecast cycle.`);
   setHtml('btn1', `See how this signal hits your margins →`);
   setHtml('btn2', '5‑min audit');
   setHtml('trendTitle', `${label.toUpperCase()} 16 WEEK TREND PROJECTION`);
