@@ -361,23 +361,42 @@
     max-width:none;
   }
 
-  .projswap-cardtitle{
+  .projswap-header-row{
     grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:52% 48%;
+    border-bottom:1px solid rgba(0,0,0,.12);
+    margin-bottom:clamp(6px,1.2cqi,14px);
+    padding-bottom:clamp(6px,1.2cqi,14px);
+  }
+  .projswap-headleft{
     text-align:center;
-    padding-right:48%;
+    padding-right:clamp(4px,0.8cqi,12px);
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
-    font-size:clamp(12px,2.4cqi,26px);
+    font-size:clamp(11px,2.2cqi,22px);
     line-height:1.15;
     letter-spacing:.015em;
     font-weight:700;
     color:#2C3E50;
     text-transform:uppercase;
-    margin:0;
-    padding-bottom:clamp(6px,1.2cqi,14px);
-    border-bottom:1px solid rgba(0,0,0,.12);
-    margin-bottom:clamp(6px,1.2cqi,14px);
     white-space:nowrap;
-    overflow:visible;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .projswap-headright{
+    text-align:center;
+    padding-left:clamp(4px,0.8cqi,12px);
+    font-family:'Oswald','Arial Narrow',Arial,sans-serif;
+    font-size:clamp(11px,2.2cqi,22px);
+    line-height:1.15;
+    letter-spacing:.015em;
+    font-weight:700;
+    color:#2C3E50;
+    text-transform:uppercase;
+    border-left:1px solid rgba(0,0,0,.10);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
 
   .projswap-mainRow{
@@ -462,34 +481,48 @@
     display:none;
   }
 
-  .projswap-lower{
+  .projswap-fromto{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:clamp(4px,1.2cqi,14px);
+    width:100%;
+    margin:clamp(4px,0.8cqi,10px) 0 0;
+  }
+  .projswap-fromto-col{
     display:flex;
     flex-direction:column;
     align-items:center;
-    width:fit-content;
-    margin:clamp(3px,0.7cqi,7px) auto 0;
-  }
-
-  .projswap-move{
-    margin:0;
     text-align:center;
-    font-family:inherit;
-    font-size:clamp(11px,2cqi,17px);
-    line-height:1.15;
-    color:#333333;
-    font-weight:400;
-    letter-spacing:-0.005em;
+    min-width:0;
   }
-
-  .projswap-avgprice-value{
-    margin:clamp(1px,0.2cqi,3px) 0 0 0;
+  .projswap-fromto-label{
     font-family:inherit;
-    font-size:clamp(22px,5cqi,46px);
+    font-size:clamp(9px,1.5cqi,12px);
+    color:#8a7f72;
+    font-weight:400;
+    line-height:1.2;
+    white-space:nowrap;
+    margin-bottom:clamp(1px,0.3cqi,4px);
+  }
+  .projswap-fromto-value{
+    font-family:inherit;
+    font-size:clamp(17px,4cqi,38px);
     font-weight:900;
-    line-height:1.1;
     color:#2C3E50;
+    line-height:1.05;
     letter-spacing:-0.01em;
-    align-self:center;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:100%;
+  }
+  .projswap-fromto-arrow{
+    font-size:clamp(14px,2.8cqi,26px);
+    color:#B5A88E;
+    flex-shrink:0;
+    line-height:1;
+    padding-top:clamp(12px,2.4cqi,22px);
   }
 
   .projswap-midline{
@@ -544,11 +577,11 @@
 
   .projswap-row{
     display:grid;
-    grid-template-columns:1fr clamp(50px,12cqi,140px) 30px;
+    grid-template-columns:1fr clamp(50px,12cqi,140px) 36px;
     column-gap:clamp(4px,1cqi,8px);
     align-items:center;
-    min-height:clamp(20px,3cqi,28px);
-    padding:clamp(1px,0.3cqi,3px) 0;
+    min-height:clamp(26px,4cqi,36px);
+    padding:clamp(2px,0.5cqi,5px) 0;
     border-bottom:1px solid rgba(0,0,0,.08);
   }
 
@@ -558,7 +591,7 @@
 
   .projswap-label{
     font-family:inherit;
-    font-size:clamp(9px,1.7cqi,12px);
+    font-size:clamp(11px,2.1cqi,15px);
     line-height:1.3;
     font-weight:400;
     color:#333;
@@ -568,7 +601,7 @@
   }
 
   .projswap-barbg{
-    height:clamp(10px,1.8cqi,16px);
+    height:clamp(12px,2.2cqi,18px);
     position:relative;
     background:#DDD6C8;
     width:100%;
@@ -592,7 +625,7 @@
 
   .projswap-pct{
     font-family:inherit;
-    font-size:clamp(8px,1.28cqi,11px);
+    font-size:clamp(10px,1.7cqi,13px);
     line-height:1;
     font-weight:400;
     color:#7F8C8D;
@@ -613,15 +646,16 @@
     box-shadow: var(--cardShadow);
   }
   .metric + .metric{ margin-top:14px; }
-  .metricTop{
-    background:var(--bg); /* #F5F1E5 */
+  .metricTop{ display:none; }
+  .metricMid{
+    display:block;
+    background:var(--bg);
     padding:14px 14px 16px;
     text-align:center;
   }
-  .metricMid{ display:none; }
   .metricBot{
-    background:var(--panel2); /* #F8E9CE */
-    padding:18px 14px;
+    background:var(--panel2);
+    padding:10px 10px 12px;
     text-align:center;
   }
   .mLabel{
@@ -657,43 +691,27 @@
     font-size:42px;
   }
 
-  .condRow{
-    margin-top:10px;
+  .condRow{ display:none; }
+  .sun{ display:none; }
+  .cloud{ display:none; }
+  .condText{ display:none; }
+  .confidenceSuffix{ display:none; }
+  .confPill{
     display:flex;
-    justify-content:center;
+    flex-direction:column;
     align-items:center;
-    gap:10px;
+    gap:2px;
   }
-  .sun{
-    width:30px;height:30px;border-radius:50%;
-    background: radial-gradient(circle at 30% 30%, #ffe49b, #f3b63c);
-    border:1px solid rgba(0,0,0,.12);
+  .confPill-icon{
+    font-size:clamp(18px,3cqi,26px);
+    line-height:1.1;
   }
-  .cloud{
-    width:44px;height:24px;border-radius:12px;
-    background:#98A8BE;
-    position:relative;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
-  }
-  .cloud:before{
-    content:"";
-    position:absolute;
-    width:22px;height:22px;border-radius:50%;
-    left:6px; top:-10px;
-    background:#98A8BE;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
-  }
-
-  .condText{
-    margin-top:10px;
-    font-weight:950;
-    color:#7b6b55;
+  .confPill-label{
+    font-size:clamp(9px,1.5cqi,11px);
+    text-transform:uppercase;
     letter-spacing:.6px;
-  }
-  .confidenceSuffix{
-    font-size:0.75em;
-    white-space:nowrap;
-    display:inline-block;
+    font-weight:600;
+    color:#8a7f72;
   }
 
   /* News cards row spans across chart + metrics width */
@@ -702,12 +720,12 @@
     margin-top:6px;
   }
   .newsHeader{
-    font-size:9px;
-    font-weight:950;
-    letter-spacing:.9px;
-    color:#736C63;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    color:#5f5446;
     text-transform:uppercase;
-    margin:0 0 10px;
+    margin:0 0 14px;
   }
 
   .newsGrid{
@@ -1274,7 +1292,10 @@
 <div class="trendTitle" id="trendTitle">COPPER 16 WEEK TREND PROJECTION</div>
 <div class="grid">
 <div class="projswap-shell">
-  <div class="projswap-cardtitle" id="projCardTitle">BALTIC DRY INDEX 16 WEEK TREND PROJECTION</div>
+  <div class="projswap-header-row">
+    <div class="projswap-headleft" id="projCardTitle">16 WEEK TREND PROJECTION</div>
+    <div class="projswap-headright">TOP FORCES BEHIND THE PROJECTION</div>
+  </div>
   <div class="projswap-left">
     <div class="projswap-main">
       <div class="projswap-mainRow">
@@ -1286,20 +1307,24 @@
         <div class="projswap-badge" id="projBadge">Down</div>
       </div>
       <hr class="projswap-midline">
-      <div class="projswap-lower">
-        <div class="projswap-move">Projected 16-Week Average Price</div>
-        <div style="height:clamp(4px,0.8cqi,9px)"></div>
-        <div class="projswap-avgprice-value" id="projAvgPrice">—</div>
-        <div style="height:clamp(4px,0.8cqi,9px)"></div>
-        <div class="projswap-meta">
-          <span class="projswap-meta-label">Range:</span>
-          <span class="projswap-meta-value" id="projRange">-12.2% to -24.4%</span>
+      <div class="projswap-fromto">
+        <div class="projswap-fromto-col">
+          <div class="projswap-fromto-label">Current Price</div>
+          <div class="projswap-fromto-value" id="projCurrentPrice">—</div>
         </div>
+        <div class="projswap-fromto-arrow">→</div>
+        <div class="projswap-fromto-col">
+          <div class="projswap-fromto-label">16-Week Projected</div>
+          <div class="projswap-fromto-value" id="projAvgPrice">—</div>
+        </div>
+      </div>
+      <div class="projswap-meta">
+        <span class="projswap-meta-label">Range:</span>
+        <span class="projswap-meta-value" id="projRange">—</span>
       </div>
     </div>
   </div>
   <div class="projswap-right">
-    <div class="projswap-title">Top Forces Behind the Projection</div>
     <div class="projswap-rows" id="predictorRows">
       <div class="projswap-row"><div class="projswap-label">Household Goods Demand</div><div class="projswap-barbg"><div class="projswap-bar is-top" style="width:100%"></div></div><div class="projswap-pct">25%</div></div>
       <div class="projswap-row"><div class="projswap-label">Korea and Asia Trade</div><div class="projswap-barbg"><div class="projswap-bar" style="width:60%"></div></div><div class="projswap-pct">15%</div></div>
@@ -1389,6 +1414,14 @@ function initTrendProjection(){
     badgeEl.textContent = isPositive ? 'Up' : 'Down';
     badgeEl.style.color = isPositive ? '#1F6B3A' : '#7F8C8D';
   }
+  /* Current Price → Projected Price (from→to) */
+  const cpEl = document.getElementById('projCurrentPrice');
+  if (cpEl) {
+    const rawCp2 = String(ch.currentprice || '').trim();
+    const cpNum = parseFloat(rawCp2.replace(/[^0-9.\-]/g, ''));
+    const cpCode = String(ch.DT_CODE || ch.dt_code || '');
+    cpEl.textContent = (!isNaN(cpNum) && cpNum > 0) ? fmtPriceByCode(cpNum, cpCode) : '—';
+  }
   /* Projected 16-Week Average Price */
   const avgPriceEl = document.getElementById('projAvgPrice');
   if (avgPriceEl) {
@@ -1447,12 +1480,10 @@ if (document.readyState === 'loading') {
 <div class="mBear" id="m2Trend">▼ Bearish</div>
 </div>
 <div class="metricBot">
-<div class="mLabel" id="m3Label">FORECAST CONFIDENCE</div>
-<div class="condRow">
-<div class="sun"></div>
-<div class="cloud"></div>
+<div class="confPill">
+  <span class="confPill-icon" id="confIcon">⛅</span>
+  <span class="confPill-label" id="m3Value">PARTLY SUNNY</span>
 </div>
-<div class="condText" id="m3Value">PARTLY SUNNY</div>
 </div>
 </div>
 </aside>
@@ -2143,16 +2174,16 @@ function applyMetricCardsFromChannel(ch){
   }
   setHtml('m2Trend', metricTrendText(Number(threeWeek || 0), 'change'));
 
-  setHtml('m3Label', 'FORECAST CONFIDENCE');
-  const mapeRaw = ch.MarketSignalForecastMAPE ?? ch.marketsignalforecastmape ?? ch.MarketSignalMAPE ?? ch.marketsignalmape ?? '';
-  const mapeNum = Number(mapeRaw);
-  let confidenceText = String(reliability || '').toUpperCase();
-  if (!Number.isNaN(mapeNum)) {
-    const half = mapeNum / 2;
-    const pct = Math.abs(half) <= 1 ? half * 100 : half;
-    confidenceText += ` <span class="confidenceSuffix">+/- ${Math.abs(pct).toFixed(1)}%</span>`;
-  }
-  setHtml('m3Value', confidenceText.trim());
+  /* Confidence: emoji icon + plain weather label */
+  const rel = String(reliability || '').toUpperCase();
+  let confIcon = '🌤️';
+  if (rel.includes('PARTLY') && rel.includes('SUNNY')) confIcon = '⛅';
+  else if (rel.includes('SUNNY')) confIcon = '☀️';
+  else if (rel.includes('CLOUDY')) confIcon = '☁️';
+  else if (rel.includes('WIND')) confIcon = '🌪️';
+  const confIconEl = document.getElementById('confIcon');
+  if (confIconEl) confIconEl.textContent = confIcon;
+  setHtml('m3Value', rel || 'MODERATE');
 }
 
 function metricTrendText(value, mode){
@@ -2504,33 +2535,4 @@ async function loadDashboard() {
       channelMeasures.push({
         dt_code: dt,
         measure_name: ch.CHANNEL || ch.channel || dt,
-        display_name: ch.CHANNEL || ch.channel || dt,
-        sort_order: String(channelMeasures.length + 1),
-        is_active: '1'
-      });
-    });
-    APP.measures = channelMeasures.length ? channelMeasures : FALLBACK.measures;
-    if (APP.measures.length) {
-      const currentValid = APP.measures.some(m => normalizeDtCode(m.dt_code) === normalizeDtCode(APP.currentMeasureCode));
-      if (!currentValid) {
-        APP.currentMeasureCode = normalizeDtCode(APP.measures[0].dt_code);
-      }
-    }
-    bindMeasureControls();
-    renderMeasure(APP.currentMeasureCode);
-  } catch(e) {
-    if (CONFIG.ALLOW_EMBEDDED_FALLBACK) {
-      console.warn('Blob fetch failed; using embedded fallback data.', e);
-      APP.all = FALLBACK;
-      APP.measures = FALLBACK.measures;
-      if (APP.measures && APP.measures.length) {
-        APP.currentMeasureCode = normalizeDtCode(APP.measures[0].dt_code);
-      }
-      bindMeasureControls();
-      renderMeasure(APP.currentMeasureCode);
-    } else {
-      showFatalBlobError(e.message || String(e));
-    }
-  }
-}
-document.addEventListener('DOMContentLoaded'
+  
