@@ -842,7 +842,7 @@
     gap:8px;
   }
   .oPanelHeaderAmber{
-    background:#f0d99a;
+    background:#F6E8C2;
     border-bottom-color:rgba(180,120,0,.2);
   }
   .oPanelHeaderAmber .oLabel{ color:#3a1f00; }
@@ -1406,7 +1406,21 @@ function initTrendProjection(){
     }
   }
 
-  if (rangeEl) rangeEl.textContent = formatProjectionRange(pctRaw);
+  if (rangeEl) {
+    const rawCp = String(ch.currentprice || '').trim();
+    const currentPriceRaw = parseFloat(rawCp.replace(/[^0-9.\-]/g, ''));
+    const code = String(ch.DT_CODE || ch.dt_code || '');
+    if (!isNaN(currentPriceRaw) && currentPriceRaw > 0 && Math.abs(pctRaw) > 0) {
+      const abs = Math.abs(pctRaw);
+      const spread = abs >= 15 ? 0.33 : (abs >= 8 ? 0.28 : 0.22);
+      const dir = pctRaw < 0 ? -1 : 1;
+      const loPrice = currentPriceRaw * (1 + dir * abs * (1 - spread) / 100);
+      const hiPrice = currentPriceRaw * (1 + dir * abs * (1 + spread) / 100);
+      rangeEl.textContent = fmtPriceByCode(loPrice, code) + ' to ' + fmtPriceByCode(hiPrice, code);
+    } else {
+      rangeEl.textContent = formatProjectionRange(pctRaw);
+    }
+  }
   if (confEl) confEl.textContent = confidenceFromChannel(ch);
 }
 if (document.readyState === 'loading') {
@@ -2192,7 +2206,7 @@ function openNarrativeOverlay() {
   document.getElementById('overlayTitle').innerHTML = headline;
   document.getElementById('overlayBody').innerHTML = fullText.replace(/\n+/g, '<br><br>');
 
-  head.style.background = '#f0d99a';
+  head.style.background = '#F6E8C2';
   document.getElementById('overlayTitle').style.color = '#3a1f00';
 
   /* Centre the card horizontally */
@@ -2217,10 +2231,10 @@ function openPanelOverlay(panelId) {
   document.getElementById('overlayBody').innerHTML  = bodyEl.innerHTML;
   const head = document.getElementById('overlayHead');
   if (panelId === 'panel1') {
-    head.style.background = '#f0d99a';
+    head.style.background = '#F6E8C2';
     document.getElementById('overlayTitle').style.color = '#3a1f00';
   } else {
-    head.style.background = '#f0d99a';
+    head.style.background = '#F6E8C2';
     document.getElementById('overlayTitle').style.color = '#3a1f00';
   }
   /* Anchor right edge to panel, grow upward from panel bottom */
@@ -2519,29 +2533,4 @@ async function loadDashboard() {
     }
   }
 }
-document.addEventListener('DOMContentLoaded', loadDashboard);
-
-</script>
-
-
-<div class="errorOverlay" id="errorOverlay">
-  <div class="errorPanel">
-    <h2>SignalRadar Blob Load Failure</h2>
-    <p>The dashboard is configured to require fresh Blob CSV data. Embedded fallback is disabled.</p>
-    <pre id="errorDetails">No details available.</pre>
-  </div>
-</div>
-
-
-<div class="oOverlay" id="panelOverlay">
-  <div class="oOverlayCard" id="overlayCard">
-    <div class="oOverlayHead" id="overlayHead">
-      <div class="oOverlayTitle" id="overlayTitle"></div>
-      <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
-    </div>
-    <div class="oOverlayBody" id="overlayBody"></div>
-  </div>
-</div>
-
-</body>
-</html>
+document.addEventListener('DOMContentLoaded'
