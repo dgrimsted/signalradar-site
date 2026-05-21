@@ -309,26 +309,25 @@
 
   /* ── PROJECTION PANEL ── */
   .projswap-shell{
-    position:relative;
     width:100%;
     display:grid;
-    grid-template-columns:56% 44%;
+    grid-template-columns:48% 52%;
     grid-template-rows:auto auto;
     gap:0;
     padding:clamp(6px,1.2cqi,12px) clamp(12px,2cqi,18px) clamp(4px,0.8cqi,8px) clamp(16px,2.8cqi,28px);
     background:#F5F1E8;
     container-type:inline-size;
   }
-  /* Floating confidence — no background, upper-right corner of shell */
+  /* Floating confidence — anchored upper-right inside projswap-left */
   .confFloat{
     position:absolute;
-    top:clamp(30px,5.5cqi,54px);
-    right:clamp(10px,1.8cqi,18px);
+    top:0;
+    right:clamp(12px,2.5cqi,28px);
     text-align:center;
     background:transparent;
     border:none;
     z-index:3;
-    min-width:clamp(70px,11cqi,96px);
+    min-width:clamp(60px,9cqi,84px);
   }
   .cfLabel{
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
@@ -356,6 +355,7 @@
   }
 
   .projswap-left{
+    position:relative;
     padding:0 clamp(12px,2.5cqi,28px) 0 0;
     display:flex;
     flex-direction:column;
@@ -390,7 +390,7 @@
   .projswap-header-row{
     grid-column:1 / -1;
     display:grid;
-    grid-template-columns:56% 44%;
+    grid-template-columns:48% 52%;
     border-bottom:1px solid rgba(0,0,0,.12);
     margin-bottom:clamp(6px,1.2cqi,14px);
     padding-bottom:clamp(6px,1.2cqi,14px);
@@ -1483,6 +1483,11 @@
     <div class="projswap-headright">TOP FORCES BEHIND THE PROJECTION</div>
   </div>
   <div class="projswap-left">
+    <div class="confFloat">
+      <div class="cfLabel" id="m3Label">FORECAST<br>CONFIDENCE</div>
+      <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+      <div class="condText" id="m3Value">PARTLY SUNNY</div>
+    </div>
     <div class="projswap-main">
       <div class="pbridge">
         <div class="pbridge-col">
@@ -1516,11 +1521,6 @@
       <div class="projswap-row"><div class="projswap-label">Korea Demand</div><div class="projswap-barbg"><div class="projswap-bar" style="width:20%"></div></div><div class="projswap-pct">5%</div></div>
       <div class="projswap-row"><div class="projswap-label">Nontheresis's Demand</div><div class="projswap-barbg"><div class="projswap-bar" style="width:8%"></div></div><div class="projswap-pct">2%</div></div>
     </div>
-  </div>
-  <div class="confFloat">
-    <div class="cfLabel" id="m3Label">FORECAST<br>CONFIDENCE</div>
-    <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
-    <div class="condText" id="m3Value">PARTLY SUNNY</div>
   </div>
 </div>
 <script>
@@ -2596,4 +2596,5 @@ async function loadImages(measureCode){
   const mapFile = MAP_FILE_MAP[code] || meta.map_image_file || `map_${code}.png`;
 
   if(hero){
-    hero.alt = `${meta.display_name || meta.measure_name || code} hero 
+    hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
+    he
