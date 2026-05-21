@@ -2061,14 +2061,7 @@ function applyInlineNarrative(fullText){
   if (moreLink) {
     moreLink.addEventListener('click', (ev) => {
       ev.preventDefault();
-      detailsEl.innerHTML = htmlFull + ' <a href="#" class="narrativeInlineMore" data-mode="collapse">(LESS)</a>';
-      const lessLink = detailsEl.querySelector('.narrativeInlineMore[data-mode="collapse"]');
-      if (lessLink) {
-        lessLink.addEventListener('click', (ev2) => {
-          ev2.preventDefault();
-          applyInlineNarrative(raw);
-        });
-      }
+      openNarrativeOverlay();
     });
   }
 }
@@ -2183,6 +2176,37 @@ function applyOverviewFromChannel(ch){
 }
 
 
+function openNarrativeOverlay() {
+  const detailsEl = document.getElementById('mainDetails');
+  const headlineEl = document.getElementById('headline');
+  const head = document.getElementById('overlayHead');
+  const card = document.getElementById('overlayCard');
+  const overlay = document.getElementById('panelOverlay');
+  if (!detailsEl || !card || !overlay) return;
+
+  const fullText = detailsEl.dataset.fulltext || detailsEl.innerText || '';
+  const headline = headlineEl ? headlineEl.innerText : 'Full Analysis';
+
+  document.getElementById('overlayTitle').innerHTML = headline;
+  document.getElementById('overlayBody').innerHTML = fullText.replace(/\n+/g, '<br><br>');
+
+  head.style.background = '#f0d99a';
+  document.getElementById('overlayTitle').style.color = '#3a1f00';
+
+  /* Centre the card horizontally */
+  card.style.top = '10vh';
+  card.style.bottom = 'auto';
+  card.style.left = '0';
+  card.style.right = '0';
+  card.style.marginLeft = 'auto';
+  card.style.marginRight = 'auto';
+  card.style.width = 'min(600px, 90vw)';
+  card.style.maxHeight = '80vh';
+
+  overlay.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+
 function openPanelOverlay(panelId) {
   const labelEl = document.getElementById(panelId === 'panel1' ? 'panel1Label' : 'panel23Label');
   const bodyEl  = document.getElementById(panelId + 'Line1');
@@ -2227,17 +2251,7 @@ document.addEventListener('click', function(e){
 
 document.addEventListener('click', function(e){
   if (e.target && e.target.id === 'narrativeMoreBtn') {
-    const detailsEl = document.getElementById('mainDetails');
-    const btn = document.getElementById('narrativeMoreBtn');
-    if (!detailsEl || !btn) return;
-    const collapsed = detailsEl.classList.contains('is-collapsed');
-    if (collapsed) {
-      detailsEl.classList.remove('is-collapsed');
-      btn.textContent = 'Less';
-    } else {
-      detailsEl.classList.add('is-collapsed');
-      btn.textContent = 'More';
-    }
+    openNarrativeOverlay();
   }
 });
 
