@@ -257,8 +257,10 @@
     grid-template-columns: 1fr;
     gap:22px;
     align-items:start;
-    padding-right:16px;
+    padding-right:86px;
+    padding-top:0;
     box-sizing:border-box;
+    position:relative;
   }
 
   
@@ -329,10 +331,12 @@
     flex-direction:column;
     align-items:center;
     text-align:center;
-    flex-shrink:0;
-    width:82px;
-    padding:20px 4px 0 8px;
+    width:78px;
+    padding:8px 4px 0 4px;
     background:transparent;
+    position:absolute;
+    top:0;
+    right:12px;
   }
   .cfLabel{
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
@@ -342,14 +346,16 @@
     color:#7a6f62;
     text-transform:uppercase;
     line-height:1.2;
-    margin-bottom:3px;
+    margin-bottom:0;
     white-space:nowrap;
   }
+  .confSpacer{ height:7px; width:100%; flex-shrink:0; }
   .confFloat .sun{ width:18px; height:18px; }
   .confFloat .cloud{ width:26px; height:14px; }
   .confFloat .cloud:before{ width:12px; height:12px; left:3px; top:-6px; }
-  .confFloat .condRow{ gap:4px; margin-top:3px; }
-  .confFloat .condText{ font-size:9px; margin-top:3px; letter-spacing:.2px; }
+  .confFloat .condRow{ gap:4px; margin-top:0; }
+  .confFloat .condText{ font-size:9px; margin-top:0; letter-spacing:.2px; line-height:1.4; }
+  .confFloat .confidenceSuffix{ font-size:14px; font-weight:600; display:block; margin-top:1px; letter-spacing:0; }
 
   .projswap-left,
   .projswap-right{
@@ -396,12 +402,15 @@
     grid-column:1 / -1;
     display:grid;
     grid-template-columns:50% 50%;
+    align-items:center;
     border-bottom:1px solid rgba(0,0,0,.12);
     margin-bottom:clamp(6px,1.2cqi,14px);
     padding-bottom:clamp(6px,1.2cqi,14px);
   }
   .projswap-headleft{
-    text-align:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     padding-right:clamp(4px,0.8cqi,12px);
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
     font-size:clamp(11px,2.2cqi,22px);
@@ -417,7 +426,10 @@
   .projswap-headright{
     display:flex;
     align-items:center;
+    justify-content:center;
+    text-align:center;
     padding-left:clamp(4px,0.8cqi,12px);
+    padding-right:clamp(4px,0.8cqi,12px);
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
     font-size:clamp(11px,2.2cqi,22px);
     line-height:1.15;
@@ -425,18 +437,7 @@
     font-weight:700;
     color:#2C3E50;
     text-transform:uppercase;
-    border-left:1px solid rgba(0,0,0,.10);
     overflow:hidden;
-  }
-  .projswap-headright-title{
-    flex:1;
-    text-align:center;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .projswap-headright > .confFloat{
-    padding-right:clamp(4px,0.8cqi,10px);
   }
 
   .projswap-mainRow{
@@ -580,42 +581,44 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:clamp(3px,0.6cqi,6px);
+    gap:0;
     width:100%;
-    margin:clamp(6px,1.2cqi,14px) 0 0;
+    margin:0;
   }
   /* Top row: badge centered */
   .pbridge-badge-row{
     display:flex;
     justify-content:center;
     width:100%;
+    margin-bottom:clamp(8px,1.6cqi,16px);
   }
-  /* Bottom row: left price | arrow | right price */
+  /* 2-row grid: row1=labels, row2=values+arrow */
   .pbridge-prices{
     display:grid;
     grid-template-columns:1fr auto 1fr;
-    align-items:center;
-    gap:clamp(6px,1.2cqi,14px);
+    column-gap:clamp(6px,1.2cqi,14px);
+    row-gap:clamp(2px,0.4cqi,5px);
     width:100%;
-  }
-  .pbridge-col{
-    display:flex;
-    flex-direction:column;
     align-items:center;
+  }
+  .pbridge-prices .pbridge-label{
     text-align:center;
+    align-self:end;
+  }
+  .pbridge-prices .pbridge-value{
+    text-align:center;
+    align-self:center;
     min-width:0;
   }
   .pbridge-col-right{
-    align-items:center;
     text-align:center;
   }
   .pbridge-label{
-    font-size:clamp(9px,1.5cqi,12px);
+    font-size:clamp(8px,1.3cqi,11px);
     color:#8a7f72;
     font-weight:400;
     line-height:1.3;
     white-space:normal;
-    margin-bottom:clamp(2px,0.4cqi,4px);
   }
   .pbridge-value{
     font-family:inherit;
@@ -651,14 +654,14 @@
   }
   .pbridge-line{
     width:clamp(14px,2.5cqi,26px);
-    height:clamp(3px,0.5cqi,4px);
+    height:clamp(5px,0.75cqi,6px);
     background:#A89878;
     border-radius:2px 0 0 2px;
   }
   .pbridge-head{
-    border-top:clamp(5px,1cqi,9px) solid transparent;
-    border-bottom:clamp(5px,1cqi,9px) solid transparent;
-    border-left:clamp(8px,1.5cqi,13px) solid #A89878;
+    border-top:clamp(8px,1.5cqi,14px) solid transparent;
+    border-bottom:clamp(8px,1.5cqi,14px) solid transparent;
+    border-left:clamp(12px,2.25cqi,20px) solid #A89878;
     flex-shrink:0;
   }
 
@@ -707,23 +710,14 @@
   }
 
   .projswap-rows{
-    display:flex;
-    flex-direction:column;
-    gap:0;
+    display:grid;
+    grid-template-columns:max-content 1fr auto;
+    column-gap:clamp(4px,1cqi,8px);
+    align-items:center;
   }
 
   .projswap-row{
-    display:grid;
-    grid-template-columns:auto clamp(70px,10cqi,110px) auto;
-    column-gap:clamp(4px,1cqi,8px);
-    align-items:center;
-    min-height:clamp(26px,4cqi,36px);
-    padding:clamp(2px,0.5cqi,5px) 0;
-    border-bottom:1px solid rgba(0,0,0,.08);
-  }
-
-  .projswap-row:last-child{
-    border-bottom:none;
+    display:contents;
   }
 
   .projswap-label{
@@ -733,16 +727,31 @@
     font-weight:400;
     color:#333;
     white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    padding-right:4px;
+    padding:clamp(4px,0.8cqi,7px) clamp(2px,0.5cqi,5px) clamp(4px,0.8cqi,7px) 0;
+    border-bottom:1px solid rgba(0,0,0,.08);
+    min-height:clamp(26px,4cqi,36px);
+    display:flex;
+    align-items:center;
+  }
+
+  .projswap-barbg{
+    border-bottom:1px solid rgba(0,0,0,.08);
+  }
+
+  .projswap-pct{
+    border-bottom:1px solid rgba(0,0,0,.08);
+  }
+
+  .projswap-row:last-child .projswap-label,
+  .projswap-row:last-child .projswap-barbg,
+  .projswap-row:last-child .projswap-pct{
+    border-bottom:none;
   }
 
   .projswap-barbg{
     height:clamp(12px,2.2cqi,18px);
     position:relative;
     background:#DDD6C8;
-    width:100%;
     overflow:hidden;
     border-radius:2px;
   }
@@ -767,7 +776,7 @@
     line-height:1;
     font-weight:400;
     color:#7F8C8D;
-    text-align:left;
+    text-align:right;
     white-space:nowrap;
   }
 /* Metrics column */
@@ -1511,18 +1520,15 @@
           <div class="pbridge-badge" id="projBigPct"><span class="pctMain">—</span><span class="pctPercent">%</span></div>
         </div>
         <div class="pbridge-prices">
-          <div class="pbridge-col">
-            <div class="pbridge-label">Current Price</div>
-            <div class="pbridge-value" id="projCurrentPrice">—</div>
-          </div>
+          <div class="pbridge-label">Current Price</div>
+          <div></div>
+          <div class="pbridge-label">Projected 16-Week<br>Average Price</div>
+          <div class="pbridge-value" id="projCurrentPrice">—</div>
           <div class="pbridge-track">
             <div class="pbridge-line"></div>
             <div class="pbridge-head"></div>
           </div>
-          <div class="pbridge-col pbridge-col-right">
-            <div class="pbridge-label">Projected 16-Week Average Price</div>
-            <div class="pbridge-value" id="projAvgPrice">—</div>
-          </div>
+          <div class="pbridge-value pbridge-col-right" id="projAvgPrice">—</div>
         </div>
       </div>
       <div class="projswap-meta">
@@ -1674,7 +1680,9 @@ if (document.readyState === 'loading') {
 </div>
 <div class="confFloat">
   <div class="cfLabel" id="m3Label">FORECAST<br>CONFIDENCE</div>
+  <div class="confSpacer"></div>
   <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+  <div class="confSpacer"></div>
   <div class="condText" id="m3Value">PARTLY SUNNY</div>
 </div>
 </div>
@@ -2392,7 +2400,7 @@ function applyMetricCardsFromChannel(ch){
   if (!Number.isNaN(mapeNum) && mapeNum !== 0) {
     const half = mapeNum / 2;
     const pct = Math.abs(half) <= 1 ? half * 100 : half;
-    confidenceText += ` <span class="confidenceSuffix">+/- ${Math.abs(pct).toFixed(1)}%</span>`;
+    confidenceText += `<br><span class="confidenceSuffix">+/- ${Math.abs(pct).toFixed(1)}%</span>`;
   }
   setHtml('m3Value', confidenceText.trim());
 }
@@ -2612,4 +2620,187 @@ async function loadImages(measureCode){
   const map = document.getElementById('mapImg');
   const embeddedHero = getEmbeddedHero(code);
   const heroFile = HERO_FILE_MAP[code] || meta.hero_image_file || '';
-  // Per-measure map: prefer 
+  // Per-measure map: prefer an explicit MAP_FILE_MAP entry, otherwise use the
+  // canonical map_<DT_CODE>.png convention that v24_no_insights.py writes to
+  // blob. The map.onerror handler below falls back to FALLBACK_MAP
+  // (signal-origin-map-fixed.png) for any DT_CODE whose per-measure file
+  // doesn't exist yet, so this is safe.
+  const mapFile = MAP_FILE_MAP[code] || meta.map_image_file || `map_${code}.png`;
+
+  if(hero){
+    hero.alt = `${meta.display_name || meta.measure_name || code} hero image`;
+    hero.removeAttribute('src');
+    const heroBox = hero.parentElement;
+    if(heroBox && CONFIG.BLOB_SAS_TOKEN && heroFile){
+      const heroUrl = `${CONFIG.BLOB_BASE_URL}/${heroFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260429g`;
+      // Set as background-image so we can force background-size:100% 100% (true stretch).
+      heroBox.style.backgroundImage = `url("${heroUrl}")`;
+    } else if (heroBox && embeddedHero) {
+      heroBox.style.backgroundImage = `url("${embeddedHero}")`;
+    }
+  }
+
+  if(map){
+    map.alt = `${meta.display_name || meta.measure_name || code} signal origin map`;
+    if(CONFIG.BLOB_SAS_TOKEN && mapFile){
+      const mapUrl = `${CONFIG.BLOB_BASE_URL}/${mapFile}?${CONFIG.BLOB_SAS_TOKEN}&v=20260505b`;
+      map.onerror = ()=>{ map.onerror = null; if(typeof FALLBACK_MAP !== 'undefined') map.src = FALLBACK_MAP; };
+      map.src = mapUrl;
+    } else if(typeof FALLBACK_MAP !== 'undefined') {
+      map.src = FALLBACK_MAP;
+    }
+  }
+}
+
+function bindMeasureControls(){
+  const sel = document.getElementById('measureSelect');
+  const prev = document.getElementById('prevMeasureBtn');
+  const next = document.getElementById('nextMeasureBtn');
+  if(!sel) return;
+
+  sel.innerHTML = '';
+  (APP.measures || []).forEach((m, index) => {
+    const code = normalizeDtCode(m.dt_code);
+    const opt = document.createElement('option');
+    opt.value = code;
+    opt.textContent = m.display_name || m.measure_name || ((m.dt_code||'').charAt(0) + (m.dt_code||'').slice(1).toLowerCase());
+    opt.dataset.index = String(index);
+    sel.appendChild(opt);
+  });
+
+  sel.value = normalizeDtCode(APP.currentMeasureCode);
+  sel.onchange = () => {
+    APP.currentMeasureCode = normalizeDtCode(sel.value);
+    renderMeasure(APP.currentMeasureCode);
+  };
+
+  const step = (dir) => {
+    const codes = Array.from(sel.options).map(o => normalizeDtCode(o.value));
+    const current = normalizeDtCode(APP.currentMeasureCode || sel.value);
+    let idx = codes.indexOf(current);
+    if (idx < 0) idx = sel.selectedIndex >= 0 ? sel.selectedIndex : 0;
+    const nextIdx = (idx + dir + codes.length) % codes.length;
+    const code = codes[nextIdx];
+    sel.selectedIndex = nextIdx;
+    sel.value = code;
+    APP.currentMeasureCode = code;
+    renderMeasure(code);
+  };
+
+  if(prev) prev.onclick = () => step(-1);
+  if(next) next.onclick = () => step(1);
+}
+function renderMeasure(measureCode){
+  const code = normalizeDtCode(measureCode || APP.currentMeasureCode || CONFIG.DEFAULT_DT_CODE);
+  APP.currentMeasureCode = code;
+  const sel = document.getElementById('measureSelect');
+  if (sel) sel.value = code;
+  const data = APP.all;
+  const drivers = filterByMeasure(data.drivers, code);
+  const disruptions = filterByMeasure(data.disruptions, code);
+  const ch = getChannelRow(code) || {};
+  // Use executive_predictors first; fall back to normalized predictors.csv when empty
+  let predictors = filterByMeasure(data.executive_predictors || [], code);
+  if (!predictors.length && data.predictors_fallback && data.predictors_fallback.length) {
+    predictors = filterByMeasure(data.predictors_fallback, code);
+  }
+  applyChannelContent(code);
+  renderDrivers(drivers);
+  renderDisruptions(disruptions);
+  renderPredictors(predictors);
+  const change = parsePct(ch['16weektrend'] ?? '0');
+  updateArrow(change, ch);
+  applyOverviewFromChannel(ch);
+  /* Update hero and map for this measure */
+  loadImages(code).catch(() => {});
+
+  /* Run clips once map image is definitely laid out */
+  (function scheduleClips(){
+    const mapImg = document.getElementById('mapImg');
+    if (mapImg && mapImg.complete && mapImg.naturalHeight > 0) {
+      requestAnimationFrame(() => requestAnimationFrame(applyPanelClips));
+    } else if (mapImg) {
+      mapImg.addEventListener('load', function(){ requestAnimationFrame(applyPanelClips); }, {once:true});
+      setTimeout(applyPanelClips, 800);
+    }
+  })();
+}
+
+async function loadDashboard() {
+  try {
+    // Five CSVs; dashboard_measures.csv is inert but fetched for compatibility
+    const [channels, drivers, disruptions, executivePredictors, predictorsRaw] = await Promise.all([
+      fetchCsv('channels.csv'),
+      fetchCsv('dashboard_news_drivers.csv').catch(() => []),
+      fetchCsv('dashboard_disruption_events.csv').catch(() => []),
+      fetchCsv('executive_predictors.csv').catch(() => []),
+      fetchCsv('predictors.csv').catch(() => [])
+    ]);
+
+    // Normalize predictors.csv rows to the same shape as executive_predictors rows
+    const predictors_fallback = (predictorsRaw || []).map(r => Object.assign({}, r, {
+      dt_code: r.dt_code || r.DT_CODE || r.Y_DT_CODE || r.y_dt_code,
+      coefficient: (r.coefficient !== undefined && r.coefficient !== '') ? r.coefficient : r.impact,
+      variable: r.variable || r.category
+    }));
+    const data = { channels, drivers, disruptions, executive_predictors: executivePredictors, predictors_fallback };
+    APP.all = data;
+    const channelMeasures = [];
+    const seenDt = new Set();
+    (data.channels || []).forEach(ch => {
+      const dt = normalizeDtCode(ch.DT_CODE || ch.dt_code);
+      if (!dt || seenDt.has(dt)) return;
+      seenDt.add(dt);
+      channelMeasures.push({
+        dt_code: dt,
+        measure_name: ch.CHANNEL || ch.channel || dt,
+        display_name: ch.CHANNEL || ch.channel || dt,
+        sort_order: String(channelMeasures.length + 1),
+        is_active: '1'
+      });
+    });
+    APP.measures = channelMeasures.length ? channelMeasures : FALLBACK.measures;
+    if (APP.measures.length) {
+      const currentValid = APP.measures.some(m => normalizeDtCode(m.dt_code) === normalizeDtCode(APP.currentMeasureCode));
+      if (!currentValid) {
+        APP.currentMeasureCode = normalizeDtCode(APP.measures[0].dt_code);
+      }
+    }
+    bindMeasureControls();
+    renderMeasure(APP.currentMeasureCode);
+  } catch(e) {
+    if (CONFIG.ALLOW_EMBEDDED_FALLBACK) {
+      console.warn('Blob fetch failed; using embedded fallback data.', e);
+      APP.all = FALLBACK;
+      APP.measures = FALLBACK.measures;
+      if (APP.measures && APP.measures.length) {
+        APP.currentMeasureCode = normalizeDtCode(APP.measures[0].dt_code);
+      }
+      bindMeasureControls();
+      renderMeasure(APP.currentMeasureCode);
+    } else {
+      showFatalBlobError(e.message || String(e));
+    }
+  }
+}
+document.addEventListener('DOMContentLoaded', loadDashboard);
+
+</script>
+
+
+<div class="errorOverlay" id="errorOverlay">
+  <div class="errorPanel">
+    <h2>SignalRadar Blob Load Failure</h2>
+    <p>The dashboard is configured to require fresh Blob CSV data. Embedded fallback is disabled.</p>
+    <pre id="errorDetails">No details available.</pre>
+  </div>
+</div>
+
+
+<div class="oOverlay" id="panelOverlay">
+  <div class="oOverlayCard" id="overlayCard">
+    <div class="oOverlayHead" id="overlayHead">
+      <div class="oOverlayTitle" id="overlayTitle"></div>
+      <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
+    </div>
+    <div class="oOverlayBody
