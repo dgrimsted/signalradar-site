@@ -1032,7 +1032,7 @@
     grid-column:1 / 3;
     margin-top:8px;
     display:grid;
-    grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
     gap:16px;
     align-items:stretch;
   }
@@ -1063,9 +1063,8 @@
     color:#2e1800;
     text-transform:uppercase;
     line-height:1.3;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    white-space:normal;
+    overflow:visible;
   }
   /* ── Panel header band + body ── */
   .oPanelHeader{
@@ -2803,4 +2802,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
       <div class="oOverlayTitle" id="overlayTitle"></div>
       <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
     </div>
-    <div class="oOv
+    <div class="oOverlayBody" id="overlayBody
