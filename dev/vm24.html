@@ -325,48 +325,47 @@
     container-type:inline-size;
   }
   /* Confidence widget — sibling of .chart inside .chartWrap; completely outside tan box */
-  /* Inline confidence strip — inside projswap-left, below range */
+  /* Inline confidence strip — design 3, no background, no separator, sits right of range */
   .confInline{
     display:flex;
     flex-direction:row;
     align-items:center;
-    gap:clamp(6px,1cqi,10px);
-    margin-top:clamp(6px,1.2cqi,10px);
-    padding-top:clamp(5px,0.9cqi,8px);
-    border-top:1px solid rgba(0,0,0,.08);
+    gap:clamp(4px,0.7cqi,7px);
+    margin-top:0;
+    margin-left:clamp(6px,1.2cqi,12px);
     background:transparent;
   }
   .confInline .condRow{
-    gap:3px;
+    gap:2px;
     margin-top:0;
-    opacity:0.55;
+    opacity:0.40;
     flex-shrink:0;
   }
-  .confInline .sun{ width:16px; height:16px; }
-  .confInline .cloud{ width:22px; height:12px; }
-  .confInline .cloud:before{ width:10px; height:10px; left:3px; top:-5px; }
+  .confInline .sun{ width:15px; height:15px; }
+  .confInline .cloud{ width:20px; height:11px; }
+  .confInline .cloud:before{ width:9px; height:9px; left:3px; top:-4px; }
   .confInlineText{
     display:flex;
     flex-direction:column;
-    line-height:1.25;
+    line-height:1.2;
   }
   .confInline .condText{
-    font-family:'Oswald','Arial Narrow',Arial,sans-serif;
-    font-size:clamp(9px,1.6cqi,11px);
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:clamp(9px,1.5cqi,11px);
     font-weight:500;
-    color:#8a7f72;
-    letter-spacing:.04em;
+    color:#a09585;
+    letter-spacing:.05em;
     text-transform:uppercase;
     margin-top:0;
   }
   .confInline .confidenceSuffix{
     font-family:'Helvetica Neue',Arial,sans-serif;
-    font-size:clamp(8px,1.3cqi,10px);
+    font-size:clamp(8px,1.2cqi,10px);
     font-weight:400;
-    color:#a09080;
+    color:#b8aca0;
     letter-spacing:.02em;
     display:block;
-    margin-top:0;
+    margin-top:1px;
   }
 
   .projswap-left,
@@ -645,15 +644,15 @@
     max-width:100%;
   }
   .pbridge-badge{
-    color:white;
-    border-radius:clamp(10px,1.8cqi,18px);
-    padding:clamp(3px,0.6cqi,7px) clamp(10px,2cqi,20px);
-    font-size:clamp(13px,2.8cqi,26px);
+    background:none;
+    border-radius:0;
+    padding:0;
+    font-size:clamp(28px,5.5cqi,52px);
     font-weight:900;
     white-space:nowrap;
-    line-height:1.2;
+    line-height:1.1;
     text-align:center;
-    letter-spacing:-0.01em;
+    letter-spacing:-0.02em;
   }
   .pbridge-badge .pctPercent{
     font-size:0.62em;
@@ -686,7 +685,7 @@
   .projswap-meta{
     margin:clamp(6px,1.2cqi,12px) 0 0 0;
     display:flex;
-    align-items:baseline;
+    align-items:center;
     justify-content:center;
     gap:clamp(5px,0.9cqi,9px);
     font-family:inherit;
@@ -1545,11 +1544,11 @@
       <div class="projswap-meta">
         <span class="projswap-meta-label">Range:</span>
         <span class="projswap-meta-value" id="projRange">—</span>
-      </div>
-      <div class="confInline">
-        <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
-        <div class="confInlineText">
-          <span class="condText" id="m3Value">SUNNY</span>
+        <div class="confInline">
+          <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+          <div class="confInlineText">
+            <span class="condText" id="m3Value">SUNNY</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1627,12 +1626,12 @@ function initTrendProjection(){
   const minusEl = document.querySelector('.projswap-minus');
 
   const trendColor = isPositive ? '#578157' : '#B9403F';
-  /* Badge: background = trendColor, sign embedded in text */
+  /* Badge: bare large number, trend-colored, no background */
   if (pctEl) {
     const num = Math.abs(Number(pctRaw)).toFixed(1);
     const sign = pctRaw < 0 ? '−' : '+';
-    pctEl.style.background = trendColor;
-    pctEl.style.color = 'white';
+    pctEl.style.background = 'none';
+    pctEl.style.color = trendColor;
     pctEl.innerHTML = `${sign}<span class="pctMain">${num}</span><span class="pctPercent">%</span>`;
   }
   /* Current Price → Projected Price (from→to) */
@@ -2811,4 +2810,6 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
   <div class="oOverlayCard" id="overlayCard">
     <div class="oOverlayHead" id="overlayHead">
       <div class="oOverlayTitle" id="overlayTitle"></div>
-      <button class="oOverlayClose" oncli
+      <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
+    </div>
+    <div class="oOverlayBody" id="overla
