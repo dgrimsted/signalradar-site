@@ -325,14 +325,14 @@
     container-type:inline-size;
   }
   /* Confidence widget — sibling of .chart inside .chartWrap; completely outside tan box */
-  /* Confidence strip — sits inside headleft title bar, centered below title */
+  /* Confidence strip — upper-right of trend box, inside headright */
   .confInline{
     display:flex;
     flex-direction:row;
     align-items:center;
-    justify-content:center;
     gap:clamp(4px,0.7cqi,7px);
     background:transparent;
+    flex-shrink:0;
   }
   .confInline .condRow{
     gap:2px;
@@ -421,10 +421,8 @@
   }
   .projswap-headleft{
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:clamp(3px,0.5cqi,5px);
     padding-right:clamp(4px,0.8cqi,12px);
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
     font-size:clamp(11px,2.2cqi,22px);
@@ -433,13 +431,15 @@
     font-weight:700;
     color:#2C3E50;
     text-transform:uppercase;
+    white-space:nowrap;
     overflow:hidden;
+    text-overflow:ellipsis;
   }
   .projswap-headright{
     display:flex;
     align-items:center;
-    justify-content:center;
-    text-align:center;
+    justify-content:space-between;
+    gap:clamp(6px,1cqi,10px);
     padding-left:clamp(4px,0.8cqi,12px);
     padding-right:clamp(4px,0.8cqi,12px);
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
@@ -1521,8 +1521,9 @@
 <div class="grid">
 <div class="projswap-shell">
   <div class="projswap-header-row">
-    <div class="projswap-headleft">
-      <span id="projCardTitle">16 WEEK TREND PROJECTION</span>
+    <div class="projswap-headleft" id="projCardTitle">16 WEEK TREND PROJECTION</div>
+    <div class="projswap-headright">
+      TOP FORCES BEHIND THE PROJECTION
       <div class="confInline">
         <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
         <div class="confInlineText">
@@ -1530,7 +1531,6 @@
         </div>
       </div>
     </div>
-    <div class="projswap-headright">TOP FORCES BEHIND THE PROJECTION</div>
   </div>
   <div class="projswap-left">
     <div class="projswap-main">
@@ -2815,4 +2815,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
       <div class="oOverlayTitle" id="overlayTitle"></div>
       <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
     </div>
-    <div class="oOverlay
+    <div class="oOverlayBody" id="overlayBody"><
