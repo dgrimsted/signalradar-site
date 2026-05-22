@@ -260,7 +260,6 @@
     padding-right:18px;
     padding-top:0;
     box-sizing:border-box;
-    position:relative;
   }
 
   
@@ -275,7 +274,7 @@
 
   .chartWrap{
     grid-column:1 / 2;
-    width:calc(100% - 92px);
+    width:100%;
     justify-self:start;
     margin-top:0px;
     display:flex;
@@ -326,36 +325,49 @@
     container-type:inline-size;
   }
   /* Confidence widget — sibling of .chart inside .chartWrap; completely outside tan box */
-  .confFloat{
+  /* Inline confidence strip — inside projswap-left, below range */
+  .confInline{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:clamp(6px,1cqi,10px);
+    margin-top:clamp(6px,1.2cqi,10px);
+    padding-top:clamp(5px,0.9cqi,8px);
+    border-top:1px solid rgba(0,0,0,.08);
+    background:transparent;
+  }
+  .confInline .condRow{
+    gap:3px;
+    margin-top:0;
+    opacity:0.55;
+    flex-shrink:0;
+  }
+  .confInline .sun{ width:16px; height:16px; }
+  .confInline .cloud{ width:22px; height:12px; }
+  .confInline .cloud:before{ width:10px; height:10px; left:3px; top:-5px; }
+  .confInlineText{
     display:flex;
     flex-direction:column;
-    align-items:center;
-    text-align:center;
-    width:78px;
-    padding:8px 4px 0 4px;
-    background:transparent;
-    position:absolute;
-    top:0;
-    right:12px;
+    line-height:1.25;
   }
-  .cfLabel{
+  .confInline .condText{
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
-    font-size:8px;
-    letter-spacing:.5px;
-    font-weight:700;
-    color:#7a6f62;
+    font-size:clamp(9px,1.6cqi,11px);
+    font-weight:500;
+    color:#8a7f72;
+    letter-spacing:.04em;
     text-transform:uppercase;
-    line-height:1.2;
-    margin-bottom:0;
-    white-space:nowrap;
+    margin-top:0;
   }
-  .confSpacer{ height:7px; width:100%; flex-shrink:0; }
-  .confFloat .sun{ width:18px; height:18px; }
-  .confFloat .cloud{ width:26px; height:14px; }
-  .confFloat .cloud:before{ width:12px; height:12px; left:3px; top:-6px; }
-  .confFloat .condRow{ gap:4px; margin-top:0; }
-  .confFloat .condText{ font-size:9px; margin-top:0; letter-spacing:.2px; line-height:1.4; }
-  .confFloat .confidenceSuffix{ font-size:14px; font-weight:600; display:block; margin-top:1px; letter-spacing:0; }
+  .confInline .confidenceSuffix{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:clamp(8px,1.3cqi,10px);
+    font-weight:400;
+    color:#a09080;
+    letter-spacing:.02em;
+    display:block;
+    margin-top:0;
+  }
 
   .projswap-left,
   .projswap-right{
@@ -1534,6 +1546,12 @@
         <span class="projswap-meta-label">Range:</span>
         <span class="projswap-meta-value" id="projRange">—</span>
       </div>
+      <div class="confInline">
+        <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+        <div class="confInlineText">
+          <span class="condText" id="m3Value">SUNNY</span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="projswap-right">
@@ -1676,11 +1694,6 @@ if (document.readyState === 'loading') {
 </script>
 
 </div>
-</div>
-<div class="confFloat">
-  <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
-  <div class="confSpacer"></div>
-  <div class="condText" id="m3Value">PARTLY SUNNY</div>
 </div>
 </div>
 <!-- metrics -->
@@ -2798,12 +2811,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
   <div class="oOverlayCard" id="overlayCard">
     <div class="oOverlayHead" id="overlayHead">
       <div class="oOverlayTitle" id="overlayTitle"></div>
-      <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
-    </div>
-    <div class="oOverlayBody" id="overlayBody"></div>
-  </div>
-</div>
-
-</body>
-</html>
-                                                        
+      <button class="oOverlayClose" oncli
