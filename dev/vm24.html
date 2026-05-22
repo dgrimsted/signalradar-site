@@ -325,47 +325,48 @@
     container-type:inline-size;
   }
   /* Confidence widget — sibling of .chart inside .chartWrap; completely outside tan box */
-  /* Inline confidence strip — design 3, no background, no separator, sits right of range */
+  /* Inline confidence strip — design 3, upper-left of left panel, all grey */
   .confInline{
     display:flex;
     flex-direction:row;
     align-items:center;
-    gap:clamp(4px,0.7cqi,7px);
-    margin-top:0;
-    margin-left:clamp(6px,1.2cqi,12px);
+    gap:clamp(5px,0.9cqi,8px);
+    margin-bottom:clamp(6px,1.1cqi,10px);
     background:transparent;
+    align-self:flex-start;
   }
   .confInline .condRow{
     gap:2px;
     margin-top:0;
-    opacity:0.40;
+    opacity:0.45;
     flex-shrink:0;
+    filter:grayscale(1);
   }
-  .confInline .sun{ width:15px; height:15px; }
-  .confInline .cloud{ width:20px; height:11px; }
-  .confInline .cloud:before{ width:9px; height:9px; left:3px; top:-4px; }
+  .confInline .sun{ width:16px; height:16px; }
+  .confInline .cloud{ width:21px; height:12px; }
+  .confInline .cloud:before{ width:10px; height:10px; left:3px; top:-5px; }
   .confInlineText{
     display:flex;
     flex-direction:column;
-    line-height:1.2;
+    line-height:1.25;
   }
   .confInline .condText{
     font-family:'Helvetica Neue',Arial,sans-serif;
     font-size:clamp(9px,1.5cqi,11px);
-    font-weight:500;
-    color:#a09585;
-    letter-spacing:.05em;
+    font-weight:600;
+    color:#888;
+    letter-spacing:.06em;
     text-transform:uppercase;
     margin-top:0;
   }
   .confInline .confidenceSuffix{
     font-family:'Helvetica Neue',Arial,sans-serif;
-    font-size:clamp(8px,1.2cqi,10px);
+    font-size:clamp(9px,1.4cqi,11px);
     font-weight:400;
-    color:#b8aca0;
+    color:#aaa;
     letter-spacing:.02em;
     display:block;
-    margin-top:1px;
+    margin-top:0;
   }
 
   .projswap-left,
@@ -381,7 +382,7 @@
     padding:0 clamp(12px,2.5cqi,28px) 0 0;
     display:flex;
     flex-direction:column;
-    justify-content:center;
+    justify-content:flex-start;
     overflow:hidden;
     min-width:0;
   }
@@ -1524,6 +1525,12 @@
     <div class="projswap-headright">TOP FORCES BEHIND THE PROJECTION</div>
   </div>
   <div class="projswap-left">
+    <div class="confInline">
+      <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+      <div class="confInlineText">
+        <span class="condText" id="m3Value">SUNNY</span>
+      </div>
+    </div>
     <div class="projswap-main">
       <div class="pbridge">
         <div class="pbridge-badge-row">
@@ -1544,12 +1551,6 @@
       <div class="projswap-meta">
         <span class="projswap-meta-label">Range:</span>
         <span class="projswap-meta-value" id="projRange">—</span>
-        <div class="confInline">
-          <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
-          <div class="confInlineText">
-            <span class="condText" id="m3Value">SUNNY</span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -2812,4 +2813,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
       <div class="oOverlayTitle" id="overlayTitle"></div>
       <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
     </div>
-    <div class="oOverlayBody" id="overla
+    <div class="oOverlayBody" id="overlayBo
