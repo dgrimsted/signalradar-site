@@ -325,16 +325,14 @@
     container-type:inline-size;
   }
   /* Confidence widget — sibling of .chart inside .chartWrap; completely outside tan box */
-  /* Inline confidence strip — design 3, upper-right of left panel, all grey */
+  /* Confidence strip — sits inside headleft title bar, centered below title */
   .confInline{
     display:flex;
     flex-direction:row;
     align-items:center;
-    gap:clamp(5px,0.9cqi,8px);
+    justify-content:center;
+    gap:clamp(4px,0.7cqi,7px);
     background:transparent;
-    position:absolute;
-    top:clamp(4px,0.8cqi,8px);
-    right:clamp(16px,3cqi,32px);
   }
   .confInline .condRow{
     gap:2px;
@@ -383,10 +381,9 @@
     padding:0 clamp(12px,2.5cqi,28px) 0 0;
     display:flex;
     flex-direction:column;
-    justify-content:flex-start;
+    justify-content:center;
     overflow:hidden;
     min-width:0;
-    position:relative;
   }
 
   .projswap-right{
@@ -424,8 +421,10 @@
   }
   .projswap-headleft{
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
+    gap:clamp(3px,0.5cqi,5px);
     padding-right:clamp(4px,0.8cqi,12px);
     font-family:'Oswald','Arial Narrow',Arial,sans-serif;
     font-size:clamp(11px,2.2cqi,22px);
@@ -434,9 +433,7 @@
     font-weight:700;
     color:#2C3E50;
     text-transform:uppercase;
-    white-space:nowrap;
     overflow:hidden;
-    text-overflow:ellipsis;
   }
   .projswap-headright{
     display:flex;
@@ -1524,16 +1521,18 @@
 <div class="grid">
 <div class="projswap-shell">
   <div class="projswap-header-row">
-    <div class="projswap-headleft" id="projCardTitle">16 WEEK TREND PROJECTION</div>
+    <div class="projswap-headleft">
+      <span id="projCardTitle">16 WEEK TREND PROJECTION</span>
+      <div class="confInline">
+        <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
+        <div class="confInlineText">
+          <span class="condText" id="m3Value">SUNNY</span>
+        </div>
+      </div>
+    </div>
     <div class="projswap-headright">TOP FORCES BEHIND THE PROJECTION</div>
   </div>
   <div class="projswap-left">
-    <div class="confInline">
-      <div class="condRow"><div class="sun"></div><div class="cloud"></div></div>
-      <div class="confInlineText">
-        <span class="condText" id="m3Value">SUNNY</span>
-      </div>
-    </div>
     <div class="projswap-main">
       <div class="pbridge">
         <div class="pbridge-badge-row">
@@ -2814,4 +2813,6 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
   <div class="oOverlayCard" id="overlayCard">
     <div class="oOverlayHead" id="overlayHead">
       <div class="oOverlayTitle" id="overlayTitle"></div>
-      <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</b
+      <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
+    </div>
+    <div class="oOverlayB
