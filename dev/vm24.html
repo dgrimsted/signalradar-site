@@ -257,7 +257,7 @@
     grid-template-columns: 1fr;
     gap:22px;
     align-items:start;
-    padding-right:86px;
+    padding-right:0;
     padding-top:0;
     box-sizing:border-box;
     position:relative;
@@ -275,8 +275,8 @@
 
   .chartWrap{
     grid-column:1 / 2;
-    width:98.4%;
-    justify-self:center;
+    width:calc(100% - 92px);
+    justify-self:start;
     margin-top:0px;
     display:flex;
     flex-direction:row;
@@ -2803,4 +2803,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
       <div class="oOverlayTitle" id="overlayTitle"></div>
       <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
     </div>
-    <div class="oOverlayBody
+    <div class="oOve
