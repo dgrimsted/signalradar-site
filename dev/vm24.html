@@ -1037,6 +1037,11 @@
     font-size:10px;
     color:#222;
     line-height:1.25;
+    display:-webkit-box;
+    -webkit-line-clamp:4;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    cursor:default;
   }
 
   /* Overview boxes row */
@@ -2561,7 +2566,7 @@ function renderDrivers(drivers){
           <div class="pct" style="color:${pctColor};">${pctText}</div>
           <div class="dirArrow" style="color:${isUp ? '#2D6B37' : (isDown ? '#B32117' : '#666')};">${arrow}</div>
         </div>
-        <div class="desc">${cleanDesc}</div>`;
+        <div class="desc" title="${(d.driver_details||'').replace(/^Importance\s+\d+[\.\s]+/i,'').trim()}">${cleanDesc}</div>`;
       wrap.appendChild(card);
     });
   requestAnimationFrame(alignDriverCardTitleHeights);
@@ -2811,8 +2816,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
 
 <div class="oOverlay" id="panelOverlay">
   <div class="oOverlayCard" id="overlayCard">
-    <div class="oOverlayHead" id="overlayHead">
-      <div class="oOverlayTitle" id="overlayTitle"></div>
-      <button class="oOverlayClose" onclick="closePanelOverlay()">&#x2715;</button>
-    </div>
-    <div class="oOverlayBody" id="overlayBody"><
+    <div class="oOverlayHead" id="overlayHe
