@@ -112,16 +112,17 @@
   .brand h1{
     display:none;
   }
-  /* Report title — prominent headline serif, SignalRadar brand brown */
+  /* Report title — matches channel name font, single line */
   .brand .sub1{
     margin-top:0;
-    font-family:'Playfair Display', 'Noto Serif Display', Georgia, serif;
-    font-size:28px;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    font-size:19px;
     line-height:1.1;
-    font-weight:800;
+    font-weight:700;
     color:var(--brand);
-    letter-spacing:.02px;
+    letter-spacing:.01px;
     text-transform:none;
+    white-space:nowrap;
   }
   /* Measure name — bold, readable, clearly subordinate */
   .brand .sub2{
@@ -2816,4 +2817,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
 
 <div class="oOverlay" id="panelOverlay">
   <div class="oOverlayCard" id="overlayCard">
-    <div class="oOverlayHead" id="overlayHe
+    <div clas
