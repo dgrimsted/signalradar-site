@@ -3135,6 +3135,16 @@ function renderMeasure(measureCode){
   APP.currentMeasureCode = code;
   const sel = document.getElementById('measureSelect');
   if (sel) sel.value = code;
+  /* Always reflect this measure's package in the badge (regardless of URL filter) */
+  try {
+    var _b = document.getElementById('packageBadge');
+    if (_b) {
+      var _m = (APP.measures || []).find(function(m){ return normalizeDtCode(m.dt_code) === code; });
+      var _pkg = (_m && _m.package) ? String(_m.package) : '';
+      if (_pkg) { _b.textContent = _pkg; _b.style.display = 'inline-flex'; }
+      else      { _b.textContent = '';   _b.style.display = 'none'; }
+    }
+  } catch(_){}
   const data = APP.all;
   const drivers = filterByMeasure(data.drivers, code);
   const disruptions = filterByMeasure(data.disruptions, code);
@@ -3218,16 +3228,7 @@ async function loadDashboard() {
     }
     APP.measures = _measures;
 
-    /* Reflect the active package in the UI badge */
-    var _badgeEl = document.getElementById('packageBadge');
-    if (_badgeEl) {
-      if (APP.activePackage) {
-        _badgeEl.textContent = APP.activePackage;
-        _badgeEl.style.display = 'inline-flex';
-      } else {
-        _badgeEl.style.display = 'none';
-      }
-    }
+    /* Badge is updated per-measure inside renderMeasure(); nothing to do here. */
 
     if (APP.measures.length) {
       const currentValid = APP.measures.some(m => normalizeDtCode(m.dt_code) === normalizeDtCode(APP.currentMeasureCode));
