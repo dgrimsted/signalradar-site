@@ -3221,14 +3221,26 @@ async function loadDashboard() {
       });
     });
 
-    /* ── Package-filter support (URL ?package=<name>) ── */
+    /* ── Package-filter support (URL ?package=<name>) ──
+       Both the URL value and the data value are run through a shared
+       canonical-label table so that synonyms (e.g. "Macro" vs "Macro Economics")
+       resolve to the same key for comparison. */
     var PARAMS = new URLSearchParams(window.location.search);
     var pkgRaw = (PARAMS.get('package') || '').trim();
     function _normPkg(v){ return String(v||'').toLowerCase().replace(/[\s\-_]+/g, ''); }
-    var pkgKey = _normPkg(pkgRaw);
+    var PKG_CANONICAL = {
+      'macro':          'macroeconomics',
+      'macroeconomics': 'macroeconomics',
+      'metals':         'metals',
+      'agriculture':    'agriculture',
+      'agri':           'agriculture',
+      'energy':         'energy'
+    };
+    function _canonPkg(v){ var k = _normPkg(v); return PKG_CANONICAL[k] || k; }
+    var pkgKey = _canonPkg(pkgRaw);
     var _measures = channelMeasures.length ? channelMeasures : FALLBACK.measures;
-    if (pkgKey) {
-      var _filtered = _measures.filter(function(m){ return _normPkg(m.package) === pkgKey; });
+    if (pkgRaw) {
+      var _filtered = _measures.filter(function(m){ return _canonPkg(m.package) === pkgKey; });
       if (_filtered.length) {
         _measures = _filtered;
         APP.activePackage = pkgRaw;
