@@ -3203,7 +3203,20 @@ async function loadDashboard() {
       coefficient: (r.coefficient !== undefined && r.coefficient !== '') ? r.coefficient : r.impact,
       variable: r.variable || r.category
     }));
-    const data = { channels, drivers, disruptions, executive_predictors: executivePredictors, predictors_fallback };
+    /* Per-DT_CODE package fallback — used when channels.csv doesn't yet have
+       the Package column. Once v24_insights_only_v6.py runs with the new SQL,
+       the CSV's Package field takes precedence. */
+    var PKG_FALLBACK_BY_DT = {
+      'BZ=F':'Energy', 'CL=F':'Energy', 'HO=F':'Energy', 'NG=F':'Energy',
+      'RB=F':'Energy', 'GASREGCOVW':'Energy', 'GASDESW':'Energy',
+      'GC=F':'Metals', 'SI=F':'Metals', 'HG=F':'Metals', 'ALI=F':'Metals',
+      'HRC=F':'Metals', 'S&PCOMMODITY16':'Metals', 'LIT-US':'Metals',
+      'ZC=F':'Agriculture', 'ZS=F':'Agriculture', 'ZW=F':'Agriculture',
+      'KC=F':'Agriculture', 'SB=F':'Agriculture', 'CC=F':'Agriculture',
+      'T5YIE':'Macro Economics', 'DX-Y.NYB':'Macro Economics',
+      'BALTIC_DRY':'Macro Economics', 'ICSA':'Macro Economics'
+    };
+        const data = { channels, drivers, disruptions, executive_predictors: executivePredictors, predictors_fallback };
     APP.all = data;
     const channelMeasures = [];
     const seenDt = new Set();
@@ -3211,11 +3224,13 @@ async function loadDashboard() {
       const dt = normalizeDtCode(ch.DT_CODE || ch.dt_code);
       if (!dt || seenDt.has(dt)) return;
       seenDt.add(dt);
+      var _csvPkg = String(ch.Package || ch.package || '').trim();
+      var _fallbackPkg = PKG_FALLBACK_BY_DT[dt] || '';
       channelMeasures.push({
         dt_code: dt,
         measure_name: ch.CHANNEL || ch.channel || dt,
         display_name: ch.CHANNEL || ch.channel || dt,
-        package: String(ch.Package || ch.package || '').trim(),
+        package: _csvPkg || _fallbackPkg,
         sort_order: String(channelMeasures.length + 1),
         is_active: '1'
       });
