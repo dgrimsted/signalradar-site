@@ -3140,9 +3140,19 @@ function renderMeasure(measureCode){
     var _b = document.getElementById('packageBadge');
     if (_b) {
       var _m = (APP.measures || []).find(function(m){ return normalizeDtCode(m.dt_code) === code; });
-      var _pkg = (_m && _m.package) ? String(_m.package) : '';
-      if (_pkg) { _b.textContent = _pkg; _b.style.display = 'inline-flex'; }
-      else      { _b.textContent = '';   _b.style.display = 'none'; }
+      var _pkg = (_m && _m.package) ? String(_m.package).trim() : '';
+      /* Display-name mapping: short package code -> human label shown on badge */
+      var _pkgKey = _pkg.toLowerCase().replace(/[\s\-_]+/g, '');
+      var _pkgLabels = {
+        'macro':       'Macro Economics',
+        'macroeconomics': 'Macro Economics',
+        'metals':      'Metals',
+        'agriculture': 'Agriculture',
+        'energy':      'Energy'
+      };
+      var _label = _pkgLabels[_pkgKey] || _pkg;
+      if (_label) { _b.textContent = _label; _b.style.display = 'inline-flex'; }
+      else        { _b.textContent = '';     _b.style.display = 'none'; }
     }
   } catch(_){}
   const data = APP.all;
