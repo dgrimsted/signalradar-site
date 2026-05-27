@@ -128,9 +128,27 @@
   .brand .sub2{
     margin-top:6px;
     font-size:25px;
+    line-height:1.15;
     font-weight:700;
     color:#333;
     letter-spacing:.05px;
+    /* Reserve 2 lines so single-line names don't push nav row up */
+    min-height:calc(25px * 1.15 * 2);
+    display:flex;
+    align-items:flex-start;
+  }
+  .brand .packageBadge{
+    display:inline-flex; align-items:center;
+    align-self:flex-start;
+    margin-top:8px;
+    padding:2px 12px;
+    background:#E8DCC0;
+    color:#3A3A3A;
+    border-radius:999px;
+    font-family:'Open Sans', sans-serif;
+    font-size:12px; font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
   }
 
   .pill{
@@ -145,7 +163,7 @@
   }
 
   .headline{
-    margin:46px 0 0;
+    margin:18px 0 0;
     font-size:15px;
     line-height:1.15;
     font-weight:950;
@@ -1424,7 +1442,7 @@
 
 
 .measureNav{
-  display:flex; align-items:center; gap:10px; margin:32px 0 10px;
+  display:flex; align-items:center; gap:10px; margin:14px 0 6px;
   flex-wrap:nowrap;
   white-space:nowrap;
   width:100%;
@@ -1438,8 +1456,17 @@
   min-width:0;
   max-width:100%;
   border:1px solid rgba(0,0,0,.15); border-radius:999px; background:#fff;
-  padding:7px 12px; font-size:12px; font-weight:800; color:#0f1720;
+  /* Right padding reserves room for custom chevron so long names never overrun it */
+  padding:7px 32px 7px 14px;
+  font-size:12px; font-weight:800; color:#0f1720;
+  text-overflow:ellipsis;
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><polyline points='1,1.5 6,6.5 11,1.5' fill='none' stroke='%231f2a38' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  background-size:12px 8px;
 }
+.measureSelect option{ font-weight:600; }
 .navBtnMini{
   flex:0 0 auto;
   border:none; border-radius:999px; background:#e7dcc7; color:#1f2a38; font-weight:900;
@@ -1749,6 +1776,7 @@
 <div class="brand">
 <h1 id="brandName">SignalRadar</h1>
 <div class="sub1" id="sub1">External Pressure Intelligence</div>
+<div class="packageBadge" id="packageBadge" style="display:none"></div>
 <div class="sub2" id="sub2">Copper — Global Spot Price</div>
 <div class="pill" id="signalPill">SIGNAL — UNDER PRESSURE</div>
 
@@ -3167,11 +3195,40 @@ async function loadDashboard() {
         dt_code: dt,
         measure_name: ch.CHANNEL || ch.channel || dt,
         display_name: ch.CHANNEL || ch.channel || dt,
+        package: String(ch.Package || ch.package || '').trim(),
         sort_order: String(channelMeasures.length + 1),
         is_active: '1'
       });
     });
-    APP.measures = channelMeasures.length ? channelMeasures : FALLBACK.measures;
+
+    /* ── Package-filter support (URL ?package=<name>) ── */
+    var PARAMS = new URLSearchParams(window.location.search);
+    var pkgRaw = (PARAMS.get('package') || '').trim();
+    function _normPkg(v){ return String(v||'').toLowerCase().replace(/[\s\-_]+/g, ''); }
+    var pkgKey = _normPkg(pkgRaw);
+    var _measures = channelMeasures.length ? channelMeasures : FALLBACK.measures;
+    if (pkgKey) {
+      var _filtered = _measures.filter(function(m){ return _normPkg(m.package) === pkgKey; });
+      if (_filtered.length) {
+        _measures = _filtered;
+        APP.activePackage = pkgRaw;
+      } else {
+        console.warn('[package filter] No measures matched package =', pkgRaw, '- showing all');
+      }
+    }
+    APP.measures = _measures;
+
+    /* Reflect the active package in the UI badge */
+    var _badgeEl = document.getElementById('packageBadge');
+    if (_badgeEl) {
+      if (APP.activePackage) {
+        _badgeEl.textContent = APP.activePackage;
+        _badgeEl.style.display = 'inline-flex';
+      } else {
+        _badgeEl.style.display = 'none';
+      }
+    }
+
     if (APP.measures.length) {
       const currentValid = APP.measures.some(m => normalizeDtCode(m.dt_code) === normalizeDtCode(APP.currentMeasureCode));
       if (!currentValid) {
