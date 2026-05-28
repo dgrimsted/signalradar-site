@@ -1831,7 +1831,22 @@
       gap:0;
       padding-bottom:14px;
     }
-    .right{ grid-template-columns:minmax(0,1fr) !important; }
+    /* On mobile, switch .right to flex column so DOM order is visual order.
+       Desktop sets grid-column:1/3 on .newsBlock and .overviewRow which spawn
+       implicit grid tracks and scramble injected children. */
+    .right{
+      display:flex !important;
+      flex-direction:column !important;
+      grid-template-columns:none !important;
+      gap:14px;
+    }
+    .right > *{
+      grid-column:auto !important;
+      grid-row:auto !important;
+      width:100% !important;
+      min-width:0 !important;
+      max-width:100% !important;
+    }
 
     /* ─── 4. EDITORIAL HEADER ─── */
     .brand{ padding-right:0; }
@@ -3708,6 +3723,89 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
         if (typeof closePanelOverlay === 'function') closePanelOverlay();
       }
     });
+  })();
+</script>
+
+<script>
+  /* Mobile narrative position — sits above News Drivers, below the
+     Trend Projection + Top Forces cards. Restored on desktop. */
+  (function setupMobileNarrativeOrder(){
+    var mq = window.matchMedia('(max-width: 720px)');
+    var originalParent = null;
+    var originalNextSibling = null;
+
+    function relocate(){
+      var narrative = document.getElementById('mainDetails');
+      var newsBlock = document.querySelector('.newsBlock');
+      if (!narrative || !newsBlock) return;
+
+      /* Capture original location the first time we run */
+      if (!originalParent) {
+        originalParent = narrative.parentElement;
+        originalNextSibling = narrative.nextSibling;
+      }
+
+      var moved = false;
+      if (mq.matches){
+        /* Mobile: insert before .newsBlock if not already there */
+        var alreadyThere = (narrative.parentNode === newsBlock.parentNode
+                            && narrative.nextElementSibling === newsBlock);
+        if (!alreadyThere){
+          newsBlock.parentNode.insertBefore(narrative, newsBlock);
+          moved = true;
+        }
+      } else {
+        /* Desktop: restore to original spot */
+        if (originalParent && narrative.parentNode !== originalParent){
+          if (originalNextSibling && originalNextSibling.parentNode === originalParent){
+            originalParent.insertBefore(narrative, originalNextSibling);
+          } else {
+            originalParent.appendChild(narrative);
+          }
+          moved = true;
+        }
+      }
+
+      /* If we moved AND we already have a full-text payload (data loaded),
+         re-truncate so the (MORE) link reflects the new column width. */
+      if (moved && narrative.dataset.fulltext
+          && typeof window.applyInlineNarrative === 'function'){
+        try { window.applyInlineNarrative(narrative.dataset.fulltext); } catch(e){}
+      }
+    }
+
+    /* Initial run before data loads */
+    if (document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', relocate);
+    } else {
+      relocate();
+    }
+
+    /* Re-run after first data render is likely done */
+    window.addEventListener('load', function(){ setTimeout(relocate, 150); });
+
+    /* Re-run when viewport crosses the 720px breakpoint */
+    if (mq.addEventListener){
+      mq.addEventListener('change', relocate);
+    } else if (mq.addListener){
+      mq.addListener(relocate);
+    }
+
+    /* And whenever the user navigates between measures via Prev/Next/select,
+       applyChannelContent re-runs applyInlineNarrative — the element stays
+       at the moved location, so no re-relocate is needed. But cover the
+       case where the script loads before APP is ready by re-checking
+       briefly after first data load. */
+    var ticks = 0;
+    var poll = setInterval(function(){
+      ticks++;
+      if (window.APP && window.APP.measures && window.APP.measures.length){
+        relocate();
+        clearInterval(poll);
+      } else if (ticks > 60){
+        clearInterval(poll);
+      }
+    }, 250);
   })();
 </script>
 </body>
