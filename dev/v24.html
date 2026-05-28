@@ -1779,13 +1779,45 @@
     }
     .content{ padding:12px 12px 90px 12px; }
 
+    /* ─── 1b. WIDTH CLAMPS — stop wrappers from bursting past the canvas.
+       Several inner grid/flex tracks size to min-content and were extending
+       to 626-682px inside a 390px viewport (hidden by canvas overflow:hidden,
+       so the right half of every card was being silently clipped). Force
+       every wrapper in the chain to respect the parent width. */
+    .right,
+    .chartWrap,
+    .chart,
+    .grid,
+    .projswap-shell,
+    .v24c-card,
+    .v24c-inner,
+    .newsBlock,
+    .newsGrid,
+    .newsCard,
+    .overviewRow,
+    .overview{
+      min-width:0 !important;
+      max-width:100% !important;
+      width:100% !important;
+      box-sizing:border-box !important;
+    }
+    /* And the tag inside newsCard — long category strings need to wrap */
+    .tag,
+    .tagRow{
+      white-space:normal !important;
+      min-width:0 !important;
+      max-width:100% !important;
+    }
+    /* projswap-shell padding eats into the limited width — shrink it */
+    .projswap-shell{ padding:6px !important; gap:10px !important; }
+
     /* ─── 2. KILL DECORATIVE BLOCKS ─── */
     .heroImg,
     .mapRow{ display:none !important; }
 
     /* ─── 3. TOP-LEVEL GRIDS STACK ─── */
     .top{
-      grid-template-columns:1fr !important;
+      grid-template-columns:minmax(0,1fr) !important;
       gap:16px;
     }
     .top > section:first-child{
@@ -1793,12 +1825,12 @@
       border-right:none;
     }
     .leftHero{
-      grid-template-columns:1fr !important;
+      grid-template-columns:minmax(0,1fr) !important;
       height:auto !important;
       gap:0;
       padding-bottom:14px;
     }
-    .right{ grid-template-columns:1fr !important; }
+    .right{ grid-template-columns:minmax(0,1fr) !important; }
 
     /* ─── 4. EDITORIAL HEADER ─── */
     .brand{ padding-right:0; }
@@ -1860,7 +1892,7 @@
 
     /* Price bridge — keep 3-col but tighten massively */
     .v24c-priceRow{
-      grid-template-columns:1fr auto 1fr !important;
+      grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
       gap:8px !important;
       align-items:center !important;
     }
@@ -1910,7 +1942,7 @@
     }
     .v24c-forces .projswap-row{
       display:grid !important;            /* override display:contents */
-      grid-template-columns:1fr auto;
+      grid-template-columns:minmax(0,1fr) auto;
       grid-template-areas:
         "label pct"
         "bar bar";
@@ -1984,7 +2016,7 @@
 
     /* ─── 9. OVERVIEW PANELS (panel1 / panel23) ─── */
     .overviewRow{
-      grid-template-columns:1fr !important;
+      grid-template-columns:minmax(0,1fr) !important;
       gap:10px !important;
     }
     .overview{
@@ -2023,7 +2055,7 @@
       font-size:15px;
     }
     .newsGrid{
-      grid-template-columns:1fr 1fr !important;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
       gap:10px;
     }
 
@@ -2035,7 +2067,7 @@
   @media (max-width: 480px){
     .content{ padding:10px 10px 80px 10px; }
     .v24c-card{ padding:12px 10px 10px !important; }
-    .newsGrid{ grid-template-columns:1fr !important; }
+    .newsGrid{ grid-template-columns:minmax(0,1fr) !important; }
 
     .v24c-bigPct{ font-size:clamp(44px, 14vw, 64px) !important; }
     .v24c-priceVal{ font-size:clamp(20px, 6.5vw, 26px) !important; }
