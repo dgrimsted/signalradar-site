@@ -1759,6 +1759,116 @@
 
   .projswap-header-row{ display:none !important; }
 
+
+  /* ══════════════════════════════════════════════════════════════
+     MOBILE (≤720px) — phones and small tablets.
+     - Drops the decorative hero watercolor and signal-origin map+events row.
+     - Single-column stack throughout.
+     - Editorial header (sub1/sub2/headline/narrative) remains, with the
+       narrative clipped to ~6 lines and an inline (MORE) link that opens
+       the existing overlay — handled in applyInlineNarrative().
+     This block is at the end of <style> so it cascades after the late-
+     defined desktop rules (.projswap-shell, .v24c-card, etc.).
+  ══════════════════════════════════════════════════════════════ */
+  @media (max-width: 720px){
+    .frame{ padding:0; }
+    .canvas{
+      width:100%;
+      border-radius:0;
+      border-left:none;
+      border-right:none;
+      max-width:none;
+    }
+    .content{ padding:12px 12px 90px 12px; }
+
+    .heroImg,
+    .mapRow{ display:none !important; }
+
+    .top{
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .top > section:first-child{
+      padding-right:0;
+      border-right:none;
+    }
+
+    .leftHero{
+      grid-template-columns:1fr;
+      height:auto;
+      gap:0;
+      padding-bottom:14px;
+    }
+
+    .brand{ padding-right:0; }
+    .brand .sub1{ font-size:clamp(14px, 3.6vw, 18px); white-space:normal; }
+    .brand .sub2{
+      font-size:clamp(20px, 5.5vw, 26px);
+      line-height:1.15;
+      min-height:0;
+      margin-top:4px;
+    }
+    .headline{
+      margin-top:14px;
+      font-size:clamp(17px, 4.6vw, 22px);
+      line-height:1.2;
+    }
+    .narrative{
+      font-size:15px;
+      line-height:1.45;
+      max-width:none;
+      margin-top:10px;
+    }
+
+    .projswap-shell{
+      flex-direction:column !important;
+      gap:12px;
+      padding:10px;
+    }
+    .v24c-card{ padding:12px 14px 10px; }
+    .v24c-trend{
+      flex:1 1 auto !important;
+      max-width:100% !important;
+    }
+
+    .newsGrid{
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .overviewRow{ grid-template-columns:1fr; }
+
+    .v24c-heroRow{ flex-wrap:wrap; gap:6px; }
+    .v24c-bigPct{ font-size:clamp(40px, 12vw, 64px); }
+    .v24c-heroRight .v24c-moveLabel{ font-size:11px; line-height:1.2; }
+
+    .navBtnMini{
+      min-height:44px;
+      padding:10px 14px;
+      font-size:13px;
+    }
+    .measureSelect{
+      min-height:44px;
+      font-size:15px;
+    }
+
+    #overlayCard{ -webkit-overflow-scrolling:touch; }
+
+    .wPriceTable{
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+  }
+
+  @media (max-width: 480px){
+    .newsGrid{ grid-template-columns:1fr; }
+    .content{ padding:10px 10px 80px 10px; }
+    .v24c-card{ padding:10px 12px 8px; }
+    .brand .sub2{ font-size:clamp(19px, 5.5vw, 24px); }
+    .headline{ font-size:clamp(16px, 4.6vw, 20px); }
+    .v24c-bigPct{ font-size:clamp(36px, 11vw, 52px); }
+  }
+
 </style>
 </head>
 <body>
@@ -2692,10 +2802,13 @@ function applyInlineNarrative(fullText){
 
   const moreHtml = ' <a href="#" class="narrativeInlineMore" data-mode="expand">(MORE)</a>';
   const lineHeight = parseFloat(getComputedStyle(detailsEl).lineHeight) || 22;
-  /* Compute height dynamically so text fills to hero image bottom */
-  let maxHeight = Math.max(220, lineHeight * 11.8);
+  /* Mobile: hero is hidden via CSS, so don't try to align to it. */
+  const isMobile = window.matchMedia('(max-width: 720px)').matches;
+  let maxHeight = isMobile
+    ? lineHeight * 6.2
+    : Math.max(220, lineHeight * 11.8);
   const heroImg = document.querySelector('.heroImg');
-  if (heroImg) {
+  if (!isMobile && heroImg) {
     const heroBottom = heroImg.getBoundingClientRect().bottom;
     const narrativeTop = detailsEl.getBoundingClientRect().top;
     const available = heroBottom - narrativeTop - 8;
