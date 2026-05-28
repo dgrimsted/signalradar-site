@@ -3734,40 +3734,57 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
     var originalParent = null;
     var originalNextSibling = null;
 
+    var headlineOriginalParent = null;
+    var headlineOriginalNextSibling = null;
+
     function relocate(){
       var narrative = document.getElementById('mainDetails');
+      var headline = document.getElementById('headline');
       var newsBlock = document.querySelector('.newsBlock');
-      if (!narrative || !newsBlock) return;
+      if (!narrative || !headline || !newsBlock) return;
 
-      /* Capture original location the first time we run */
-      if (!originalParent) {
+      /* Capture original locations the first time we run */
+      if (!originalParent){
         originalParent = narrative.parentElement;
         originalNextSibling = narrative.nextSibling;
+      }
+      if (!headlineOriginalParent){
+        headlineOriginalParent = headline.parentElement;
+        headlineOriginalNextSibling = headline.nextSibling;
       }
 
       var moved = false;
       if (mq.matches){
-        /* Mobile: insert before .newsBlock if not already there */
-        var alreadyThere = (narrative.parentNode === newsBlock.parentNode
-                            && narrative.nextElementSibling === newsBlock);
-        if (!alreadyThere){
+        /* Mobile: headline + narrative together, just before .newsBlock,
+           in that order: ... trend, forces, HEADLINE, NARRATIVE, news ... */
+        var headlineMisplaced = (headline.parentNode !== newsBlock.parentNode
+                                 || headline.nextElementSibling !== narrative);
+        var narrativeMisplaced = (narrative.parentNode !== newsBlock.parentNode
+                                  || narrative.nextElementSibling !== newsBlock);
+        if (headlineMisplaced || narrativeMisplaced){
+          newsBlock.parentNode.insertBefore(headline, newsBlock);
           newsBlock.parentNode.insertBefore(narrative, newsBlock);
           moved = true;
         }
       } else {
-        /* Desktop: restore to original spot */
-        if (originalParent && narrative.parentNode !== originalParent){
-          if (originalNextSibling && originalNextSibling.parentNode === originalParent){
-            originalParent.insertBefore(narrative, originalNextSibling);
-          } else {
-            originalParent.appendChild(narrative);
+        /* Desktop: restore both to original spots */
+        function restore(el, parent, nextSib){
+          if (parent && el.parentNode !== parent){
+            if (nextSib && nextSib.parentNode === parent){
+              parent.insertBefore(el, nextSib);
+            } else {
+              parent.appendChild(el);
+            }
+            return true;
           }
-          moved = true;
+          return false;
         }
+        var r1 = restore(headline, headlineOriginalParent, headlineOriginalNextSibling);
+        var r2 = restore(narrative, originalParent, originalNextSibling);
+        if (r1 || r2) moved = true;
       }
 
-      /* If we moved AND we already have a full-text payload (data loaded),
-         re-truncate so the (MORE) link reflects the new column width. */
+      /* Re-truncate after move so (MORE) reflects new column width. */
       if (moved && narrative.dataset.fulltext
           && typeof window.applyInlineNarrative === 'function'){
         try { window.applyInlineNarrative(narrative.dataset.fulltext); } catch(e){}
