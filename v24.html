@@ -2500,9 +2500,10 @@ function initTrendProjection(){
       const isoTry = rawDate.replace(' ', 'T');
       const d = new Date(isoTry);
       if (!isNaN(d.getTime())) {
-        asOfText = 'AS OF ' + d.toLocaleDateString('en-US', {
-          month: 'short', day: 'numeric', year: 'numeric'
-        }).toUpperCase();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        const yy = String(d.getFullYear()).slice(-2);
+        asOfText = 'AS OF ' + mm + '/' + dd + '/' + yy;
       } else {
         asOfText = 'AS OF ' + rawDate;
       }
@@ -2536,19 +2537,23 @@ function initTrendProjection(){
   }
 
   /* Compute range and push to both hidden projRange and the confidence block.
-     Spread = MarketSignalForecastMAPE so the fan matches the SUNNY/CLOUDY label. */
+     Fan is centered on the model's projected price (so the pill always sits
+     dead-center) with half-width = MarketSignalForecastMAPE × projection. */
   const rawCp = String(ch.currentprice || '').trim();
   const currentPriceRaw = parseFloat(rawCp.replace(/[^0-9.\-]/g, ''));
   const priceCode = String(ch.DT_CODE || ch.dt_code || '');
   const mapeSpread = mapeSpreadFromChannel(ch);
+  /* Project price: prefer the model's avg16w, fall back to current × (1 + trend) */
+  const rawAvg = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
+  const avgNum = rawAvg ? parseFloat(rawAvg.replace(/[^0-9.\-]/g, '')) : NaN;
+  const projPrice = (!isNaN(avgNum) && avgNum > 0)
+    ? avgNum
+    : (!isNaN(currentPriceRaw) && currentPriceRaw > 0 ? currentPriceRaw * (1 + pctRaw / 100) : NaN);
   let rangeStr = '—';
-  if (!isNaN(currentPriceRaw) && currentPriceRaw > 0 && Math.abs(pctRaw) > 0) {
-    const abs = Math.abs(pctRaw);
-    const dir = pctRaw < 0 ? -1 : 1;
-    const loPrice = currentPriceRaw * (1 + dir * abs * (1 - mapeSpread) / 100);
-    const hiPrice = currentPriceRaw * (1 + dir * abs * (1 + mapeSpread) / 100);
-    const minPrice = Math.min(loPrice, hiPrice);
-    const maxPrice = Math.max(loPrice, hiPrice);
+  if (!isNaN(projPrice) && projPrice !== 0) {
+    const halfWidth = Math.abs(projPrice) * mapeSpread;
+    const minPrice = projPrice - halfWidth;
+    const maxPrice = projPrice + halfWidth;
     rangeStr = fmtPriceByCode(minPrice, priceCode) + ' to ' + fmtPriceByCode(maxPrice, priceCode);
   } else if (Math.abs(pctRaw) > 0) {
     rangeStr = formatProjectionRange(pctRaw, mapeSpread);
@@ -2601,22 +2606,20 @@ function initTrendProjection(){
   const rawCpV = String(ch.currentprice || '').trim();
   const cpRawV = parseFloat(rawCpV.replace(/[^0-9.\-]/g, ''));
   const pcV    = String(ch.DT_CODE || ch.dt_code || '');
-  if (!isNaN(cpRawV) && cpRawV > 0 && Math.abs(pctRaw) > 0) {
-    const absV = Math.abs(pctRaw);
-    const spdV = mapeSpreadFromChannel(ch);  /* MAPE-driven, matches SUNNY label */
-    const dirV = pctRaw < 0 ? -1 : 1;
-    const loV  = cpRawV * (1 + dirV * absV * (1 - spdV) / 100);
-    const hiV  = cpRawV * (1 + dirV * absV * (1 + spdV) / 100);
-    const minV = Math.min(loV, hiV);
-    const maxV = Math.max(loV, hiV);
-    const rawAv = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
-    const avNum = rawAv ? parseFloat(rawAv.replace(/[^0-9.\-]/g, '')) : NaN;
-    const projV = (!isNaN(avNum) && avNum > 0) ? avNum : cpRawV * (1 + pctRaw / 100);
-    const spanV = maxV - minV;
-    const posV  = Math.max(6, Math.min(94, spanV > 0 ? ((projV - minV) / spanV) * 100 : 50));
+  /* Fan is centered on the projection. Pill is always at 50% by construction. */
+  const rawAvP = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
+  const avNumP = rawAvP ? parseFloat(rawAvP.replace(/[^0-9.\-]/g, '')) : NaN;
+  const projV  = (!isNaN(avNumP) && avNumP > 0)
+    ? avNumP
+    : (!isNaN(cpRawV) && cpRawV > 0 ? cpRawV * (1 + pctRaw / 100) : NaN);
+  if (!isNaN(projV) && projV !== 0) {
+    const spdV     = mapeSpreadFromChannel(ch);
+    const halfV    = Math.abs(projV) * spdV;
+    const minV     = projV - halfV;
+    const maxV     = projV + halfV;
     if (rangeMinEl) rangeMinEl.textContent = fmtPriceByCode(minV, pcV);
     if (rangeMaxEl) rangeMaxEl.textContent = fmtPriceByCode(maxV, pcV);
-    if (pillEl) { pillEl.textContent = fmtPriceByCode(projV, pcV); pillEl.style.left = posV + '%'; }
+    if (pillEl) { pillEl.textContent = fmtPriceByCode(projV, pcV); pillEl.style.left = '50%'; }
   }
 
 }
