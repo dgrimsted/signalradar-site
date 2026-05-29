@@ -2082,6 +2082,73 @@
 
     /* iOS overlay scroll */
     #overlayCard{ -webkit-overflow-scrolling:touch; }
+
+    /* ─── 13. CARD HEADERS — TOP FORCES title was nowrap, overlapping the
+       SUNNY confidence chip. Allow wrap, shrink the title, keep chip on
+       the right but not flexing past it. ─── */
+    .v24c-head{
+      align-items:center !important;
+      gap:8px !important;
+      flex-wrap:wrap;
+    }
+    .v24c-title,
+    .v24c-forces .v24c-title,
+    .v24c-trend .v24c-title{
+      white-space:normal !important;
+      font-size:14px !important;
+      line-height:1.2 !important;
+      flex:1 1 auto !important;
+      min-width:0 !important;
+    }
+    .v24c-sunny{
+      flex-shrink:0 !important;
+    }
+    .v24c-sunWord{ font-size:11px !important; }
+    .v24c-sunDelta{ font-size:9px !important; }
+
+    /* ─── 14. FOOTER — absolute-positioned 106px-tall bar overlapped the
+       big nowrap CTA button on top of "SIGNALRADAR INTELLIGENCE" wordmark.
+       On mobile, switch to static flow with a vertical stack. ─── */
+    .footer{
+      position:static !important;
+      height:auto !important;
+      flex-direction:column !important;
+      align-items:stretch !important;
+      padding:16px 14px !important;
+      gap:12px !important;
+      margin-top:8px;
+    }
+    .footLeft{ width:100%; min-width:0; }
+    .footLabel{
+      font-size:11px !important;
+      letter-spacing:.06em !important;
+    }
+    .footText{
+      white-space:normal !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+      font-size:14px !important;
+      line-height:1.4 !important;
+      margin-top:4px !important;
+    }
+    .footText small{ font-size:14px !important; }
+    .footActions{
+      width:100%;
+      flex-direction:column;
+      gap:10px;
+    }
+    .btn{
+      width:100% !important;
+      white-space:normal !important;
+      padding:14px 20px !important;
+      font-size:16px !important;
+      line-height:1.2 !important;
+      text-align:center;
+      box-shadow:0 4px 10px rgba(0,0,0,.22) !important;
+    }
+    /* The .content padding-bottom 120px existed only to clear the absolute
+       footer. With footer static, no extra reservation needed. */
+    .content{ padding-bottom:24px !important; }
   }
 
   /* ─── 12. PHONES (≤480px) — tighten further, drop to 1 col ─── */
