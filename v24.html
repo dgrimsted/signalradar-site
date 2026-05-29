@@ -2228,6 +2228,22 @@
     #overlayHead{ padding:12px 16px; }
     #overlayBody{ padding:14px 16px 18px; font-size:15px; }
   }
+
+  /* As-of date under CURRENT PRICE label */
+  .v24c-asof{
+    font-family:'Open Sans', sans-serif;
+    font-size:10px;
+    font-weight:600;
+    color:#9A8E7B;
+    letter-spacing:.04em;
+    line-height:1.2;
+    margin:-3px 0 6px;
+    text-transform:none;
+  }
+  .v24c-asof:empty{ display:none; }
+  @media (max-width: 720px){
+    .v24c-asof{ font-size:9px !important; margin:-2px 0 4px !important; }
+  }
 </style>
 </head>
 <body>
@@ -2310,6 +2326,7 @@
       <div class="v24c-priceRow">
         <div class="v24c-priceBlock">
           <div class="v24c-priceLabel">CURRENT PRICE</div>
+          <div class="v24c-asof" id="projCurrentAsOf"></div>
           <div class="v24c-priceVal" id="projCurrentPrice">
             <span id="projCurrentPriceText">—</span><span class="v24c-priceUnit" id="projCurrentUnit"></span>
           </div>
@@ -2469,6 +2486,28 @@ function initTrendProjection(){
     const cpTextEl = document.getElementById('projCurrentPriceText');
     const cpFmt = (!isNaN(cpNum) && cpNum > 0) ? fmtPriceByCode(cpNum, cpCode) : '—';
     if (cpTextEl) cpTextEl.textContent = cpFmt; else cpEl.textContent = cpFmt;
+  }
+
+  /* "AS OF <date>" under the Current Price label — uses ch.CurrentDate
+     from channels.csv (sourced from runlist.CurrentValueDate). */
+  const asOfEl = document.getElementById('projCurrentAsOf');
+  if (asOfEl) {
+    const rawDate = String(ch.CurrentDate ?? ch.currentdate ?? ch.current_date ?? '').trim();
+    let asOfText = '';
+    if (rawDate) {
+      /* Accept "YYYY-MM-DD", "YYYY-MM-DDTHH:MM:SS", "YYYY-MM-DD HH:MM:SS",
+         and other Date-parseable forms. Fall back to raw string if unparseable. */
+      const isoTry = rawDate.replace(' ', 'T');
+      const d = new Date(isoTry);
+      if (!isNaN(d.getTime())) {
+        asOfText = 'AS OF ' + d.toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric', year: 'numeric'
+        }).toUpperCase();
+      } else {
+        asOfText = 'AS OF ' + rawDate;
+      }
+    }
+    asOfEl.textContent = asOfText;
   }
   /* Projected 16-Week Average Price — colored with trend */
   const avgPriceEl = document.getElementById('projAvgPrice');
