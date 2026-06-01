@@ -2026,6 +2026,7 @@
           <div class="v24c-priceVal" id="projCurrentPrice">
             <span id="projCurrentPriceText">—</span><span class="v24c-priceUnit" id="projCurrentUnit"></span>
           </div>
+          <div id="projCurrentPriceDate" style="font-size:10px;color:#888;margin-top:2px;letter-spacing:.03em;"></div>
         </div>
         <div class="v24c-dirBox" id="projDirIcon">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -2975,6 +2976,19 @@ function riskPillFromChannel(ch){
 
 function applyMetricCardsFromChannel(ch){
   const currentPrice = ch.currentprice ?? '';
+  const rawCpDate = String(ch.CurrentDate || '').trim();
+  const cpDateEl = document.getElementById('projCurrentPriceDate');
+  if (cpDateEl) {
+    if (rawCpDate) {
+      const d = new Date(rawCpDate);
+      if (!isNaN(d)) {
+        const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+        const dd = String(d.getUTCDate()).padStart(2,'0');
+        const yy = String(d.getUTCFullYear()).slice(-2);
+        cpDateEl.textContent = 'as of ' + mm + '/' + dd + '/' + yy;
+      } else { cpDateEl.textContent = ''; }
+    } else { cpDateEl.textContent = ''; }
+  }
   const threeWeek = ch['3weekchange'] ?? '';
   const reliability = ch.reliability ?? '';
   const riskNow = Number(ch.riskscorenow ?? 0);
