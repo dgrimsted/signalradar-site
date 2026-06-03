@@ -471,19 +471,18 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
     return;
   }
   
-  // Submit to MailerLite
+   // Submit to MailerLite
   const formData = new FormData(this);
-  
-  fetch(this.action, {
-    method: 'POST',
-    body: formData,
+  const params = new URLSearchParams(formData).toString();
+
+  fetch('https://assets.mailerlite.com/jsonp/2369662/forms/188118374336693767/subscribe?' + params, {
+    method: 'GET',
     mode: 'no-cors'
   }).then(() => {
-    // Show confirmation
     document.getElementById('form-state').style.display = 'none';
     document.getElementById('confirmation-state').classList.add('active');
     window.scrollTo(0, 0);
-  }).catch(error => {
+  }).catch(() => {
     alert('Oops! There was a problem submitting your form. Please try again.');
   });
 });
