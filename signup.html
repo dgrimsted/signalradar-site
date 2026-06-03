@@ -448,7 +448,7 @@ nav {
     </div>
 
     <p style="font-size: 14px; color: var(--gray);">
-      Watch your inbox for a confirmation email from SignalRadar.
+      We'll be in touch when your first report is ready.
     </p>
 
     <div class="confirmation-back">
@@ -471,17 +471,21 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
     return;
   }
   
-   // Submit to MailerLite
+ // Submit to Formspree
   const formData = new FormData(this);
-  const params = new URLSearchParams(formData).toString();
-
-  fetch('https://assets.mailerlite.com/jsonp/2369662/forms/188118374336693767/subscribe?' + params, {
-    method: 'GET',
-    mode: 'no-cors'
-  }).then(() => {
-    document.getElementById('form-state').style.display = 'none';
-    document.getElementById('confirmation-state').classList.add('active');
-    window.scrollTo(0, 0);
+  
+  fetch('https://formspree.io/f/mwvydqka', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      document.getElementById('form-state').style.display = 'none';
+      document.getElementById('confirmation-state').classList.add('active');
+      window.scrollTo(0, 0);
+    } else {
+      alert('Oops! There was a problem submitting your form. Please try again.');
+    }
   }).catch(() => {
     alert('Oops! There was a problem submitting your form. Please try again.');
   });
