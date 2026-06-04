@@ -463,20 +463,19 @@ nav {
 document.getElementById('signup-form').addEventListener('submit', function(e) {
   e.preventDefault();
   
-  // Validate at least one report selected
   const checkboxes = document.querySelectorAll('input[name="fields[country][]"]:checked');
-  
   if (checkboxes.length === 0) {
     alert('Please select at least one report.');
     return;
   }
-  
- // Submit to MailerLite
+
   const formData = new FormData(this);
-  
-   fetch('https://mailerlite-proxy.jlarryburns.workers.dev', {
+  const params = new URLSearchParams(formData).toString();
+
+  fetch('https://mailerlite-proxy.jlarryburns.workers.dev', {
     method: 'POST',
-    body: formData
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params
   }).then(response => {
     if (response.ok) {
       document.getElementById('form-state').style.display = 'none';
