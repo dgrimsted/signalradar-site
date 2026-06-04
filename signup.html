@@ -461,12 +461,11 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
   }
 
   const formData = new FormData(this);
-  const params = new URLSearchParams(formData).toString();
-
-  fetch('https://mailerlite-proxy.jlarryburns.workers.dev', {
+ 
+fetch('https://formspree.io/f/mwvydqka', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params
+    body: formData,
+    headers: { 'Accept': 'application/json' }
   }).then(response => {
     if (response.ok) {
       document.getElementById('form-state').style.display = 'none';
