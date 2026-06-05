@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Industrial Metals Intelligence | SignalRadar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --gold:        #C8860A;
+      --gold-light:  #E09E20;
+      --gold-pale:   #F5E8C8;
+      --purple:      #1E1248;
+      --purple-2:    #2A1A5E;
+      --purple-3:    #160D38;
+      --charcoal:    #1C1C1C;
+      --charcoal-2:  #2A2A2A;
+      --charcoal-3:  #3A3A3A;
+      --cream:       #F7F3ED;
+      --cream-2:     #EDE8DF;
+      --white:       #FFFFFF;
+      --text-dark:   #1C1C1C;
+      --text-mid:    #4A4A4A;
+      --text-light:  #7A7A7A;
+      --red:         #C0392B;
+      --green:       #2E7D32;
+      --border:      rgba(200,134,10,0.25);
+      --shadow-gold: 0 4px 24px rgba(200,134,10,0.18);
+      --shadow-card: 0 2px 16px rgba(0,0,0,0.10);
+      --r:           6px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { display: block; max-width: 100%; }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--charcoal);
+      border-bottom: 1px solid rgba(200,134,10,0.3);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      height: 58px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--white); letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); text-decoration: none; }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: var(--r);
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      background: var(--purple);
+      background-image:
+        radial-gradient(ellipse 70% 80% at 30% 50%, var(--purple-2) 0%, var(--purple-3) 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 0 0 0 0;
+    }
+
+    /* diagonal grain texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero-topbar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 60%, transparent 100%);
+    }
+
+    /* Content constrained to same width as rest of site */
+    .hero-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .hero-headline-row {
+      padding: 36px 0 24px;
+      border-bottom: 1px solid rgba(200,134,10,0.2);
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5vw, 58px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* decorative element */
+    .hero-title-deco {
+      position: absolute; right: 40px; top: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px; font-weight: 700;
+      color: rgba(200,134,10,0.06);
+      line-height: 1;
+      user-select: none; pointer-events: none;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-body-row {
+      display: grid;
+      grid-template-columns: 45fr 55fr;
+      gap: 0;
+      min-height: 300px;
+    }
+
+    .hero-text-block {
+      padding: 28px 36px 36px 0;
+      border-right: 1px solid rgba(200,134,10,0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-text-inner {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+    }
+
+    .hero-body-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.82);
+      font-weight: 300;
+    }
+    .hero-body-text strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .hero-read-cue {
+      margin-top: 18px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .hero-read-cue::after {
+      content: '↓';
+      font-size: 14px;
+    }
+
+    .hero-image-block {
+      padding: 20px 0 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.12);
+    }
+
+    .hero-report-wrap {
+      position: relative;
+      width: 100%;
+      transform: rotate(2.5deg);
+      transition: transform 0.4s ease;
+      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.6)) drop-shadow(0 2px 8px rgba(200,134,10,0.2));
+    }
+    .hero-report-wrap:hover {
+      transform: rotate(0deg) scale(1.01);
+    }
+    .hero-report-img {
+      width: 100%;
+      border-radius: 3px;
+      border: 1px solid rgba(200,134,10,0.3);
+    }
+
+    /* gold corner accent on report image */
+    .hero-report-wrap::before {
+      content: '';
+      position: absolute;
+      top: -4px; left: -4px;
+      width: 28px; height: 28px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      border-radius: 2px 0 0 0;
+      pointer-events: none;
+    }
+    .hero-report-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; right: -4px;
+      width: 28px; height: 28px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      border-radius: 0 0 2px 0;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       SECTION WRAPPER
+    ============================================================ */
+    .section-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ============================================================
+       SECTION HEADER
+    ============================================================ */
+    .section-header {
+      display: flex; align-items: baseline; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.15;
+    }
+
+    /* ============================================================
+       FEATURED METRICS — Compact 2×2 Grid
+    ============================================================ */
+    .metrics-section {
+      padding: 40px 0 36px;
+      background: var(--cream);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .metric-card {
+      background: var(--white);
+      border: 1px solid var(--cream-2);
+      border-top: 3px solid var(--gold);
+      border-radius: var(--r);
+      box-shadow: var(--shadow-card);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .metric-card:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,0.13);
+      transform: translateY(-2px);
+    }
+
+    .metric-info {
+      padding: 18px 16px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metric-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px; font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .metric-name a {
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+    .metric-name a:hover { color: var(--gold); text-decoration: none; }
+
+    .metric-desc {
+      font-size: 12.5px;
+      color: var(--text-mid);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 12px;
+    }
+
+    .metric-links {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .metric-link {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--gold);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .metric-link:hover { text-decoration: underline; }
+    .metric-link-secondary {
+      font-size: 11.5px;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+    .metric-link-secondary:hover { color: var(--text-mid); text-decoration: underline; }
+
+    .metric-thumb {
+      width: 200px;
+      min-width: 200px;
+      background: var(--cream);
+      border-left: 1px solid var(--cream-2);
+      display: flex;
+      align-items: center;
+      padding: 8px;
+    }
+    .metric-thumb img {
+      width: 100%;
+      height: auto;
+      border-radius: 3px;
+    }
+
+    /* ============================================================
+       HOW TO READ THE REPORT — SCHEMATIC
+    ============================================================ */
+    .how-section {
+      padding: 56px 0 60px;
+      background: var(--cream-2);
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .how-sub {
+      font-size: 16px;
+      color: var(--text-mid);
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    /* Schematic grid */
+    .schematic {
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      grid-template-rows: auto auto auto;
+      background: var(--cream);
+      border: 1px solid rgba(200,134,10,0.2);
+      border-radius: var(--r);
+      padding: 28px 20px;
+      position: relative;
+    }
+    .schematic::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,134,10,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,134,10,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      border-radius: var(--r);
+      pointer-events: none;
+    }
+    .sc-top    { grid-column: 2; grid-row: 1; display:flex; flex-direction:column; align-items:center; padding-bottom:14px; position:relative; z-index:1; }
+    .sc-img    { grid-column: 2; grid-row: 2; padding: 0 16px; position:relative; z-index:1; }
+    .sc-bottom { grid-column: 2; grid-row: 3; display:flex; flex-direction:column; align-items:center; padding-top:14px; position:relative; z-index:1; }
+    .sc-left   { grid-column: 1; grid-row: 1/4; display:flex; flex-direction:column; justify-content:space-around; padding-right:10px; position:relative; z-index:1; }
+    .sc-right  { grid-column: 3; grid-row: 1/4; display:flex; flex-direction:column; justify-content:space-around; padding-left:10px; position:relative; z-index:1; }
+
+    .sc-callout {
+      background: var(--white);
+      border: 1px solid rgba(200,134,10,0.3);
+      border-left: 3px solid var(--gold-light);
+      padding: 10px 13px;
+      margin-bottom: 18px;
+      cursor: default;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .sc-callout:last-child { margin-bottom: 0; }
+    .sc-callout:hover {
+      border-color: var(--gold);
+      border-left-color: var(--gold);
+      box-shadow: 0 2px 10px rgba(200,134,10,0.14);
+    }
+    .sc-callout.gold-accent {
+      border-color: var(--gold);
+      border-left-color: var(--gold);
+      background: #fdf6e8;
+    }
+    .sc-callout.gold-accent:hover { box-shadow: 0 2px 10px rgba(200,134,10,0.22); }
+
+    .sc-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 3px;
+    }
+    .sc-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--purple);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      line-height: 1.35;
+      margin-bottom: 5px;
+    }
+    .sc-callout.gold-accent .sc-title { color: var(--gold); }
+    .sc-desc { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
+    .sc-premium {
+      margin-top: 7px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(200,134,10,0.25);
+      font-size: 11px;
+      color: var(--gold);
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .sc-vline { width: 1px; background: rgba(200,134,10,0.35); }
+    .sc-rdot  { width: 14px; height: 14px; flex-shrink: 0; }
+    .sc-img img {
+      width: 100%;
+      display: block;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 3px;
+    }
+    .sc-hotspot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 20px; height: 20px;
+      background: var(--purple);
+      color: var(--white);
+      border-radius: 50%;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--white);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.28);
+      opacity: 0.65;
+      z-index: 10;
+      transition: transform 0.2s, opacity 0.2s, background 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .sc-hotspot.gold { background: var(--gold); }
+    .sc-hotspot.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.3);
+      background: var(--purple-2);
+      box-shadow: 0 2px 10px rgba(30,18,72,0.35);
+    }
+    .sc-hotspot.gold.active {
+      background: var(--gold);
+      box-shadow: 0 2px 10px rgba(200,134,10,0.4);
+    }
+
+    /* ============================================================
+       VALUE PROPOSITION BAND
+    ============================================================ */
+    .value-band {
+      background: var(--charcoal);
+      padding: 40px 0;
+    }
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(200,134,10,0.15);
+    }
+    .value-cell {
+      background: var(--charcoal-2);
+      padding: 28px 32px;
+    }
+    .value-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .value-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .value-headline.gold {
+      color: var(--gold);
+    }
+    .value-body {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+    }
+    .value-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    /* ============================================================
+       CTAs
+    ============================================================ */
+    .cta-section {
+      padding: 52px 0;
+      background: var(--cream);
+    }
+    .cta-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+    }
+    .cta-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px; font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.15;
+    }
+    .cta-sub {
+      font-size: 15px;
+      color: var(--text-mid);
+      max-width: 520px;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: var(--r);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+      border: none; cursor: pointer;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      text-decoration: none;
+      color: var(--white);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--charcoal);
+      padding: 13px 28px;
+      border-radius: var(--r);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      border: 2px solid var(--charcoal);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      background: var(--charcoal);
+      color: var(--white);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(200,134,10,0.2);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero-inner { padding: 0 20px; }
+      .hero-body-row { grid-template-columns: 1fr; }
+      .hero-text-block { padding: 20px 0 24px; border-right: none; border-bottom: 1px solid rgba(200,134,10,0.2); }
+      .hero-image-block { padding: 20px 0; }
+      .hero-report-wrap { transform: none; }
+      .hero-title-deco { display: none; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .value-grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 12px; text-align: center; }
+      .section-wrap { padding: 0 20px; }
+    }
+
+    @media (max-width: 600px) {
+      .metric-thumb { width: 140px; min-width: 140px; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV
+  ============================================================ -->
+  <nav class="nav">
+    <div class="nav-logo">Signal<span>Radar</span></div>
+    <ul class="nav-links">
+      <li><a href="https://signalradar.ai">Home</a></li>
+      <li><a href="https://signalradar.ai/about.html">About Us</a></li>
+      <li><a href="https://signalradar.ai/resources.html">Resources</a></li>
+      <li><a href="https://signalradar.ai/contact.html" class="nav-cta">Schedule a Call</a></li>
+    </ul>
+  </nav>
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section class="hero">
+      <div class="hero-topbar"></div>
+      <div class="hero-inner">
+
+        <!-- Headline row -->
+        <div class="hero-headline-row">
+          <div class="hero-eyebrow">Free Intelligence Report Series</div>
+          <h1 class="hero-title">Industrial Metals<br><em>Intelligence</em></h1>
+          <div class="hero-title-deco">IMI</div>
+        </div>
+
+        <!-- Body: 45% text + 55% image -->
+        <div class="hero-body-row">
+          <div class="hero-text-block">
+            <div class="hero-text-inner">
+              <p class="hero-body-text">
+                This report details the impact of external signals on key industrial metals that can 
+                <strong>move commodity and supply chain forecasts.</strong> We track copper, aluminum, 
+                silver, and steel prices — providing <strong>16-week projections</strong> that reflect 
+                advance notice of market disruptions and ever-changing news impacts.<br><br>
+                These free reports are simply examples — imagine what we could do 
+                <strong>using your own key metrics.</strong>
+              </p>
+              <a href="#how-to-read" class="hero-read-cue">See how to read this report</a>
+            </div>
+          </div>
+
+          <div class="hero-image-block">
+            <div class="hero-report-wrap">
+              <img
+                src="https://signalradar.ai/images/aluminum-report-sample.jpg"
+                alt="Sample Aluminum Futures Intelligence Report"
+                class="hero-report-img"
+                onerror="this.style.opacity='0.3'; this.alt='[Report image — upload aluminum-report-sample.jpg to /images/]';"
+              >
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /hero-inner -->
+    </section>
+
+  <!-- ============================================================
+       FEATURED METRICS — Compact 2×2 Grid
+  ============================================================ -->
+  <section class="metrics-section">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-label">Tracked Metrics</span>
+        <div class="section-rule"></div>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 20px;">Four Metals. One Report Package.</h2>
+
+      <div class="metrics-grid">
+
+        <!-- Copper -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="/reports/industrial-metals/copper/">US Copper Closing Price</a>
+              </div>
+              <p class="metric-desc">Track global copper price trends with 16-week advance signals from geopolitical events, mining disruptions, and construction demand patterns that move prices.</p>
+            </div>
+            <div class="metric-links">
+              <a href="/reports/industrial-metals/copper/" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/SignalRadar_FAQ_IndustrialMetals_v2.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/Copper_16_week.png"
+              alt="US Copper 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- Aluminum -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="/reports/industrial-metals/aluminum/">Aluminum Futures</a>
+              </div>
+              <p class="metric-desc">Monitor aluminum futures with 16-week advance signals from global bauxite production, energy costs, and geopolitical tensions in key mining regions.</p>
+            </div>
+            <div class="metric-links">
+              <a href="/reports/industrial-metals/aluminum/" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/SignalRadar_FAQ_IndustrialMetals_v2.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/Aluminum_16_Week.png"
+              alt="Aluminum Futures 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- Silver -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="/reports/industrial-metals/silver/">COMEX Silver Futures</a>
+              </div>
+              <p class="metric-desc">Track silver price movements with 16-week advance signals including geopolitical risk premiums, industrial demand from technology sectors, and currency effects.</p>
+            </div>
+            <div class="metric-links">
+              <a href="/reports/industrial-metals/silver/" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/SignalRadar_FAQ_IndustrialMetals_v2.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/Silver_16_week.png"
+              alt="COMEX Silver 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- Hot-Rolled Steel -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="/reports/industrial-metals/steel/">U.S. Midwest Hot-Rolled Steel</a>
+              </div>
+              <p class="metric-desc">Monitor steel prices with 16-week advance signals from energy costs, geopolitical disruptions affecting ore supply, and construction sector demand patterns.</p>
+            </div>
+            <div class="metric-links">
+              <a href="/reports/industrial-metals/steel/" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/SignalRadar_FAQ_IndustrialMetals_v2.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/Hot-Rolled_steel_16_week.png"
+              alt="Hot-Rolled Steel 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+      </div><!-- /metrics-grid -->
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW TO READ THE REPORT — SCHEMATIC
+  ============================================================ -->
+  <section class="how-section" id="how-to-read">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-label">Report Guide</span>
+        <div class="section-rule"></div>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 10px;">How to Read the Report</h2>
+      <p class="how-sub">Seven integrated sections &mdash; hover any label to locate it in the report</p>
+
+      <div class="schematic">
+
+        <!-- TOP: Section 2 -->
+        <div class="sc-top">
+          <div class="sc-callout" style="max-width:300px;text-align:center;margin-bottom:0;"
+               onmouseenter="scActivate(2)" onmouseleave="scDeactivate(2)">
+            <div class="sc-num">Section 02</div>
+            <div class="sc-title">16-Week Price Projection</div>
+            <div class="sc-desc">Directional forecast with expected price range &mdash; the quantitative headline of the report</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="sc-vline" style="height:14px;margin-top:2px;"></div>
+            <svg class="sc-rdot" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1E1248" stroke-width="0.8"/><circle cx="7" cy="7" r="3.5" stroke="#1E1248" stroke-width="0.7" stroke-dasharray="1.8 1.2"/><circle cx="7" cy="7" r="1.5" fill="#1E1248"/><line x1="7" y1="7" x2="11.5" y2="3.5" stroke="#C8860A" stroke-width="0.9" stroke-linecap="round"/></svg>
+            <div class="sc-vline" style="height:10px;"></div>
+          </div>
+        </div>
+
+        <!-- LEFT: Sections 1 & 5 -->
+        <div class="sc-left">
+          <div class="sc-callout"
+               onmouseenter="scActivate(1)" onmouseleave="scDeactivate(1)">
+            <div class="sc-num">Section 01</div>
+            <div class="sc-title">Signal Narrative</div>
+            <div class="sc-desc">Current market context driving price movement &mdash; the analytical setup for everything that follows</div>
+          </div>
+          <div class="sc-callout"
+               onmouseenter="scActivate(5)" onmouseleave="scDeactivate(5)">
+            <div class="sc-num">Section 05</div>
+            <div class="sc-title">Geographic Disruption Map</div>
+            <div class="sc-desc">Active global events and their supply pressure origins &mdash; location intelligence behind the signal</div>
+          </div>
+        </div>
+
+        <!-- CENTER IMAGE -->
+        <div class="sc-img">
+          <div style="position:relative;">
+            <img src="https://signalradar.ai/images/aluminum-report-sample.jpg"
+                 alt="SignalRadar Aluminum Futures Intelligence Report"
+                 onerror="this.src='https://signalradar.ai/images/Aluminum_16_Week.png';">
+            <!-- Hotspots -->
+            <div class="sc-hotspot" id="shs1" style="left:15%;top:30%;">1</div>
+            <div class="sc-hotspot" id="shs2" style="left:60%;top:18%;">2</div>
+            <div class="sc-hotspot" id="shs3" style="left:88%;top:22%;">3</div>
+            <div class="sc-hotspot" id="shs4" style="left:50%;top:47%;">4</div>
+            <div class="sc-hotspot" id="shs5" style="left:22%;top:76%;">5</div>
+            <div class="sc-hotspot" id="shs6" style="left:56%;top:80%;">6</div>
+            <div class="sc-hotspot gold" id="shs7" style="left:88%;top:76%;">7</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Sections 3, 4, 6 -->
+        <div class="sc-right">
+          <div class="sc-callout"
+               onmouseenter="scActivate(3)" onmouseleave="scDeactivate(3)">
+            <div class="sc-num">Section 03</div>
+            <div class="sc-title">Top Forces Behind the Projection</div>
+            <div class="sc-desc">Structural analysis: ranked categories of influence on the signal</div>
+          </div>
+          <div class="sc-callout"
+               onmouseenter="scActivate(4)" onmouseleave="scDeactivate(4)">
+            <div class="sc-num">Section 04</div>
+            <div class="sc-title">News Driving This Signal</div>
+            <div class="sc-desc">Major macro themes ranked by impact weight &mdash; the live news layer behind the model</div>
+          </div>
+          <div class="sc-callout"
+               onmouseenter="scActivate(6)" onmouseleave="scDeactivate(6)">
+            <div class="sc-num">Section 06</div>
+            <div class="sc-title">Betting Markets &amp; Futures</div>
+            <div class="sc-desc">Alternative market perspectives on price direction &mdash; real-money conviction vs. model forecast</div>
+          </div>
+        </div>
+
+        <!-- BOTTOM: Section 7 -->
+        <div class="sc-bottom">
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="sc-vline" style="height:10px;background:rgba(200,134,10,0.5);"></div>
+            <svg class="sc-rdot" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#C8860A" stroke-width="1"/><circle cx="7" cy="7" r="3.5" stroke="#C8860A" stroke-width="0.8" stroke-dasharray="1.8 1.2"/><circle cx="7" cy="7" r="1.5" fill="#C8860A"/><line x1="7" y1="7" x2="11.5" y2="3.5" stroke="#C8860A" stroke-width="1" stroke-linecap="round"/></svg>
+            <div class="sc-vline" style="height:10px;background:rgba(200,134,10,0.5);"></div>
+          </div>
+          <div class="sc-callout gold-accent" style="max-width:380px;text-align:center;margin-top:0;"
+               onmouseenter="scActivate(7)" onmouseleave="scDeactivate(7)">
+            <div class="sc-num" style="color:#a07030;">Section 07</div>
+            <div class="sc-title">What This Means for Your Business</div>
+            <div class="sc-desc" style="color:#5a4010;">Company-specific translation of the signal&rsquo;s planning impact</div>
+            <div class="sc-premium">&#9670;&nbsp; Free report: generalized industry context &nbsp;&bull;&nbsp; Premium: tailored to your company, margins &amp; planning cycle</div>
+          </div>
+        </div>
+
+      </div><!-- /.schematic -->
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VALUE PROPOSITION BAND
+  ============================================================ -->
+  <section class="value-band">
+    <div class="section-wrap">
+      <div class="value-grid">
+        <div class="value-cell">
+          <div class="value-headline gold">Weeks of advance notice</div>
+          <p class="value-body">External signals surface weeks before disruptions reach your internal dashboards. SignalRadar moves you from reactive to anticipatory.</p>
+        </div>
+        <div class="value-cell">
+          <div class="value-headline gold">Four metals tracked in this package</div>
+          <p class="value-body">Copper, aluminum, silver, and hot-rolled steel — each with 16-week projections tied to real-world external signals. Let us create a package for you!</p>
+        </div>
+        <div class="value-cell">
+          <div class="value-headline gold">These are just examples</div>
+          <p class="value-body">Free reports demonstrate the methodology. The real power is mapping this same external intelligence approach to your specific business metrics and reforecast cycle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTAs
+  ============================================================ -->
+  <section class="cta-section">
+    <div class="section-wrap">
+      <div class="cta-inner">
+        <h2 class="cta-headline">Ready to connect external intelligence to enable your team to engage in anticipatory planning?</h2>
+        <p class="cta-sub">Schedule a conversation to explore what SignalRadar could surface using your own key metrics and planning cycle.</p>
+        <div class="cta-buttons">
+          <a href="https://signalradar.ai/contact.html" class="btn-primary">Schedule a Conversation</a>
+          <a href="https://signalradar.ai/signup.html" class="btn-secondary">Sign Up for Free Reports</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="footer-logo">Signal<span>Radar</span></div>
+    <div class="footer-tagline">External intelligence for anticipatory planning.</div>
+    <div class="footer-copy">© 2026 SignalRadar. All rights reserved.</div>
+  </footer>
+
+  <!-- ============================================================
+       JS: Tooltip zone calibration
+       On image load, verify zones are correctly sized to image
+  ============================================================ -->
+  <script>
+    function scActivate(n) {
+      var el = document.getElementById('shs' + n);
+      if (el) el.classList.add('active');
+    }
+    function scDeactivate(n) {
+      var el = document.getElementById('shs' + n);
+      if (el) el.classList.remove('active');
+    }
+  </script>
+
+</body>
+</html>
