@@ -138,17 +138,25 @@
     align-items:flex-start;
   }
   .brand .packageBadge{
-    display:inline-flex; align-items:center;
-    align-self:flex-start;
-    margin-top:8px;
-    padding:2px 12px;
-    background:#E8DCC0;
-    color:#3A3A3A;
+    display:inline-flex; align-items:center; justify-content:center;
+    align-self:center;
+    margin-bottom:0;
+    padding:5px 18px;
+    background:#111;
+    color:#fff;
     border-radius:999px;
     font-family:'Open Sans', sans-serif;
     font-size:12px; font-weight:800;
-    letter-spacing:.08em;
+    letter-spacing:.12em;
     text-transform:uppercase;
+  }
+  .packetRule{
+    display:none;
+    width:100%;
+    height:1px;
+    background:rgba(17,17,17,.13);
+    margin:12px 0 14px;
+    flex-shrink:0;
   }
 
   .pill{
@@ -789,7 +797,8 @@
 
   .projswap-bar{
     position:absolute;
-    left:0;
+    left:0 !important;
+    right:auto !important;
     top:0;
     bottom:0;
     background:#B5A88E;
@@ -1442,7 +1451,7 @@
 
 
 .measureNav{
-  display:flex; align-items:center; gap:10px; margin:14px 0 6px;
+  display:flex; align-items:center; gap:10px; margin:6px 0 6px;
   flex-wrap:nowrap;
   white-space:nowrap;
   width:100%;
@@ -1477,14 +1486,17 @@
 /* ── Channel ? info button ── */
 .channelInfoBtn{
   flex:0 0 auto;
-  width:26px; height:26px;
+  width:18px; height:18px;
   border:none; border-radius:50%;
   background:var(--brand); color:#fff;
-  font-size:13px; font-weight:900; line-height:1;
+  font-size:10px; font-weight:900; line-height:1;
   cursor:pointer; display:flex; align-items:center; justify-content:center;
-  box-shadow:0 2px 5px rgba(0,0,0,.20);
+  box-shadow:0 2px 4px rgba(0,0,0,.18);
   transition:background .15s;
   padding:0;
+  margin-left:auto;
+  align-self:flex-start;
+  margin-top:4px;
 }
 .channelInfoBtn:hover{ background:#9a6425; }
 
@@ -1531,7 +1543,6 @@
   cursor:pointer; line-height:1; padding:4px 8px; border-radius:8px;
 }
 .cdClose:hover{ background:#f0e8d8; color:var(--ink); }
-
 
 /* Keep it usable on narrower screens */
   @media (max-width: 1200px){
@@ -1820,45 +1831,93 @@
 
 
   /* ══════════════════════════════════════════════════════════════
-     MOBILE (≤720px) — phones and small tablets.
-     - Drops the decorative hero watercolor and signal-origin map+events row.
-     - Single-column stack throughout.
-     - Editorial header (sub1/sub2/headline/narrative) remains, with the
-       narrative clipped to ~6 lines and an inline (MORE) link that opens
-       the existing overlay — handled in applyInlineNarrative().
-     This block is at the end of <style> so it cascades after the late-
-     defined desktop rules (.projswap-shell, .v24c-card, etc.).
+     MOBILE (≤720px) — phones. Hatchet redesign: restructures the
+     INTERNALS of each component for narrow screens, not just outer
+     grid stacking. Sits at end of <style> so it cascades after the
+     late-defined desktop rules that use !important.
   ══════════════════════════════════════════════════════════════ */
   @media (max-width: 720px){
+
+    /* ─── 1. CANVAS / OUTER FRAME ─── */
     .frame{ padding:0; }
     .canvas{
-      width:100%;
+      width:100% !important;
+      max-width:none !important;
       border-radius:0;
       border-left:none;
       border-right:none;
-      max-width:none;
     }
     .content{ padding:12px 12px 90px 12px; }
 
+    /* ─── 1b. WIDTH CLAMPS — stop wrappers from bursting past the canvas.
+       Several inner grid/flex tracks size to min-content and were extending
+       to 626-682px inside a 390px viewport (hidden by canvas overflow:hidden,
+       so the right half of every card was being silently clipped). Force
+       every wrapper in the chain to respect the parent width. */
+    .right,
+    .chartWrap,
+    .chart,
+    .grid,
+    .projswap-shell,
+    .v24c-card,
+    .v24c-inner,
+    .newsBlock,
+    .newsGrid,
+    .newsCard,
+    .overviewRow,
+    .overview{
+      min-width:0 !important;
+      max-width:100% !important;
+      width:100% !important;
+      box-sizing:border-box !important;
+    }
+    /* And the tag inside newsCard — long category strings need to wrap */
+    .tag,
+    .tagRow{
+      white-space:normal !important;
+      min-width:0 !important;
+      max-width:100% !important;
+    }
+    /* projswap-shell padding eats into the limited width — shrink it */
+    .projswap-shell{ padding:6px !important; gap:10px !important; }
+
+    /* ─── 2. KILL DECORATIVE BLOCKS ─── */
     .heroImg,
     .mapRow{ display:none !important; }
 
+    /* ─── 3. TOP-LEVEL GRIDS STACK ─── */
     .top{
-      grid-template-columns:1fr;
+      grid-template-columns:minmax(0,1fr) !important;
       gap:16px;
     }
     .top > section:first-child{
       padding-right:0;
       border-right:none;
     }
-
     .leftHero{
-      grid-template-columns:1fr;
-      height:auto;
+      grid-template-columns:minmax(0,1fr) !important;
+      height:auto !important;
       gap:0;
       padding-bottom:14px;
     }
+    /* On mobile, switch .right to flex column so DOM order is visual order.
+       Desktop sets grid-column:1/3 on .newsBlock and .overviewRow which spawn
+       implicit grid tracks and scramble injected children. */
+    .right{
+      display:flex !important;
+      flex-direction:column !important;
+      grid-template-columns:none !important;
+      gap:14px;
+    }
+    .right > *{
+      grid-column:auto !important;
+      grid-row:auto !important;
+      width:100% !important;
+      min-width:0 !important;
+      max-width:100% !important;
+    }
 
+    /* ─── 4. EDITORIAL HEADER ─── */
     .brand{ padding-right:0; }
     .brand .sub1{ font-size:clamp(14px, 3.6vw, 18px); white-space:normal; }
     .brand .sub2{
@@ -1879,28 +1938,203 @@
       margin-top:10px;
     }
 
+    /* ─── 5. PROJECTION CARDS — outer shell ─── */
     .projswap-shell{
       flex-direction:column !important;
-      gap:12px;
-      padding:10px;
+      gap:12px !important;
+      padding:8px !important;
     }
-    .v24c-card{ padding:12px 14px 10px; }
-    .v24c-trend{
+    .v24c-card{
+      padding:14px 12px 12px !important;
+    }
+    .v24c-trend,
+    .v24c-forces{
       flex:1 1 auto !important;
       max-width:100% !important;
     }
 
-    .newsGrid{
-      grid-template-columns:1fr 1fr;
-      gap:10px;
+    /* ─── 6. TREND PROJECTION — internal restructure ─── */
+    /* Hero row (big % + EXPECTED MOVE label): STACK vertically, both centered */
+    .v24c-heroRow{
+      flex-direction:column !important;
+      align-items:center !important;
+      gap:2px !important;
+      text-align:center;
+    }
+    .v24c-bigPct{
+      font-size:clamp(48px, 16vw, 76px) !important;
+      line-height:1 !important;
+    }
+    .v24c-heroRight{
+      padding-bottom:0 !important;
+      align-items:center !important;
+    }
+    .v24c-moveLabel{
+      font-size:11px !important;
+      line-height:1.3 !important;
+      text-align:center;
     }
 
-    .overviewRow{ grid-template-columns:1fr; }
+    /* Price bridge — keep 3-col but tighten massively */
+    .v24c-priceRow{
+      grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
+      gap:8px !important;
+      align-items:center !important;
+    }
+    .v24c-priceLabel{
+      font-size:9px !important;
+      letter-spacing:.06em !important;
+      line-height:1.25 !important;
+      margin-bottom:3px !important;
+    }
+    .v24c-priceVal{
+      font-size:clamp(22px, 7.5vw, 30px) !important;
+      line-height:1 !important;
+    }
+    .v24c-priceUnit{
+      font-size:.42em !important;
+    }
+    .v24c-dirBox{
+      width:42px !important;
+      height:42px !important;
+    }
+    .v24c-dirBox svg{
+      width:26px !important;
+      height:26px !important;
+    }
 
-    .v24c-heroRow{ flex-wrap:wrap; gap:6px; }
-    .v24c-bigPct{ font-size:clamp(40px, 12vw, 64px); }
-    .v24c-heroRight .v24c-moveLabel{ font-size:11px; line-height:1.2; }
+    /* Expected range — kill the outer 40px margin and inner 28px padding */
+    .v24c-rangeSection{
+      margin:10px 0 0 !important;
+      padding:8px 10px !important;
+    }
+    .v24c-rangeHdr{
+      font-size:10px !important;
+      letter-spacing:.08em !important;
+      margin-bottom:6px !important;
+    }
+    .v24c-rangeBar{ gap:8px !important; }
+    .v24c-rangeEdge{ font-size:12px !important; }
 
+    /* ─── 7. TOP FORCES — restructure each row to stack ─── */
+    /* Override the desktop 3-col grid; each row becomes a 2-line block:
+       [label .................. %]
+       [══════════ bar ══════════] */
+    .v24c-forces .projswap-rows,
+    #predictorRows{
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:stretch !important;
+      gap:0 !important;
+    }
+    .v24c-forces .projswap-row,
+    #predictorRows .projswap-row{
+      display:grid !important;            /* override display:contents */
+      width:100% !important;
+      align-self:stretch !important;
+      grid-template-columns:minmax(0,1fr) auto;
+      grid-template-areas:
+        "label pct"
+        "bar bar";
+      column-gap:8px;
+      row-gap:4px;
+      padding:9px 0 !important;
+      border-bottom:1px solid rgba(140,100,50,.20);
+    }
+    .v24c-forces .projswap-row:last-child{ border-bottom:none; }
+    .v24c-forces .projswap-label{
+      grid-area:label;
+      white-space:normal !important;
+      overflow:visible !important;
+      text-overflow:initial !important;
+      padding:0 !important;
+      border-bottom:none !important;
+      font-size:13px !important;
+      line-height:1.25 !important;
+      min-height:0 !important;
+    }
+    .v24c-forces .projswap-pct{
+      grid-area:pct;
+      padding:0 !important;
+      border-bottom:none !important;
+      font-size:14px !important;
+      text-align:right;
+    }
+    .v24c-forces .projswap-barbg{
+      grid-area:bar;
+      width:100% !important;
+      height:10px !important;
+      margin-top:2px;
+      border-bottom:none !important;
+    }
+    .v24c-forces .projswap-bar{
+      height:100% !important;
+    }
+
+    /* ─── 8. NEWS DRIVER CARDS — tighten ─── */
+    .newsCard{
+      padding:10px 10px 8px 14px !important;
+      min-height:0 !important;
+    }
+    .newsCard:before{ width:5px; }
+    .tag{ font-size:12px !important; }
+    .pctRow{
+      grid-template-columns:auto 1fr !important;
+      margin:6px 0 4px 0 !important;
+      width:auto !important;
+      min-height:0 !important;
+      column-gap:8px;
+    }
+    .pct{
+      grid-column:1 !important;
+      justify-self:start !important;
+      font-size:30px !important;
+    }
+    .dirArrow{
+      grid-column:2 !important;
+      justify-self:end !important;
+      font-size:18px !important;
+      height:auto !important;
+      margin:0 4px 0 0 !important;
+    }
+    .desc{
+      font-size:13px !important;
+      line-height:1.4 !important;
+      -webkit-line-clamp:6 !important;
+      margin:4px 0 0 0 !important;
+    }
+
+    /* ─── 9. OVERVIEW PANELS (panel1 / panel23) ─── */
+    .overviewRow{
+      grid-template-columns:minmax(0,1fr) !important;
+      gap:10px !important;
+    }
+    .overview{
+      min-height:0 !important;
+      max-height:none !important;
+    }
+    .oWisdomText{ font-size:14px !important; line-height:1.55 !important; }
+
+    /* ─── 10. WHAT-THIS-MEANS / BETTING MARKET price rows ─── */
+    /* The 76px label / 1fr val / 60px delta grid is too tight at 390 with
+       long numbers. Allow horizontal scroll on the wrapper as a safety net,
+       but also tighten the row itself. */
+    .wPriceTable{
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .wPriceRow{
+      grid-template-columns:64px 1fr 56px !important;
+      column-gap:6px;
+    }
+    .wPriceMonth,
+    .wPriceVal,
+    .wPriceDelta{
+      font-size:12px !important;
+      white-space:nowrap;
+    }
+
+    /* ─── 11. TOUCH TARGETS + UI CHROME ─── */
     .navBtnMini{
       min-height:44px;
       padding:10px 14px;
@@ -1910,24 +2144,175 @@
       min-height:44px;
       font-size:15px;
     }
+    .newsGrid{
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+      gap:10px;
+    }
 
+    /* iOS overlay scroll */
     #overlayCard{ -webkit-overflow-scrolling:touch; }
 
-    .wPriceTable{
-      overflow-x:auto;
-      -webkit-overflow-scrolling:touch;
+    /* ─── 13. CARD HEADERS — TOP FORCES title was nowrap, overlapping the
+       SUNNY confidence chip. Allow wrap, shrink the title, keep chip on
+       the right but not flexing past it. ─── */
+    .v24c-head{
+      align-items:center !important;
+      gap:8px !important;
+      flex-wrap:wrap;
     }
+    .v24c-title,
+    .v24c-forces .v24c-title,
+    .v24c-trend .v24c-title{
+      white-space:normal !important;
+      font-size:14px !important;
+      line-height:1.2 !important;
+      flex:1 1 auto !important;
+      min-width:0 !important;
+    }
+    .v24c-sunny{
+      flex-shrink:0 !important;
+    }
+    .v24c-sunWord{ font-size:11px !important; }
+    .v24c-sunDelta{ font-size:9px !important; }
+
+    /* ─── 14. FOOTER — absolute-positioned 106px-tall bar overlapped the
+       big nowrap CTA button on top of "SIGNALRADAR INTELLIGENCE" wordmark.
+       On mobile, switch to static flow with a vertical stack. ─── */
+    .footer{
+      position:static !important;
+      height:auto !important;
+      flex-direction:column !important;
+      align-items:stretch !important;
+      padding:16px 14px !important;
+      gap:12px !important;
+      margin-top:8px;
+    }
+    .footLeft{ width:100%; min-width:0; }
+    .footLabel{
+      font-size:11px !important;
+      letter-spacing:.06em !important;
+    }
+    .footText{
+      white-space:normal !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+      font-size:14px !important;
+      line-height:1.4 !important;
+      margin-top:4px !important;
+    }
+    .footText small{ font-size:14px !important; }
+    .footActions{
+      width:100%;
+      flex-direction:column;
+      gap:10px;
+    }
+    .btn{
+      width:100% !important;
+      white-space:normal !important;
+      padding:14px 20px !important;
+      font-size:16px !important;
+      line-height:1.2 !important;
+      text-align:center;
+      box-shadow:0 4px 10px rgba(0,0,0,.22) !important;
+    }
+    /* The .content padding-bottom 120px existed only to clear the absolute
+       footer. With footer static, no extra reservation needed. */
+    .content{ padding-bottom:24px !important; }
   }
 
+  /* ─── 12. PHONES (≤480px) — tighten further, drop to 1 col ─── */
   @media (max-width: 480px){
-    .newsGrid{ grid-template-columns:1fr; }
     .content{ padding:10px 10px 80px 10px; }
-    .v24c-card{ padding:10px 12px 8px; }
+    .v24c-card{ padding:12px 10px 10px !important; }
+    .newsGrid{ grid-template-columns:minmax(0,1fr) !important; }
+
+    .v24c-bigPct{ font-size:clamp(44px, 14vw, 64px) !important; }
+    .v24c-priceVal{ font-size:clamp(20px, 6.5vw, 26px) !important; }
+    .v24c-dirBox{ width:38px !important; height:38px !important; }
+    .v24c-dirBox svg{ width:22px !important; height:22px !important; }
+
     .brand .sub2{ font-size:clamp(19px, 5.5vw, 24px); }
     .headline{ font-size:clamp(16px, 4.6vw, 20px); }
-    .v24c-bigPct{ font-size:clamp(36px, 11vw, 52px); }
+    .pct{ font-size:26px !important; }
   }
 
+
+
+  /* Panel overlay — markup injected at end of <body>. JS sets card position. */
+  #panelOverlay{
+    display:flex; align-items:flex-start; justify-content:center;
+    position:fixed; inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:99999;
+    padding:0;
+    opacity:0; pointer-events:none;
+    transition:opacity .22s ease;
+  }
+  #panelOverlay.is-open{ opacity:1; pointer-events:all; }
+  #panelOverlay.is-closing{ opacity:0; pointer-events:none; }
+  #overlayCard{
+    position:fixed;
+    background:#FFFDF8;
+    border-radius:16px;
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+    display:flex; flex-direction:column;
+    overflow:hidden;
+    transform:translateY(20px);
+    opacity:0;
+    transition:transform .32s cubic-bezier(.22,1,.36,1), opacity .28s ease;
+    width:min(600px, 90vw); max-height:80vh;
+  }
+  #panelOverlay.is-open #overlayCard{ transform:translateY(0); opacity:1; }
+  #overlayHead{
+    padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid rgba(0,0,0,.08);
+    flex-shrink:0;
+  }
+  #overlayTitle{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:14px; font-weight:800;
+    letter-spacing:.02em; line-height:1.25;
+    color:#3a1f00;
+    margin:0; padding-right:12px;
+  }
+  #overlayClose{
+    background:transparent; border:none;
+    font-size:22px; line-height:1; color:#3a1f00;
+    cursor:pointer; padding:6px 10px;
+    border-radius:8px;
+    min-width:44px; min-height:44px;
+  }
+  #overlayClose:hover{ background:rgba(0,0,0,.06); }
+  #overlayBody{
+    padding:16px 20px 20px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:15px; line-height:1.55;
+    color:#1a1a1a;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  @media (max-width:720px){
+    #overlayCard{ width:94vw; max-height:88vh; }
+    #overlayHead{ padding:12px 16px; }
+    #overlayBody{ padding:14px 16px 18px; font-size:15px; }
+  }
+
+  /* As-of date under CURRENT PRICE label */
+  .v24c-asof{
+    font-family:'Open Sans', sans-serif;
+    font-size:10px;
+    font-weight:600;
+    color:#9A8E7B;
+    letter-spacing:.04em;
+    line-height:1.2;
+    margin:-3px 0 6px;
+    text-transform:none;
+  }
+  .v24c-asof:empty{ display:none; }
+  @media (max-width: 720px){
+    .v24c-asof{ font-size:9px !important; margin:-2px 0 4px !important; }
+  }
 </style>
 </head>
 <body>
@@ -1944,11 +2329,12 @@
 </div>
 <div class="brand">
 <h1 id="brandName">SignalRadar</h1>
-<div class="sub1" id="sub1">External Pressure Intelligence</div>
 <div class="packageBadge" id="packageBadge" style="display:none"></div>
-<div style="display:flex;align-items:flex-start;gap:7px;">
+<div class="packetRule" id="packetRule"></div>
+<div class="sub1" id="sub1">External Pressure Intelligence</div>
+<div style="display:flex;align-items:flex-start;gap:7px;width:100%;">
   <div class="sub2" id="sub2">Copper — Global Spot Price</div>
-  <button class="channelInfoBtn" id="channelInfoBtn" title="About this channel" style="margin-top:7px;flex-shrink:0;font-style:italic;font-family:Georgia,serif;font-size:15px;">i</button>
+  <button class="channelInfoBtn" id="channelInfoBtn" title="About this channel" style="font-style:italic;font-family:Georgia,serif;">i</button>
 </div>
 <div class="pill" id="signalPill">SIGNAL — UNDER PRESSURE</div>
 
@@ -2022,9 +2408,9 @@
       <!-- Price bridge -->
       <div class="v24c-priceRow">
         <div class="v24c-priceBlock">
-          <div class="v24c-priceLabel" style="text-align:center;">CURRENT PRICE</div>
-          <div id="projCurrentPriceDate" style="font-size:10px;color:#888;letter-spacing:.03em;text-align:center;margin-bottom:4px;"></div>
-          <div class="v24c-priceVal" id="projCurrentPrice" style="text-align:center;">
+          <div class="v24c-priceLabel">CURRENT PRICE</div>
+          <div class="v24c-asof" id="projCurrentAsOf"></div>
+          <div class="v24c-priceVal" id="projCurrentPrice">
             <span id="projCurrentPriceText">—</span><span class="v24c-priceUnit" id="projCurrentUnit"></span>
           </div>
         </div>
@@ -2094,11 +2480,22 @@
 
 </div>
 <script>
-function formatProjectionRange(pctRaw){
+/* Range spread = MarketSignalForecastMAPE — the same metric that drives
+   the SUNNY/PARTIALLY SUNNY/CLOUDY reliability label. SUNNY (MAPE ≤ 0.05)
+   gets a narrow ±5% fan around the projection, CLOUDY (MAPE > 0.10) gets
+   a wider fan. Fallback 0.10 (PARTIALLY SUNNY tier) when MAPE is missing. */
+function mapeSpreadFromChannel(ch){
+  const raw = (ch && (ch.MarketSignalForecastMAPE ?? ch.marketsignalforecastmape ?? ch.mape));
+  const n = parseFloat(raw);
+  if (isFinite(n) && n >= 0) return n;
+  return 0.10;
+}
+
+function formatProjectionRange(pctRaw, spread){
   const abs = Math.abs(pctRaw || 0);
-  const spread = abs >= 15 ? 0.33 : (abs >= 8 ? 0.28 : 0.22);
-  const lo = abs * (1 - spread);
-  const hi = abs * (1 + spread);
+  const sp = (typeof spread === 'number' && isFinite(spread) && spread >= 0) ? spread : 0.10;
+  const lo = abs * (1 - sp);
+  const hi = abs * (1 + sp);
   const fmt = (v) => {
     const s = (Math.round(v * 10) / 10).toFixed(1);
     return s.endsWith('.0') ? s.slice(0,-2) : s;
@@ -2173,6 +2570,29 @@ function initTrendProjection(){
     const cpFmt = (!isNaN(cpNum) && cpNum > 0) ? fmtPriceByCode(cpNum, cpCode) : '—';
     if (cpTextEl) cpTextEl.textContent = cpFmt; else cpEl.textContent = cpFmt;
   }
+
+  /* "AS OF <date>" under the Current Price label — uses ch.CurrentDate
+     from channels.csv (sourced from runlist.CurrentValueDate). */
+  const asOfEl = document.getElementById('projCurrentAsOf');
+  if (asOfEl) {
+    const rawDate = String(ch.CurrentDate ?? ch.currentdate ?? ch.current_date ?? '').trim();
+    let asOfText = '';
+    if (rawDate) {
+      /* Accept "YYYY-MM-DD", "YYYY-MM-DDTHH:MM:SS", "YYYY-MM-DD HH:MM:SS",
+         and other Date-parseable forms. Fall back to raw string if unparseable. */
+      const isoTry = rawDate.replace(' ', 'T');
+      const d = new Date(isoTry);
+      if (!isNaN(d.getTime())) {
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        const yy = String(d.getFullYear()).slice(-2);
+        asOfText = 'AS OF ' + mm + '/' + dd + '/' + yy;
+      } else {
+        asOfText = 'AS OF ' + rawDate;
+      }
+    }
+    asOfEl.textContent = asOfText;
+  }
   /* Projected 16-Week Average Price — colored with trend */
   const avgPriceEl = document.getElementById('projAvgPrice');
   if (avgPriceEl) {
@@ -2199,22 +2619,27 @@ function initTrendProjection(){
     avgPriceEl.style.color = '#1a1a1a';
   }
 
-  /* Compute range and push to both hidden projRange and the confidence block */
+  /* Compute range and push to both hidden projRange and the confidence block.
+     Fan is centered on the model's projected price (so the pill always sits
+     dead-center) with half-width = MarketSignalForecastMAPE × projection. */
   const rawCp = String(ch.currentprice || '').trim();
   const currentPriceRaw = parseFloat(rawCp.replace(/[^0-9.\-]/g, ''));
   const priceCode = String(ch.DT_CODE || ch.dt_code || '');
+  const mapeSpread = mapeSpreadFromChannel(ch);
+  /* Project price: prefer the model's avg16w, fall back to current × (1 + trend) */
+  const rawAvg = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
+  const avgNum = rawAvg ? parseFloat(rawAvg.replace(/[^0-9.\-]/g, '')) : NaN;
+  const projPrice = (!isNaN(avgNum) && avgNum > 0)
+    ? avgNum
+    : (!isNaN(currentPriceRaw) && currentPriceRaw > 0 ? currentPriceRaw * (1 + pctRaw / 100) : NaN);
   let rangeStr = '—';
-  if (!isNaN(currentPriceRaw) && currentPriceRaw > 0 && Math.abs(pctRaw) > 0) {
-    const abs = Math.abs(pctRaw);
-    const spread = abs >= 15 ? 0.33 : (abs >= 8 ? 0.28 : 0.22);
-    const dir = pctRaw < 0 ? -1 : 1;
-    const loPrice = currentPriceRaw * (1 + dir * abs * (1 - spread) / 100);
-    const hiPrice = currentPriceRaw * (1 + dir * abs * (1 + spread) / 100);
-    const minPrice = Math.min(loPrice, hiPrice);
-    const maxPrice = Math.max(loPrice, hiPrice);
+  if (!isNaN(projPrice) && projPrice !== 0) {
+    const halfWidth = Math.abs(projPrice) * mapeSpread;
+    const minPrice = projPrice - halfWidth;
+    const maxPrice = projPrice + halfWidth;
     rangeStr = fmtPriceByCode(minPrice, priceCode) + ' to ' + fmtPriceByCode(maxPrice, priceCode);
   } else if (Math.abs(pctRaw) > 0) {
-    rangeStr = formatProjectionRange(pctRaw);
+    rangeStr = formatProjectionRange(pctRaw, mapeSpread);
   }
   if (rangeEl) rangeEl.textContent = rangeStr;
   const confRangeEl = document.getElementById('confRangeDisplay');
@@ -2264,22 +2689,20 @@ function initTrendProjection(){
   const rawCpV = String(ch.currentprice || '').trim();
   const cpRawV = parseFloat(rawCpV.replace(/[^0-9.\-]/g, ''));
   const pcV    = String(ch.DT_CODE || ch.dt_code || '');
-  if (!isNaN(cpRawV) && cpRawV > 0 && Math.abs(pctRaw) > 0) {
-    const absV = Math.abs(pctRaw);
-    const spdV = absV >= 15 ? 0.33 : (absV >= 8 ? 0.28 : 0.22);
-    const dirV = pctRaw < 0 ? -1 : 1;
-    const loV  = cpRawV * (1 + dirV * absV * (1 - spdV) / 100);
-    const hiV  = cpRawV * (1 + dirV * absV * (1 + spdV) / 100);
-    const minV = Math.min(loV, hiV);
-    const maxV = Math.max(loV, hiV);
-    const rawAv = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
-    const avNum = rawAv ? parseFloat(rawAv.replace(/[^0-9.\-]/g, '')) : NaN;
-    const projV = (!isNaN(avNum) && avNum > 0) ? avNum : cpRawV * (1 + pctRaw / 100);
-    const spanV = maxV - minV;
-    const posV  = Math.max(6, Math.min(94, spanV > 0 ? ((projV - minV) / spanV) * 100 : 50));
+  /* Fan is centered on the projection. Pill is always at 50% by construction. */
+  const rawAvP = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
+  const avNumP = rawAvP ? parseFloat(rawAvP.replace(/[^0-9.\-]/g, '')) : NaN;
+  const projV  = (!isNaN(avNumP) && avNumP > 0)
+    ? avNumP
+    : (!isNaN(cpRawV) && cpRawV > 0 ? cpRawV * (1 + pctRaw / 100) : NaN);
+  if (!isNaN(projV) && projV !== 0) {
+    const spdV     = mapeSpreadFromChannel(ch);
+    const halfV    = Math.abs(projV) * spdV;
+    const minV     = projV - halfV;
+    const maxV     = projV + halfV;
     if (rangeMinEl) rangeMinEl.textContent = fmtPriceByCode(minV, pcV);
     if (rangeMaxEl) rangeMaxEl.textContent = fmtPriceByCode(maxV, pcV);
-    if (pillEl) { pillEl.textContent = fmtPriceByCode(projV, pcV); pillEl.style.left = posV + '%'; }
+    if (pillEl) { pillEl.textContent = fmtPriceByCode(projV, pcV); pillEl.style.left = '50%'; }
   }
 
 }
@@ -2976,19 +3399,6 @@ function riskPillFromChannel(ch){
 
 function applyMetricCardsFromChannel(ch){
   const currentPrice = ch.currentprice ?? '';
-  const rawCpDate = String(ch.CurrentDate || '').trim();
-  const cpDateEl = document.getElementById('projCurrentPriceDate');
-  if (cpDateEl) {
-    if (rawCpDate) {
-      const d = new Date(rawCpDate);
-      if (!isNaN(d)) {
-        const mm = String(d.getUTCMonth()+1).padStart(2,'0');
-        const dd = String(d.getUTCDate()).padStart(2,'0');
-        const yy = String(d.getUTCFullYear()).slice(-2);
-        cpDateEl.textContent = 'as of ' + mm + '/' + dd + '/' + yy;
-      } else { cpDateEl.textContent = ''; }
-    } else { cpDateEl.textContent = ''; }
-  }
   const threeWeek = ch['3weekchange'] ?? '';
   const reliability = ch.reliability ?? '';
   const riskNow = Number(ch.riskscorenow ?? 0);
@@ -3152,7 +3562,6 @@ function closePanelOverlay() {
 }
 document.addEventListener('click', function(e){
   if (e.target && e.target.id === 'panelOverlay') closePanelOverlay();
-  if (e.target && e.target.id === 'overlayClose') closePanelOverlay();
 });
 
 document.addEventListener('click', function(e){
@@ -3351,8 +3760,9 @@ function renderMeasure(measureCode){
         'energy':      'Energy'
       };
       var _label = _pkgLabels[_pkgKey] || _pkg;
-      if (_label) { _b.textContent = _label; _b.style.display = 'inline-flex'; }
-      else        { _b.textContent = '';     _b.style.display = 'none'; }
+      var _rule = document.getElementById('packetRule');
+      if (_label) { _b.textContent = _label + ' Packet'; _b.style.display = 'inline-flex'; if(_rule) _rule.style.display='block'; }
+      else        { _b.textContent = '';     _b.style.display = 'none'; if(_rule) _rule.style.display='none'; }
     }
   } catch(_){}
   const data = APP.all;
@@ -3492,70 +3902,133 @@ async function loadDashboard() {
 }
 document.addEventListener('DOMContentLoaded', loadDashboard);
 
-// ── Channel description modal ─────────────────────────────────────────────────
-// Reads ChannelDescription from the live channels.csv data already loaded into
-// APP.all.channels. Falls back gracefully if the column is not present yet.
-(function () {
-  function getChannelRow(code) {
-    if (!APP.all || !APP.all.channels) return null;
-    return APP.all.channels.find(function(r) {
-      return (r.DT_CODE || r.dt_code || '') === code;
-    }) || null;
-  }
-
-  function openModal() {
-    var code = APP.currentMeasureCode || CONFIG.DEFAULT_DT_CODE || '';
-    var row  = getChannelRow(code);
-    var desc = row && (row.ChannelDescription || row.channeldescription || '');
-    var name = (row && (row.CHANNEL || row.channel)) || code;
-
-    document.getElementById('cdTitle').textContent = name;
-    document.getElementById('cdSub').textContent   = code;
-
-    var bodyEl = document.getElementById('cdBody');
-    if (desc && desc.trim()) {
-      // CSV stores paragraphs separated by \n\r\n or \n\n; filter blank lines
-      var paras = desc.split(/\r?\n/).map(function(l){ return l.replace(/\r/g,'').trim(); })
-                      .filter(function(l){ return l.length > 20; });
-      if (paras.length === 0) paras = [desc.trim()];
-      var out = '<div class="cdLead">' + paras[0] + '</div>';
-      for (var i = 1; i < paras.length; i++) {
-        out += '<p>' + paras[i] + '</p>';
-      }
-      bodyEl.innerHTML = out;
-    } else {
-      bodyEl.innerHTML = '<p style="color:#888;font-style:italic;">Description not yet available. Run the insights pipeline to populate.</p>';
-    }
-    document.getElementById('cdOverlay').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('cdOverlay').classList.remove('open');
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('channelInfoBtn').addEventListener('click', openModal);
-    document.getElementById('cdClose').addEventListener('click', closeModal);
-    document.getElementById('cdOverlay').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-    });
-  });
-})();
-
 </script>
 
-<!-- Panel / Narrative overlay (used by More button and panel cards) -->
-<div class="oOverlay" id="panelOverlay">
-  <div class="oOverlayCard" id="overlayCard">
-    <div class="oOverlayHead" id="overlayHead">
-      <div class="oOverlayTitle" id="overlayTitle"></div>
-      <button class="oOverlayClose" id="overlayClose" title="Close">×</button>
+<div id="panelOverlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+  <div id="overlayCard">
+    <div id="overlayHead">
+      <div id="overlayTitle">Full analysis</div>
+      <button id="overlayClose" type="button" aria-label="Close">×</button>
     </div>
-    <div class="oOverlayBody" id="overlayBody"></div>
+    <div id="overlayBody"></div>
   </div>
 </div>
+<script>
+  (function(){
+    var ov = document.getElementById('panelOverlay');
+    var close = document.getElementById('overlayClose');
+    if (close) close.addEventListener('click', function(){
+      if (typeof closePanelOverlay === 'function') closePanelOverlay();
+    });
+    if (ov) ov.addEventListener('click', function(e){
+      if (e.target === ov && typeof closePanelOverlay === 'function') closePanelOverlay();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && ov && ov.classList.contains('is-open')) {
+        if (typeof closePanelOverlay === 'function') closePanelOverlay();
+      }
+    });
+  })();
+</script>
+
+<script>
+  /* Mobile narrative position — sits above News Drivers, below the
+     Trend Projection + Top Forces cards. Restored on desktop. */
+  (function setupMobileNarrativeOrder(){
+    var mq = window.matchMedia('(max-width: 720px)');
+    var originalParent = null;
+    var originalNextSibling = null;
+
+    var headlineOriginalParent = null;
+    var headlineOriginalNextSibling = null;
+
+    function relocate(){
+      var narrative = document.getElementById('mainDetails');
+      var headline = document.getElementById('headline');
+      var newsBlock = document.querySelector('.newsBlock');
+      if (!narrative || !headline || !newsBlock) return;
+
+      /* Capture original locations the first time we run */
+      if (!originalParent){
+        originalParent = narrative.parentElement;
+        originalNextSibling = narrative.nextSibling;
+      }
+      if (!headlineOriginalParent){
+        headlineOriginalParent = headline.parentElement;
+        headlineOriginalNextSibling = headline.nextSibling;
+      }
+
+      var moved = false;
+      if (mq.matches){
+        /* Mobile: headline + narrative together, just before .newsBlock,
+           in that order: ... trend, forces, HEADLINE, NARRATIVE, news ... */
+        var headlineMisplaced = (headline.parentNode !== newsBlock.parentNode
+                                 || headline.nextElementSibling !== narrative);
+        var narrativeMisplaced = (narrative.parentNode !== newsBlock.parentNode
+                                  || narrative.nextElementSibling !== newsBlock);
+        if (headlineMisplaced || narrativeMisplaced){
+          newsBlock.parentNode.insertBefore(headline, newsBlock);
+          newsBlock.parentNode.insertBefore(narrative, newsBlock);
+          moved = true;
+        }
+      } else {
+        /* Desktop: restore both to original spots */
+        function restore(el, parent, nextSib){
+          if (parent && el.parentNode !== parent){
+            if (nextSib && nextSib.parentNode === parent){
+              parent.insertBefore(el, nextSib);
+            } else {
+              parent.appendChild(el);
+            }
+            return true;
+          }
+          return false;
+        }
+        var r1 = restore(headline, headlineOriginalParent, headlineOriginalNextSibling);
+        var r2 = restore(narrative, originalParent, originalNextSibling);
+        if (r1 || r2) moved = true;
+      }
+
+      /* Re-truncate after move so (MORE) reflects new column width. */
+      if (moved && narrative.dataset.fulltext
+          && typeof window.applyInlineNarrative === 'function'){
+        try { window.applyInlineNarrative(narrative.dataset.fulltext); } catch(e){}
+      }
+    }
+
+    /* Initial run before data loads */
+    if (document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', relocate);
+    } else {
+      relocate();
+    }
+
+    /* Re-run after first data render is likely done */
+    window.addEventListener('load', function(){ setTimeout(relocate, 150); });
+
+    /* Re-run when viewport crosses the 720px breakpoint */
+    if (mq.addEventListener){
+      mq.addEventListener('change', relocate);
+    } else if (mq.addListener){
+      mq.addListener(relocate);
+    }
+
+    /* And whenever the user navigates between measures via Prev/Next/select,
+       applyChannelContent re-runs applyInlineNarrative — the element stays
+       at the moved location, so no re-relocate is needed. But cover the
+       case where the script loads before APP is ready by re-checking
+       briefly after first data load. */
+    var ticks = 0;
+    var poll = setInterval(function(){
+      ticks++;
+      if (window.APP && window.APP.measures && window.APP.measures.length){
+        relocate();
+        clearInterval(poll);
+      } else if (ticks > 60){
+        clearInterval(poll);
+      }
+    }, 250);
+  })();
+</script>
 </body>
 </html>
