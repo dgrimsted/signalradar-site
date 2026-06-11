@@ -71,6 +71,14 @@
     display:flex;
     flex-direction:column;
   }
+  /* Right section spans both grid rows so leftBottom can sit below the left hero */
+  section.right { grid-row: 1 / 3; }
+  /* Narrative block: sits below hero on desktop, below projections on mobile (DOM order) */
+  .leftBottom {
+    padding-right: 10px;
+    border-right: 1px solid rgba(91,72,45,.10);
+    padding-top: 16px;
+  }
 
   /* LEFT SIDE */
   .leftHero{
@@ -1552,6 +1560,8 @@
     .newsGrid{ grid-template-columns: 1fr 1fr; }
     .overviewRow{ grid-template-columns: 1fr; }
     .leftHero{ grid-template-columns: 1fr; }
+    section.right { grid-row: auto; }
+    .leftBottom { padding-right: 0; border-right: none; }
   }
 
 .errorOverlay{
@@ -2095,14 +2105,16 @@
 
 /* ── V25 mobile resets (720px) ───────────────────────────────────────────────
    The v25 desktop overrides use !important and appear after the base
-   @media rules, so they win by source order. Override them back here. */
+   @media rules, so they win by source order. Override them back here.
+   Layout model mirrors v24: sections are allowed to overflow the viewport
+   width naturally (no overflow:hidden clipping) — the browser clips at the
+   viewport edge without creating a scrollbar, matching v24 behaviour. */
 @media (max-width: 720px) {
-  /* CRITICAL: grid items default to min-width:auto, letting them grow past
-     their 1fr column to fit content (measureSelect ~516px inflates left
-     section to ~682px and clips the page). Force 0 to constrain properly. */
-  .top > section { min-width: 0; overflow: hidden; }
-  /* Cap the measure select so it never forces its container wider than viewport */
-  .measureSelect { max-width: 100% !important; width: 100% !important; box-sizing: border-box !important; }
+  /* No min-width constraint on sections: mirrors v24 behaviour where sections
+     inflate to their min-content width (~682px) but docScrollW stays 390px
+     (the viewport clips the overflow without creating a scrollbar). */
+  /* Prevent measureSelect from overflowing its container (safety cap only) */
+  .measureSelect { max-width: 100% !important; box-sizing: border-box !important; }
   /* Let chartWrap revert to its normal grid column (no 1/3 span needed on mobile) */
   .chartWrap { grid-column: 1 / 2 !important; }
   /* Restore shell right padding so mobile padding:10px applies cleanly */
@@ -2111,17 +2123,15 @@
   .v24c-trend { flex: 1 1 auto !important; max-width: 100% !important; }
   /* Stack overviewRow to single column on mobile */
   .overviewRow { grid-template-columns: 1fr !important; }
-  /* Allow altcard and forces wrap to size naturally when stacked */
-  .v25-altcard { height: auto !important; max-height: none !important; }
+  /* Fix altcard: desktop sets flex:1 1 0px which collapses it to ~0 height
+     when the shell has no fixed height. Reset to natural sizing. */
+  .v25-altcard { flex: 0 0 auto !important; width: 100% !important; height: auto !important; max-height: none !important; }
   .v25-forces-wrap { height: auto !important; max-height: none !important; }
   /* Let panel1 inside altcard size naturally too */
   #panel1 { max-height: none !important; }
-  /* Clip card overflow so price content doesn't bleed into parent */
-  .v24c-card { overflow: hidden !important; }
-  /* Scale down price values so they fit the narrower card on mobile */
-  .v24c-priceVal { font-size: clamp(22px, 7vw, 38px) !important; }
-  /* Allow price labels to wrap rather than overflow */
-  .v24c-priceLabel { white-space: normal !important; }
+  /* Reset right section grid-row span; leftBottom flows naturally below it */
+  section.right { grid-row: auto !important; }
+  .leftBottom { padding-right: 0 !important; border-right: none !important; padding-top: 8px !important; }
 }
 
 </style>
@@ -2165,10 +2175,6 @@
   </div>
 </div>
 
-<div class="headline" id="headline">Three converging bearish signals push copper to its weakest point since Q3 2024.</div>
-<div class="date" id="asOf">Mon Feb 24, 2025</div>
-<div class="narrative is-collapsed" id="mainDetails">Tariffs are the dominant force this week — 88% of 139 articles bearish, the highest conviction of any category. Mine supply disruptions and softening China demand add compounding pressure while dollar strength limits any near‑term recovery.</div>
-<div class="narrativeMoreWrap"><button class="narrativeMoreBtn" id="narrativeMoreBtn" type="button">More</button></div>
 </div>
 </div>
 <div class="mapRow">
@@ -2548,6 +2554,13 @@ if (document.readyState === 'loading') {
 </div>
 </div>
 </div>
+</section>
+<!-- NARRATIVE — appears left-below hero on desktop (grid row 2), below projections on mobile (DOM order) -->
+<section class="leftBottom">
+<div class="headline" id="headline">Three converging bearish signals push copper to its weakest point since Q3 2024.</div>
+<div class="date" id="asOf">Mon Feb 24, 2025</div>
+<div class="narrative is-collapsed" id="mainDetails">Tariffs are the dominant force this week — 88% of 139 articles bearish, the highest conviction of any category. Mine supply disruptions and softening China demand add compounding pressure while dollar strength limits any near‑term recovery.</div>
+<div class="narrativeMoreWrap"><button class="narrativeMoreBtn" id="narrativeMoreBtn" type="button">More</button></div>
 </section>
 </div>
 </div>
@@ -3793,19 +3806,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
       var fw2      = document.querySelector('.v25-forces-wrap');
       var p1b      = document.getElementById('panel1');
       if (altcard2) { altcard2.style.height = ''; altcard2.style.maxHeight = ''; }
-      if (fw2)      { fw2.style.height = '';      fw2.style.maxHeight = '';      }
-      if (p1b)      { p1b.style.maxHeight = ''; }
-      return;
-    }
-    var trendCard = document.querySelector('.v24c-trend');
-    var altcard   = document.querySelector('.v25-altcard');
-    var panel1    = document.getElementById('panel1');
-    var titlerow  = document.querySelector('.v25-altcard-titlerow');
-    if (trendCard && altcard && panel1 && titlerow) {
-      var trendH = trendCard.getBoundingClientRect().height;
-      if (trendH > 50) {
-        altcard.style.height    = trendH + 'px';
-        altcard.style.maxHeight = trendH + 'px';
-        var titleH = titlerow.getBoundingClientRect().height;
-        panel1.style.maxHeight = (trendH - titleH) + 'px';
-        panel1.s
+      if (fw2)      { fw2.style.height = '';      fw2.st
