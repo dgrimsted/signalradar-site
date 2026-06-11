@@ -1936,7 +1936,7 @@
 
   @media (max-width: 480px){
     .newsGrid{ grid-template-columns:1fr; }
-    .content{ padding:10px 10px 80px 10px; }
+    .content{ padding:10px 10px 150px 10px; } /* match 720px footer clearance */
     .v24c-card{ padding:10px 12px 8px; }
     .brand .sub2{ font-size:clamp(19px, 5.5vw, 24px); }
     .headline{ font-size:clamp(16px, 4.6vw, 20px); }
@@ -1971,10 +1971,10 @@
 }
 .v25-altcard-titlerow {
   background: #F8F2E7;
-  padding: 14px 18px 11px;
+  padding: 10px 18px 7px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   flex-shrink: 0;
   border-bottom: 1px solid #D2B18A;
   position: relative;
@@ -2013,9 +2013,11 @@
 .v25-altcard .oPanelHeader { display: none !important; }
 .v25-altcard .oPanelBody {
   flex: 1;
-  padding: 12px 16px 14px !important;
+  padding: 10px 16px 22px !important;
   overflow-y: auto !important;
 }
+/* Remove the divider between verdict text and betting markets in the alt card */
+.v25-altcard .wVerdictDivider { display: none !important; }
 .v25-altcard .oWisdomText {
   font-size: 0.82rem !important;
   line-height: 1.58 !important;
@@ -2134,6 +2136,14 @@
   .leftBottom { display: block !important; padding-top: 20px !important; border-top: 1px solid rgba(91,72,45,.15) !important; margin-top: 8px !important; }
   /* Hide narrative inside .brand on mobile — leftBottom carries it instead */
   .brand .headline, .brand .date, .brand .narrative, .brand .narrativeMoreWrap { display: none !important; }
+  /* leftBottom: ensure it clears the footer */
+  .leftBottom { padding-bottom: 140px !important; }
+  /* Footer: collapse to compact column so the CTA button doesn't overflow the viewport */
+  .footer { height: auto !important; flex-direction: column !important; align-items: stretch !important; padding: 10px 14px 12px !important; gap: 6px !important; }
+  .footLeft { flex: none !important; }
+  .footText { white-space: normal !important; font-size: 14px !important; }
+  .footActions { width: 100% !important; }
+  .btn { width: 100% !important; font-size: 14px !important; padding: 10px 14px !important; white-space: normal !important; text-align: center !important; }
 }
 
 </style>
