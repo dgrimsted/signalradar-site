@@ -2097,6 +2097,12 @@
    The v25 desktop overrides use !important and appear after the base
    @media rules, so they win by source order. Override them back here. */
 @media (max-width: 720px) {
+  /* CRITICAL: grid items default to min-width:auto, letting them grow past
+     their 1fr column to fit content (measureSelect ~516px inflates left
+     section to ~682px and clips the page). Force 0 to constrain properly. */
+  .top > section { min-width: 0; overflow: hidden; }
+  /* Cap the measure select so it never forces its container wider than viewport */
+  .measureSelect { max-width: 100% !important; width: 100% !important; box-sizing: border-box !important; }
   /* Let chartWrap revert to its normal grid column (no 1/3 span needed on mobile) */
   .chartWrap { grid-column: 1 / 2 !important; }
   /* Restore shell right padding so mobile padding:10px applies cleanly */
@@ -2110,6 +2116,12 @@
   .v25-forces-wrap { height: auto !important; max-height: none !important; }
   /* Let panel1 inside altcard size naturally too */
   #panel1 { max-height: none !important; }
+  /* Clip card overflow so price content doesn't bleed into parent */
+  .v24c-card { overflow: hidden !important; }
+  /* Scale down price values so they fit the narrower card on mobile */
+  .v24c-priceVal { font-size: clamp(22px, 7vw, 38px) !important; }
+  /* Allow price labels to wrap rather than overflow */
+  .v24c-priceLabel { white-space: normal !important; }
 }
 
 </style>
@@ -3796,25 +3808,4 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
         altcard.style.maxHeight = trendH + 'px';
         var titleH = titlerow.getBoundingClientRect().height;
         panel1.style.maxHeight = (trendH - titleH) + 'px';
-        panel1.style.minHeight = '';
-      }
-    }
-    var panel23    = document.getElementById('panel23');
-    var forcesWrap = document.querySelector('.v25-forces-wrap');
-    if (panel23 && forcesWrap) {
-      var h = panel23.getBoundingClientRect().height;
-      if (h > 50) {
-        forcesWrap.style.height    = h + 'px';
-        forcesWrap.style.maxHeight = h + 'px';
-      }
-    }
-    v25ScaleForceRows();
-  }
-
-  function setup() {
-    var panel1  = document.getElementById('panel1');
-    var panel23 = document.getElementById('panel23');
-    if (!panel1 || !panel23) { setTimeout(setup, 100); return; }
-    new MutationObserver(v25Fix).observe(panel1,  { attributes: true, attributeFilter: ['style'] });
-    new MutationObserver(v25Fix).observe(panel23, { attributes: true, attributeFilter: ['style'] });
-    var predictorRows = document.getEleme
+        panel1.s
