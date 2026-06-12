@@ -2567,7 +2567,7 @@ if (document.readyState === 'loading') {
 </div>
 <div class="overview o23" id="panel23">
 <div class="oPanelHeader oPanelHeaderAmber">
-<div class="oLabel" id="panel23Label">WHAT THIS MEANS FOR <span>Cummins Engine</span></div>
+<div class="oLabel" id="panel23Label">WHAT THIS MEANS FOR <span>Acme Engine</span></div>
 <button class="oExpandBtn" onclick="openPanelOverlay('panel23')" title="View full analysis"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="7,1 10,1 10,4"/><line x1="10" y1="1" x2="6" y2="5"/><polyline points="4,10 1,10 1,7"/><line x1="1" y1="10" x2="5" y2="6"/></svg></button>
 </div>
 <div class="oPanelBody">
@@ -3316,7 +3316,7 @@ function applyOverviewFromChannel(ch){
   // RIGHT panel (panel23, 1/3 wide): company impact analysis
   const wtmHeadline = String(ch.WhatThisMeansHeadline || ch.whatthismeansheadline || '');
   const wtmText     = String(ch.WhatThisMeansText     || ch.whatthismeanstext     || '');
-  setHtml('panel23Label', 'WHAT THIS MEANS FOR <span>Cummins Engine</span>');
+  setHtml('panel23Label', 'WHAT THIS MEANS FOR <span>Acme Engine</span>');
   setHtml('panel23Title', wtmHeadline);
   setPanelText('panel23Line1', renderCompanyImpactHtml(wtmText));
 }
@@ -3927,6 +3927,51 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setup);
   } else { setup(); }
+}());
+
+/* Presentation-layer brand substitution — intercepts at the setter level.
+   Wraps setHtml + setPanelText so "Cummins" never reaches the DOM. */
+(function () {
+  var pairs = [
+    [/Cummins Engine/gi, 'Acme Engine'],
+    [/Cummins/gi,        'Acme Engine'],
+  ];
+  function subst(s) {
+    if (typeof s !== 'string') return s;
+    pairs.forEach(function (p) { s = s.replace(p[0], p[1]); });
+    return s;
+  }
+  function wrap() {
+    if (typeof window.setHtml === 'function' && !window.setHtml._acme) {
+      var _sh = window.setHtml;
+      window.setHtml = function (id, value) { return _sh(id, subst(value)); };
+      window.setHtml._acme = true;
+    }
+    if (typeof window.setPanelText === 'function' && !window.setPanelText._acme) {
+      var _sp = window.setPanelText;
+      window.setPanelText = function (id, html) { return _sp(id, subst(html)); };
+      window.setPanelText._acme = true;
+    }
+  }
+  // Wrap immediately (functions are defined in same script block above)
+  wrap();
+  // Safety: also run a DOM scan after data arrives in case anything slips through
+  function scanDom() {
+    if (!document.body) return;
+    var walker = document.createTreeWalker(document.body, 4 /* NodeFilter.SHOW_TEXT */);
+    var node;
+    while ((node = walker.nextNode())) {
+      var orig = node.nodeValue;
+      var val = orig;
+      pairs.forEach(function (p) { val = val.replace(p[0], p[1]); });
+      if (val !== orig) { node.nodeValue = val; }
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      wrap(); setTimeout(scanDom, 2000); setTimeout(scanDom, 5000);
+    });
+  } else { setTimeout(scanDom, 2000); setTimeout(scanDom, 5000); }
 }());
 </script>
 
