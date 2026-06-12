@@ -2131,7 +2131,7 @@
   /* Let panel1 inside altcard size naturally too */
   #panel1 { max-height: none !important; }
   /* Reset explicit grid placement so sections stack in single column */
-  section.right { grid-column: auto !important; }
+  section.right { grid-column: auto !important; padding-right: 0 !important; grid-template-columns: 1fr !important; column-gap: 0 !important; }
   /* Show narrative block on mobile (hidden on desktop); it sits after section.right in DOM */
   .leftBottom { display: block !important; padding-top: 20px !important; border-top: 1px solid rgba(91,72,45,.15) !important; margin-top: 8px !important; }
   /* Hide narrative inside .brand on mobile — leftBottom carries it instead */
