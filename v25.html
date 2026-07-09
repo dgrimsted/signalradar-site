@@ -3273,11 +3273,12 @@ function applyMetricCardsFromChannel(ch){
     setHtml('m3Value', word);
     var d = document.getElementById('v24cSunDelta');
     if (!d) return;
-    var mRaw = ch.MarketSignalForecastMAPE || ch['marketsignalforecastmape'] || '';
-    var mN = Number(mRaw);
-    if (!isNaN(mN) && mN !== 0) {
-      var pv = Math.abs(mN) <= 1 ? mN * 100 : mN;
-      d.textContent = '+/\u2212 ' + Math.abs(pv / 2).toFixed(1) + '%';
+    var biasRaw = ch.MarketSignalForecastBias ?? ch.marketsignalforecastbias ?? ch.MarketSignalForecastMAPE ?? '';
+    var bN = Number(biasRaw);
+    if (!isNaN(bN) && bN !== 0) {
+      // MAPE fallback is a fraction (<=1); bias is already a percent.
+      var pv = (Math.abs(bN) <= 1 && (ch.MarketSignalForecastBias == null || ch.MarketSignalForecastBias === '')) ? bN * 100 : bN;
+      d.textContent = '+/− ' + Math.abs(pv).toFixed(1) + '%';
     } else {
       var w = parseFloat(String(ch['3weekchange']||'').replace(/[^0-9.\-]/g,''));
       d.textContent = isNaN(w) ? '' : ((w >= 0 ? '+' : '') + w.toFixed(1) + '%');
