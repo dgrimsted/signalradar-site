@@ -3477,7 +3477,7 @@ function renderDrivers(drivers){
       const pctColor = '#42556B';
       const arrow = isUp ? '▲' : (isDown ? '▼' : '■');
       const pctNum = Math.abs(Number(d.percentage || 0));
-      const pctText = `${isDown ? '-' : ''}${pctNum}%`;
+      const pctText = `${pctNum}%`;
 
       const card = document.createElement('div');
       card.className = 'newsCard';
