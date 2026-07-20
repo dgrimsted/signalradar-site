@@ -2341,6 +2341,7 @@
         </div>
         <div class="v24c-priceBlock" style="align-items:flex-end">
           <div class="v24c-priceLabel" style="text-align:right">PROJECTED 16-WEEK<br>AVERAGE</div>
+          <div id="projAvgPriceDate" style="font-size:10px;color:#888;letter-spacing:.03em;text-align:right;margin-bottom:4px;"></div>
           <div class="v24c-priceVal" id="projAvgPrice" style="text-align:right">
             <span id="projAvgPriceText">—</span><span class="v24c-priceUnit" id="projAvgUnit"></span>
           </div>
@@ -3289,6 +3290,19 @@ function applyMetricCardsFromChannel(ch){
         cpDateEl.textContent = 'as of ' + mm + '/' + dd + '/' + yy;
       } else { cpDateEl.textContent = ''; }
     } else { cpDateEl.textContent = ''; }
+  }
+  const rawFpDate = String(ch.ForecastPeriod || '').trim();
+  const fpDateEl = document.getElementById('projAvgPriceDate');
+  if (fpDateEl) {
+    if (rawFpDate) {
+      const d = new Date(rawFpDate);
+      if (!isNaN(d)) {
+        const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+        const dd = String(d.getUTCDate()).padStart(2,'0');
+        const yy = String(d.getUTCFullYear()).slice(-2);
+        fpDateEl.textContent = 'as of ' + mm + '/' + dd + '/' + yy;
+      } else { fpDateEl.textContent = ''; }
+    } else { fpDateEl.textContent = ''; }
   }
   const threeWeek = ch['3weekchange'] ?? '';
   const reliability = ch.reliability ?? '';
