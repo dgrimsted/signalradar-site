@@ -1319,6 +1319,8 @@
   .wPriceDelta{ font-size:0.69rem; font-weight:700; text-align:right; }
   .wSectionSummary{ font-size:0.74rem; color:#555; margin-top:6px; line-height:1.52; }
   .wContractName{ font-weight:500; letter-spacing:.02em; color:#8a7060; margin-left:6px; text-transform:none; font-size:9px; }
+  .wContractChip{ display:inline-block; margin-left:8px; padding:1px 7px; border:1px solid #d9c9b8; border-radius:9px; background:#f5efe7; color:#6b533f; font-weight:600; font-size:9px; letter-spacing:.02em; text-transform:none; vertical-align:middle; }
+  .wContractChip .wcLabel{ opacity:.6; font-weight:500; }
   .wNewsBody{ font-size:0.76rem; line-height:1.58; color:#2c3e50; margin-top:5px; }
   .wVerdictHdr{ font-size:10px; font-weight:900; letter-spacing:.10em; color:#3a2a10; text-transform:uppercase; margin-top:11px; margin-bottom:3px; }
   .wVerdictBody{ font-size:0.76rem; font-weight:700; line-height:1.58; color:#1a2433; }
@@ -2557,16 +2559,35 @@ function initTrendProjection(){
   const cpRawV = parseFloat(rawCpV.replace(/[^0-9.\-]/g, ''));
   const pcV    = String(ch.DT_CODE || ch.dt_code || '');
   if (!isNaN(cpRawV) && cpRawV > 0 && Math.abs(pctRaw) > 0) {
-    const absV = Math.abs(pctRaw);
-    const spdV = absV >= 15 ? 0.33 : (absV >= 8 ? 0.28 : 0.22);
-    const dirV = pctRaw < 0 ? -1 : 1;
-    const loV  = cpRawV * (1 + dirV * absV * (1 - spdV) / 100);
-    const hiV  = cpRawV * (1 + dirV * absV * (1 + spdV) / 100);
-    const minV = Math.min(loV, hiV);
-    const maxV = Math.max(loV, hiV);
     const rawAv = String(ch.average16WeekProjection || ch.averageprojection || '').trim();
     const avNum = rawAv ? parseFloat(rawAv.replace(/[^0-9.\-]/g, '')) : NaN;
     const projV = (!isNaN(avNum) && avNum > 0) ? avNum : cpRawV * (1 + pctRaw / 100);
+
+    // EXPECTED RANGE = projection ± the FULL forecast bias (same value shown as the
+    // "+/- x%" band next to the reliability word). MAPE fallback arrives as a
+    // fraction (<=1); MarketSignalForecastBias is already a percent — normalise to %.
+    let biasN = Number(ch.MarketSignalForecastBias ?? ch.marketsignalforecastbias ??
+                       ch.MarketSignalForecastMAPE ?? ch.marketsignalforecastmape ?? '');
+    let biasPct = isNaN(biasN) ? 0 : biasN;
+    if (Math.abs(biasPct) <= 1 && (ch.MarketSignalForecastBias == null || ch.MarketSignalForecastBias === '')) {
+      biasPct = biasPct * 100;
+    }
+
+    let minV, maxV;
+    if (biasPct !== 0) {
+      const halfW = projV * Math.abs(biasPct) / 100;   // FULL bias on each side of the projection
+      minV = projV - halfW;
+      maxV = projV + halfW;
+    } else {
+      // Fallback only when no bias is available: prior spread heuristic.
+      const absV = Math.abs(pctRaw);
+      const spdV = absV >= 15 ? 0.33 : (absV >= 8 ? 0.28 : 0.22);
+      const dirV = pctRaw < 0 ? -1 : 1;
+      const loV  = cpRawV * (1 + dirV * absV * (1 - spdV) / 100);
+      const hiV  = cpRawV * (1 + dirV * absV * (1 + spdV) / 100);
+      minV = Math.min(loV, hiV);
+      maxV = Math.max(loV, hiV);
+    }
     const spanV = maxV - minV;
     const posV  = Math.max(6, Math.min(94, spanV > 0 ? ((projV - minV) / spanV) * 100 : 50));
     if (rangeMinEl) rangeMinEl.textContent = fmtPriceByCode(minV, pcV);
@@ -2966,7 +2987,7 @@ function renderWisdomHtml(raw) {
       const contractMatch = hdr.match(/(?:—|-|:)\s*(.+)$/);
       const contractLabel = contractMatch ? contractMatch[1].trim() : '';
       const fwdTitle = contractLabel
-        ? 'FORWARD PRICES <span class="wContractName">' + contractLabel + '</span>'
+        ? 'FORWARD PRICES <span class="wContractChip"><span class="wcLabel">Contract:</span> ' + contractLabel + '</span>'
         : 'FORWARD PRICES';
       structuredOut += '<div class="wSection"><div class="wSectionHdr">' + fwdTitle + '</div>';
       const prices = [], summary = [];
@@ -3346,12 +3367,14 @@ function applyMetricCardsFromChannel(ch){
     setHtml('m3Value', word);
     var d = document.getElementById('v24cSunDelta');
     if (!d) return;
+    // New backend: MarketSignalForecastBias (= avgBestAbsPctError*100, already a percent).
+    // Show the full bias as the \u00b1 confidence band.
     var biasRaw = ch.MarketSignalForecastBias ?? ch.marketsignalforecastbias ?? ch.MarketSignalForecastMAPE ?? '';
     var bN = Number(biasRaw);
     if (!isNaN(bN) && bN !== 0) {
-      // MAPE fallback is a fraction (<=1); bias is already a percent.
+      // MAPE fallback is a fraction (<=1); bias is already a percent \u2014 normalise either to percent.
       var pv = (Math.abs(bN) <= 1 && (ch.MarketSignalForecastBias == null || ch.MarketSignalForecastBias === '')) ? bN * 100 : bN;
-      d.textContent = '+/− ' + Math.abs(pv).toFixed(1) + '%';
+      d.textContent = '+/\u2212 ' + Math.abs(pv).toFixed(1) + '%';
     } else {
       var w = parseFloat(String(ch['3weekchange']||'').replace(/[^0-9.\-]/g,''));
       d.textContent = isNaN(w) ? '' : ((w >= 0 ? '+' : '') + w.toFixed(1) + '%');
