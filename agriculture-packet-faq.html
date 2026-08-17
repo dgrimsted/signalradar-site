@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4705QM7GC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X4705QM7GC');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalRadar — Agriculture Packet · Variable Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --purple:        #632ca6;
+    --purple-mid:    #7d3fcb;
+    --purple-light:  #f0eaf8;
+    --purple-pale:   #f8f4fd;
+    --near-black:    #1a1a2e;
+    --gray-dark:     #444455;
+    --gray-mid:      #777788;
+    --gray-light:    #e8e4f0;
+    --gray-pale:     #f5f4f8;
+    --amber:         #c8960a;
+    --amber-bg:      #fffaee;
+    --green:         #1a7f5a;
+    --green-bg:      #edf7f2;
+    --red:           #c0392b;
+    --red-bg:        #fdf0ee;
+    --ag-accent:     #3a7d44;
+    --ag-bg:         #f2f8f3;
+    --ag-border:     #a8d4b0;
+    --white:         #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    background: var(--gray-pale);
+    color: var(--near-black);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--near-black);
+    color: white;
+    padding: 40px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,44,166,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(58,125,68,0.22) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .logo-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: white;
+    letter-spacing: 0.02em;
+  }
+  .page-header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ag-accent);
+    margin-bottom: 8px;
+    filter: brightness(1.6);
+  }
+  .page-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .page-header-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    line-height: 1.65;
+  }
+
+  /* ── EMBED WRAPPER ── */
+  .faq-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+
+  /* ── CATEGORY BADGE ── */
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--ag-bg);
+    border: 1px solid var(--ag-border);
+    border-radius: 6px;
+    padding: 6px 14px 6px 10px;
+    margin-bottom: 28px;
+  }
+  .category-badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ag-accent);
+    flex-shrink: 0;
+  }
+  .category-badge-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ag-accent);
+  }
+
+  /* ── SECTION INTRO ── */
+  .section-intro {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-left: 4px solid var(--ag-accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+  }
+  .section-intro-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ag-accent);
+    margin-bottom: 8px;
+  }
+  .section-intro-text {
+    font-size: 14px;
+    color: var(--gray-dark);
+    line-height: 1.7;
+  }
+  .section-intro-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+
+  /* ── READING GUIDE ── */
+  .reading-guide {
+    background: var(--purple-light);
+    border: 1px solid rgba(99,44,166,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .reading-guide-icon {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .reading-guide-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+  .reading-guide-text {
+    font-size: 13px;
+    color: var(--gray-dark);
+    line-height: 1.65;
+  }
+
+  /* ── VARIABLE CARDS ── */
+  .variable-card {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+  .variable-card:hover {
+    box-shadow: 0 4px 20px rgba(58,125,68,0.09);
+  }
+
+  .var-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--gray-pale);
+  }
+  .var-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--near-black);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .var-also-known {
+    font-size: 12px;
+    color: var(--gray-mid);
+    font-style: italic;
+  }
+  .var-meta-chips {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .chip-freq {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+  .chip-freq.weekly {
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+  .chip-source {
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    font-size: 10px;
+  }
+
+  .var-body {
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+  }
+
+  @media (max-width: 640px) {
+    .var-body { grid-template-columns: 1fr; }
+    .var-header { grid-template-columns: 1fr; }
+    .var-meta-chips { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    .faq-section { padding: 24px 16px 48px; }
+    .page-header { padding: 28px 24px; }
+  }
+
+  .var-field-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 5px;
+  }
+  .var-field-text {
+    font-size: 13.5px;
+    color: var(--gray-dark);
+    line-height: 1.6;
+  }
+  .var-field-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+  .var-field.full-width {
+    grid-column: 1 / -1;
+  }
+  .var-field.planning-impact {
+    grid-column: 1 / -1;
+    background: var(--ag-bg);
+    border: 1px solid var(--ag-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .var-field.planning-impact .var-field-label {
+    color: var(--ag-accent);
+  }
+  .var-field.planning-impact .var-field-text {
+    color: var(--near-black);
+    font-size: 13.5px;
+  }
+
+  /* ── SOURCES REFERENCE ── */
+  .sources-block {
+    margin-top: 36px;
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .sources-header {
+    background: var(--gray-pale);
+    border-bottom: 1px solid var(--gray-light);
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+  }
+  .sources-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .source-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--near-black);
+    margin-bottom: 2px;
+  }
+  .source-item-desc {
+    font-size: 12px;
+    color: var(--gray-mid);
+    line-height: 1.5;
+  }
+  .source-item-url {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--purple);
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin: 32px 0;
+  }
+
+  /* ── FOOTER NOTE ── */
+  .faq-footer {
+    margin-top: 40px;
+    font-size: 11.5px;
+    color: var(--gray-mid);
+    line-height: 1.6;
+    border-top: 1px solid var(--gray-light);
+    padding-top: 20px;
+  }
+  .faq-footer strong { color: var(--gray-dark); }
+
+  @media print {
+    body { background: white; }
+    .page-header { padding: 24px 32px; }
+    .variable-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- STANDALONE PAGE HEADER                              -->
+<!-- Remove when embedding in a landing page            -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="logo-row">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5"/>
+        <path d="M5 12 L8 8 L11 10 L15 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">SignalRadar</span>
+  </div>
+  <div class="page-header-eyebrow">Category Reference · Agriculture</div>
+  <div class="page-header-title">Agriculture Packet<br>Variable Reference Guide</div>
+  <div class="page-header-desc">What every variable in the Agriculture Packet measures, where the data comes from, how often it updates, and what a move in each signal means for ingredient costs, supplier pricing, and planning assumptions.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- EMBED START — .faq-section is the component root   -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="faq-section">
+
+  <div class="category-badge">
+    <div class="category-badge-dot"></div>
+    <span class="category-badge-text">Agriculture Packet</span>
+  </div>
+
+  <!-- SECTION INTRO -->
+  <div class="section-intro" id="methodology">
+    <div class="section-intro-label">About This Report Category</div>
+    <div class="section-intro-text">
+      Agricultural commodity prices are among the most consequential — and least watched — cost signals for planning teams outside of the food and beverage industry. That is changing. In a world where inflation has reset what "normal" input costs look like, the price of corn, wheat, soybeans, sugar, and coffee no longer belongs only in the conversations of food manufacturers and restaurant chains.<br><br>
+      For any business that sells to consumers, sources from suppliers with agricultural exposure, or operates in categories where food cost pressure drives discretionary spending shifts — these markets send early signals that conventional planning data misses entirely.<br><br>
+      The SignalRadar <strong>Agriculture Packet</strong> tracks five publicly available commodity markets across grains, oilseeds, and soft commodities. Together they give you early visibility into where food-driven cost pressure is building in supply chains, customer wallets, or both, well before it lands in the re-forecast conversation.<br><br>
+      <strong>How these reports are framed:</strong> Every report in this series is written from a specific point of view — as if it were being delivered directly to the executive team at Acme Engine, a fictional global engine manufacturer we use as a consistent narrative anchor, grounded in the real dynamics of large-scale engine and equipment manufacturers. Agriculture is a more indirect exposure for Acme — relevant mainly to the segment of its business serving farm equipment and ag-sector power generation — so here the executive team routes this input to that segment's leadership specifically, who decide whether it's worth adjusting a regional sales forecast, a dealer inventory plan, or simply noting it for the next segment review. That's a deliberate choice: it shows not just that a price moved, but how a real business's leadership would actually use that signal — the same translation SignalRadar would offer using your own metrics, your own team structure, and your own business. See this framing at work in <a href="https://signalradar.ai/agriculture-packet-landing.html">this week's Agriculture Packet report →</a>.
+    </div>
+  </div>
+
+  <!-- READING GUIDE -->
+  <div class="reading-guide">
+    <div class="reading-guide-icon">📖</div>
+    <div>
+      <div class="reading-guide-label">How to read this guide</div>
+      <div class="reading-guide-text">Each variable below is described in plain terms — no commodities experience required. For each one you'll find: what it measures, who publishes the data, how often it updates, and most importantly, <strong>what a meaningful move in that variable likely means for planning assumptions based on cost structures and other impacted metrics</strong>. The agriculture category includes both direct cost signals (for businesses buying ingredients) and indirect demand signals (when food price pressure affects customer spending behavior). Use this as a reference when reading your weekly Agriculture Packet and want to understand the "so what" behind a signal.</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 1: CORN ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Corn</div>
+        <div class="var-also-known">Also known as: Maize, CBOT Corn Futures, No. 2 Yellow Corn</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · CBOT / ICE</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Corn futures represent the price of a bushel of No. 2 Yellow Corn for delivery at Chicago Board of Trade (CBOT) specifications. Corn is the single largest field crop grown in the United States and one of the most widely used raw materials in the global food system. It is priced in dollars and cents per bushel. Despite being thought of as a vegetable, the vast majority of corn produced is <em>field corn</em> — not sweet corn — grown for industrial and animal feed use.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Corn futures are traded on the <strong>Chicago Board of Trade (CBOT)</strong>, part of the CME Group. Supply and demand fundamentals — which are the primary drivers of corn prices — are published monthly by the <strong>US Department of Agriculture (USDA)</strong> in its World Agricultural Supply and Demand Estimates (WASDE) report, widely considered the most market-moving agricultural data release in the world.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Where corn goes</div>
+        <div class="var-field-text">Roughly 40% of the US corn crop goes to <strong>ethanol production</strong> (which links corn prices to energy markets). Another 35–40% goes to <strong>animal feed</strong> — making corn a primary cost driver for poultry, pork, and beef producers. The remainder goes to food processing: high-fructose corn syrup, corn starch, corn oil, masa flour, and dozens of food ingredient derivatives.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily during trading hours. The monthly USDA WASDE report (typically released the second Tuesday of each month) is the single most important scheduled data event for corn and frequently causes significant price moves.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Corn is a first-order cost signal for <strong>food and beverage manufacturers, protein producers, and quick-service restaurant chains</strong>. When corn prices rise: feed costs for poultry, pork, and beef rise within one to two production cycles, putting pressure on protein ingredient costs months before they appear in supplier invoices. Food-grade corn derivatives (sweeteners, starches, oils) follow with a similar lag. The ethanol link also means that when oil prices spike, corn prices can be pulled higher simultaneously — compounding cost pressure across two categories at once. <strong>For non-food businesses</strong>, a sustained corn price increase signals that food cost inflation is building in the consumer economy, typically preceding pressure on household discretionary spending.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 2: WHEAT ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Wheat</div>
+        <div class="var-also-known">Also known as: CBOT Soft Red Winter Wheat, SRW Wheat, Chicago Wheat Futures</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · CBOT / ICE</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Wheat futures track the price of Soft Red Winter (SRW) wheat, one of several wheat classes grown in the US and the primary futures contract benchmark. Wheat is the foundational grain behind flour — and flour is the foundational ingredient behind bread, pasta, crackers, baked goods, and a wide range of staple food products. It is priced in dollars and cents per bushel. Wheat is also a critical animal feed grain, though corn dominates that use in the US.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Wheat futures are traded on the <strong>Chicago Board of Trade (CBOT)</strong>. As with corn, the <strong>USDA WASDE report</strong> is the primary scheduled data driver for wheat prices. Global wheat markets are also significantly influenced by crop conditions in the major exporting nations: United States, Canada, Australia, Russia, Ukraine, and the European Union — making wheat unusually sensitive to geopolitical events.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">The geopolitical dimension</div>
+        <div class="var-field-text">Wheat is uniquely sensitive to supply disruptions from international conflict. Russia and Ukraine together account for roughly 25–30% of global wheat exports. The 2022 Russian invasion of Ukraine caused wheat prices to spike over 60% in weeks, one of the clearest examples of a geopolitical event transmitting directly into consumer food costs. Monitoring wheat provides early warning of this type of supply shock well before it reaches grocery shelves or restaurant menus.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily. Monthly USDA WASDE report drives the most significant scheduled price moves. Crop progress reports (published weekly by USDA during the growing season) also influence prices.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Wheat is the most direct signal for <strong>flour and staple ingredient cost pressure</strong>. For food manufacturers, bakeries, foodservice distributors, and QSR chains with significant bread or baked goods exposure, a meaningful wheat price increase is a leading indicator of flour cost increases arriving within 60 to 120 days. For non-food businesses, a sustained wheat spike driven by geopolitical supply disruption signals broad food inflation that will compress consumer discretionary spending. The 2022 wheat spike was visible in futures markets months before it appeared in restaurant menu price increases or grocery price inflation headlines. That is precisely the kind of early signal this report is designed to surface.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 3: SOYBEANS ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Soybeans</div>
+        <div class="var-also-known">Also known as: CBOT Soybean Futures, Soy Complex anchor contract</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · CBOT / ICE</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Soybean futures track the price of a bushel of soybeans at CBOT specifications. Soybeans are unique among the grains in this report because they are primarily a <em>processing crop</em> — soybeans are rarely consumed directly but instead crushed into two separate outputs: <strong>soybean meal</strong> (a high-protein animal feed and aquaculture ingredient) and <strong>soybean oil</strong> (a cooking oil, food ingredient, and increasingly a biodiesel feedstock). The price of soybeans is therefore a composite signal reflecting demand from multiple industries simultaneously.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Soybean futures are traded on the <strong>Chicago Board of Trade (CBOT)</strong>. The US and Brazil together produce roughly 80% of the world's soybeans, making this market unusually sensitive to weather conditions and crop reports from both countries. The <strong>USDA WASDE report</strong> and Brazilian crop estimates from agencies such as CONAB are the key scheduled data events.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">The soy complex</div>
+        <div class="var-field-text">Soybeans, soybean meal, and soybean oil trade as a linked "complex" — their prices move in a defined relationship called the <strong>crush spread</strong>. When demand for either meal or oil rises, it pulls the whole complex higher. Currently, strong biodiesel demand has elevated soybean oil prices, while protein meal demand from global livestock expansion supports meal prices. Both effects lift the soybean price itself.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily. Monthly USDA WASDE reports and Brazilian crop progress updates are the key scheduled events. South American harvest season (February–April) is a high-volatility period for the soy complex.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Soybeans are a cost signal that runs through <strong>vegetable oils, protein-based ingredients, animal feed, and biodiesel</strong>. For food companies using soybean oil as a frying or cooking oil (QSR, food manufacturing, foodservice), soybean price moves translate directly into oil cost assumptions. For businesses with poultry, pork, farmed fish, or other protein inputs, soybean meal price is a primary driver of the feed costs their protein suppliers are managing and will eventually pass through. The biodiesel link also means that energy policy shifts (renewable fuel mandates) can unexpectedly drive soybean prices higher, creating cross-category cost pressure that appears unrelated to traditional food market dynamics. A sustained soy price increase warrants reviewing any supply chain touching cooking oils, protein ingredients, or animal-derived inputs.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 4: SUGAR ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Sugar No. 11</div>
+        <div class="var-also-known">Also known as: Raw Cane Sugar Futures, ICE Sugar, World Sugar Price</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · ICE</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Sugar No. 11 is the global benchmark futures contract for raw cane sugar, traded on ICE Futures US. It is priced in cents per pound and represents the world price of sugar before it has been refined and before domestic price programs (like the US sugar support program) apply their adjustments. Raw cane sugar is the primary input for refined sugar — the sweetener used in beverages, confectionery, baked goods, condiments, and hundreds of processed food products.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Sugar No. 11 futures are traded on <strong>ICE Futures US</strong> (Intercontinental Exchange). Brazil is the world's largest sugar producer and exporter, making Brazilian crop conditions, ethanol economics (Brazilian mills can switch between sugar and ethanol production depending on relative prices), and currency movements critical drivers of world sugar prices.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">The ethanol connection</div>
+        <div class="var-field-text">Brazilian sugar mills can flex their output between raw sugar and sugarcane ethanol depending on which is more profitable. When Brazilian ethanol prices rise (often tied to oil prices), mills divert cane to ethanol production — reducing global sugar supply and pushing prices up. This creates a link between energy markets and sugar prices that is easy to miss if you're watching only food market data.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily. Sugar is subject to seasonal harvest patterns, with the main Brazilian center-south harvest running April through November. Weather events in Brazil, India (the second-largest producer), and Thailand can cause significant price dislocations on short notice.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Sugar is a direct cost signal for <strong>beverage companies, confectionery manufacturers, bakeries, QSR chains, and any CPG business with sweetener-intensive products</strong>. Because sugar supplier contracts are often reset annually or semi-annually, a sustained spike in world sugar prices can create a cliff event in input costs at the next contract renewal, the kind of surprise that forces mid-year budget revisions. For businesses with significant consumer exposure, rising sugar prices are also a leading indicator of menu price increases and reformulation pressure at the brands their customers buy, which can shift spending patterns. World sugar prices above historical norms for a sustained period are historically one of the more reliable precursors to confectionery and soft drink list price adjustments.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 5: COFFEE ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Coffee — Arabica</div>
+        <div class="var-also-known">Also known as: "C" Coffee Contract, ICE Coffee Futures, Arabica Coffee Price</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · ICE</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">The Coffee "C" contract is the global benchmark for Arabica coffee beans — the higher-quality variety used in most specialty coffee, branded retail coffee products, and premium foodservice offerings. It is priced in cents per pound and traded on ICE Futures US. Arabica accounts for approximately 60% of global coffee production and is the primary coffee input for most North American consumer brands, cafes, and food service operators. (Robusta coffee, used primarily in espresso blends and instant coffee, trades on a separate London exchange.)</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Arabica coffee futures are traded on <strong>ICE Futures US</strong>. Brazil and Colombia are the dominant Arabica producers. Brazil alone accounts for roughly 35–40% of global coffee production, making Brazilian crop weather (particularly frost events in the coffee-growing regions of Minas Gerais and São Paulo — the single most market-moving supply factor) the most important supply indicator. The <strong>International Coffee Organization (ICO)</strong> publishes monthly supply, demand, and trade data.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Supply sensitivity</div>
+        <div class="var-field-text">Coffee is a perennial crop with a two-year fruiting cycle — damage to trees from frost or drought reduces output not just in the current season but for the following year as well. This means supply disruptions compound over time rather than resolving within a single season, and price spikes can be sustained longer than typical annual crop disruptions. Coffee prices also alternate between high and low years based on Brazil's biennial production cycle.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily. Weather events in Brazil (frost season: June–August) and Colombia (rainfall disruptions year-round) are the primary short-term price drivers outside of scheduled crop reports.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Coffee is a direct margin pressure signal for <strong>foodservice operators, beverage companies, CPG coffee brands, and any retail channel with significant coffee category exposure</strong>. Because roasted coffee has a lead time of roughly 90–180 days from green bean purchase to retail shelf, a coffee price spike today signals cost pressure arriving in finished goods pricing within one to two quarters. For foodservice and QSR operators, coffee is often a high-frequency, high-margin category — meaning that sustained green bean price increases put disproportionate pressure on the items that drive the most customer visits. For CPG businesses, coffee price spikes have historically preceded list price increases from major brands within 6–12 months, creating category dynamics that shift retailer planogram economics and promotional funding conversations.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SOURCES REFERENCE -->
+  <div class="sources-block">
+    <div class="sources-header">Data Sources Reference</div>
+    <div class="sources-body">
+      <div class="source-item">
+        <div class="source-item-name">Chicago Board of Trade (CBOT)</div>
+        <div class="source-item-desc">Part of CME Group. Primary US exchange for grain futures including corn, wheat, and soybeans. The world's oldest and largest agricultural futures market.</div>
+        <a class="source-item-url" href="https://www.cmegroup.com/markets/agriculture.html" target="_blank">cmegroup.com/markets/agriculture</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">ICE Futures US</div>
+        <div class="source-item-desc">Intercontinental Exchange, US operations. Primary exchange for sugar and coffee futures — the two "soft commodities" in this report.</div>
+        <a class="source-item-url" href="https://www.theice.com/products/Futures-US" target="_blank">theice.com</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">USDA — World Agricultural Supply and Demand Estimates (WASDE)</div>
+        <div class="source-item-desc">Published monthly by the US Department of Agriculture. The single most market-moving scheduled data release for corn, wheat, and soybean prices. Released the second Tuesday of each month.</div>
+        <a class="source-item-url" href="https://www.usda.gov/oce/commodity/wasde" target="_blank">usda.gov/oce/commodity/wasde</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">International Coffee Organization (ICO)</div>
+        <div class="source-item-desc">Intergovernmental organization publishing monthly coffee production, trade, and price data across all producing nations.</div>
+        <a class="source-item-url" href="https://www.ico.org" target="_blank">ico.org</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Yahoo Finance</div>
+        <div class="source-item-desc">Provides real-time and historical futures price data for all five agricultural contracts tracked in this report.</div>
+        <a class="source-item-url" href="https://finance.yahoo.com" target="_blank">finance.yahoo.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER NOTE -->
+  <div class="faq-footer">
+    <strong>SignalRadar — Agriculture Packet · Variable Reference</strong><br>
+    All variables in this report draw on publicly available, free data updated daily. SignalRadar's platform processes historical and current values to identify early-shift signals relative to defined planning baselines. The platform's analysis of individual variables does not constitute investment advice. Variable definitions and planning implications are provided for educational and planning context only. Last updated: August 2026.
+  </div>
+
+</div><!-- end .faq-section -->
+
+</body>
+</html>

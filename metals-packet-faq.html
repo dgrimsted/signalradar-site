@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4705QM7GC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X4705QM7GC');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalRadar — Metals Packet · Variable Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --purple:         #632ca6;
+    --purple-mid:     #7d3fcb;
+    --purple-light:   #f0eaf8;
+    --purple-pale:    #f8f4fd;
+    --near-black:     #1a1a2e;
+    --gray-dark:      #444455;
+    --gray-mid:       #777788;
+    --gray-light:     #e8e4f0;
+    --gray-pale:      #f5f4f8;
+    --amber:          #c8960a;
+    --amber-bg:       #fffaee;
+    --green:          #1a7f5a;
+    --green-bg:       #edf7f2;
+    --metals-accent:  #2e6da4;
+    --metals-bg:      #f0f5fb;
+    --metals-border:  #a8c4e0;
+    --metals-accent2: #7a6a52;
+    --market-accent:  #1a7a6a;
+    --market-bg:      #eef7f5;
+    --market-border:  #a8d4cc;
+    --white:          #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    background: var(--gray-pale);
+    color: var(--near-black);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--near-black);
+    color: white;
+    padding: 40px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,44,166,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,109,164,0.22) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .logo-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: white;
+    letter-spacing: 0.02em;
+  }
+  .page-header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7ab8e8;
+    margin-bottom: 8px;
+  }
+  .page-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .page-header-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    line-height: 1.65;
+  }
+
+  /* ── EMBED WRAPPER ── */
+  .faq-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+
+  /* ── CATEGORY BADGE ── */
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--metals-bg);
+    border: 1px solid var(--metals-border);
+    border-radius: 6px;
+    padding: 6px 14px 6px 10px;
+    margin-bottom: 28px;
+  }
+  .category-badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--metals-accent);
+    flex-shrink: 0;
+  }
+  .category-badge-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--metals-accent);
+  }
+
+  /* ── SECTION INTRO ── */
+  .section-intro {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-left: 4px solid var(--metals-accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+  }
+  .section-intro-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--metals-accent);
+    margin-bottom: 8px;
+  }
+  .section-intro-text {
+    font-size: 14px;
+    color: var(--gray-dark);
+    line-height: 1.7;
+  }
+  .section-intro-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+
+  /* ── VARIABLE GROUP DIVIDERS ── */
+  .var-group-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin: 36px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gray-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .var-group-label::before {
+    content: '';
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--metals-accent);
+    flex-shrink: 0;
+  }
+  .var-group-label.precious::before {
+    background: var(--metals-accent2);
+  }
+  .var-group-label.precious {
+    color: var(--metals-accent2);
+  }
+  .var-group-label.market::before {
+    background: var(--market-accent);
+  }
+  .var-group-label.market {
+    color: var(--market-accent);
+  }
+
+  /* ── READING GUIDE ── */
+  .reading-guide {
+    background: var(--purple-light);
+    border: 1px solid rgba(99,44,166,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .reading-guide-icon {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .reading-guide-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+  .reading-guide-text {
+    font-size: 13px;
+    color: var(--gray-dark);
+    line-height: 1.65;
+  }
+
+  /* ── VARIABLE CARDS ── */
+  .variable-card {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+  .variable-card:hover {
+    box-shadow: 0 4px 20px rgba(46,109,164,0.09);
+  }
+  .variable-card.precious:hover {
+    box-shadow: 0 4px 20px rgba(122,106,82,0.10);
+  }
+  .variable-card.market:hover {
+    box-shadow: 0 4px 20px rgba(26,122,106,0.10);
+  }
+
+  .var-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--gray-pale);
+  }
+  .var-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--near-black);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .var-also-known {
+    font-size: 12px;
+    color: var(--gray-mid);
+    font-style: italic;
+  }
+  .var-meta-chips {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .chip-freq {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+  .chip-source {
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    font-size: 10px;
+  }
+
+  .var-body {
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+  }
+
+  @media (max-width: 640px) {
+    .var-body { grid-template-columns: 1fr; }
+    .var-header { grid-template-columns: 1fr; }
+    .var-meta-chips { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    .faq-section { padding: 24px 16px 48px; }
+    .page-header { padding: 28px 24px; }
+  }
+
+  .var-field-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 5px;
+  }
+  .var-field-text {
+    font-size: 13.5px;
+    color: var(--gray-dark);
+    line-height: 1.6;
+  }
+  .var-field-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+  .var-field.full-width {
+    grid-column: 1 / -1;
+  }
+  .var-field.planning-impact {
+    grid-column: 1 / -1;
+    background: var(--metals-bg);
+    border: 1px solid var(--metals-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .var-field.planning-impact .var-field-label {
+    color: var(--metals-accent);
+  }
+  .var-field.planning-impact .var-field-text {
+    color: var(--near-black);
+    font-size: 13.5px;
+  }
+  /* Precious metals variant of planning impact */
+  .var-field.planning-impact.precious-impact {
+    background: #faf8f4;
+    border-color: #d4c9b4;
+  }
+  .var-field.planning-impact.precious-impact .var-field-label {
+    color: var(--metals-accent2);
+  }
+  /* Broader market variant of planning impact */
+  .var-field.planning-impact.market-impact {
+    background: var(--market-bg);
+    border-color: var(--market-border);
+  }
+  .var-field.planning-impact.market-impact .var-field-label {
+    color: var(--market-accent);
+  }
+
+  /* ── SOURCES REFERENCE ── */
+  .sources-block {
+    margin-top: 36px;
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .sources-header {
+    background: var(--gray-pale);
+    border-bottom: 1px solid var(--gray-light);
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+  }
+  .sources-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .source-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--near-black);
+    margin-bottom: 2px;
+  }
+  .source-item-desc {
+    font-size: 12px;
+    color: var(--gray-mid);
+    line-height: 1.5;
+  }
+  .source-item-url {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--purple);
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin: 32px 0;
+  }
+
+  /* ── FOOTER NOTE ── */
+  .faq-footer {
+    margin-top: 40px;
+    font-size: 11.5px;
+    color: var(--gray-mid);
+    line-height: 1.6;
+    border-top: 1px solid var(--gray-light);
+    padding-top: 20px;
+  }
+  .faq-footer strong { color: var(--gray-dark); }
+
+  @media print {
+    body { background: white; }
+    .page-header { padding: 24px 32px; }
+    .variable-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- STANDALONE PAGE HEADER                              -->
+<!-- Remove when embedding in a landing page            -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="logo-row">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5"/>
+        <path d="M5 12 L8 8 L11 10 L15 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">SignalRadar</span>
+  </div>
+  <div class="page-header-eyebrow">Category Reference · Metals</div>
+  <div class="page-header-title">Metals Packet<br>Variable Reference Guide</div>
+  <div class="page-header-desc">What every variable in the Metals Packet measures, where the data comes from, how often it updates, and what a move in each signal means for your input costs, supply chain assumptions, and planning horizon.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- EMBED START — .faq-section is the component root   -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="faq-section">
+
+  <div class="category-badge">
+    <div class="category-badge-dot"></div>
+    <span class="category-badge-text">Metals Packet</span>
+  </div>
+
+  <!-- SECTION INTRO -->
+  <div class="section-intro" id="methodology">
+    <div class="section-intro-label">About This Report Category</div>
+    <div class="section-intro-text">
+      Metals move quietly until they don't. For most planning teams, steel, copper, and aluminum costs are negotiated annually and largely invisible between contract cycles — until a tariff announcement, a mining disruption, or a demand surge from infrastructure spending sends prices sharply in a direction that no one's operating plan assumed.<br><br>
+      This report tracks seven metals-linked markets that collectively function as <strong>direct cost inputs</strong>, <strong>economic condition indicators</strong>, and <strong>broader sector signals</strong>. Steel, copper, and aluminum are industrial workhorses whose prices reflect real-world demand for manufacturing, construction, and electronics, flowing directly into the cost of components, equipment, packaging, and facilities. Gold and silver occupy a different role: they are <strong>financial condition signals</strong>, revealing something important about how markets perceive inflation risk, currency stability, and economic stress. The Dow Jones U.S. Basic Materials Index and the G-X Lithium ETF round out the packet as <strong>broader market signals</strong> — equity-market reads on the materials sector as a whole and the lithium/battery supply chain specifically, useful for confirming (or challenging) what the individual commodity prices are saying. That is intelligence that belongs in any serious planning conversation regardless of whether a business touches metals directly.<br><br>
+      The SignalRadar <strong>Metals Packet</strong> gives you early visibility into where metals-driven cost pressure — or economic stress — is building, before it shows up in supplier quotes or the re-forecast conversation.<br><br>
+      <strong>How these reports are framed:</strong> Every report in this series is written from a specific point of view — as if it were being delivered directly to the executive team at Acme Engine, a fictional global engine manufacturer we use as a consistent narrative anchor, grounded in the real dynamics of large-scale engine and equipment manufacturers. For a packet built around direct cost inputs like steel, copper, and aluminum, that executive team takes this input and interacts with and directs its procurement and supply chain organization — reworking supplier negotiations, adjusting hedges, or simply flagging a contract renewal to watch more closely, whichever the signal actually calls for. That's a deliberate choice: it shows not just that a price moved, but how a real business's leadership would actually use that signal — the same translation SignalRadar would offer using your own metrics, your own team structure, and your own business. See this framing at work in <a href="https://signalradar.ai/metals-packet-landing.html">this week's Metals Packet report →</a>.
+    </div>
+  </div>
+
+  <!-- READING GUIDE -->
+  <div class="reading-guide">
+    <div class="reading-guide-icon">📖</div>
+    <div>
+      <div class="reading-guide-label">How to read this guide</div>
+      <div class="reading-guide-text">Each variable below is described in plain terms — no metals trading experience required. For each one you'll find: what it measures, who publishes the data, how often it updates, and most importantly, <strong>what a meaningful move in that variable likely means for planning assumptions based on cost structures and other impacted metrics</strong>. This report is organized in three groups: industrial metals (direct cost signals), precious metals (economic and financial condition signals), and broader market signals (sector and supply-chain equity benchmarks). All three matter to the planning conversation, in different but complementary ways. Use this as a reference when reading your weekly Metals Packet and want to understand the "so what" behind a signal.</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- GROUP 1: INDUSTRIAL METALS                           -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="var-group-label">Industrial Metals — Direct Cost Signals</div>
+
+
+  <!-- ═══════════════ VARIABLE 1: US MIDWEST HRC STEEL ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">US Midwest Hot-Rolled Coil Steel</div>
+        <div class="var-also-known">Also known as: HRC Steel, Midwest HRC, Flat-Rolled Steel Benchmark</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Hot-Rolled Coil (HRC) is a form of flat-rolled steel produced by passing heated steel slabs through a series of rollers to create wide, thin coils of metal. It is the foundational steel product from which most downstream steel items are made — including cold-rolled steel, galvanized steel, auto body parts, appliances, construction materials, industrial equipment, and metal packaging. The US Midwest price is the primary benchmark for domestically produced steel in North America, priced in dollars per short ton.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">HRC steel futures are traded on the <strong>New York Mercantile Exchange (NYMEX)</strong>. Physical steel pricing is also surveyed and published by trade publications including <strong>Platts (S&P Global)</strong> and <strong>CRU Group</strong>, which produce widely used price assessments. Because US steel operates under significant trade protection (tariffs, quotas, and anti-dumping duties), the Midwest HRC price can diverge substantially from global steel benchmarks during periods of trade policy change.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Trade policy sensitivity</div>
+        <div class="var-field-text">US steel prices are uniquely sensitive to trade policy. The Section 232 tariffs implemented in 2018 (25% on most imported steel) created a persistent premium for US Midwest HRC over global benchmarks. Policy changes such as new tariffs, tariff exclusions, or quota adjustments can move domestic steel prices significantly and rapidly, independent of underlying supply and demand fundamentals. This makes steel the variable in this report most directly affected by government action.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">NYMEX futures prices update daily. Physical market price assessments from Platts and CRU update weekly. The futures market provides the most timely daily signal; physical assessments confirm where actual transaction prices are settling.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Steel is the most broadly applicable direct cost signal in this category. It matters to <strong>any business that buys metal components, equipment, vehicles, structural materials, appliances, or metal packaging</strong> — directly or through suppliers who do. Because steel is purchased in contracts that are often set annually or semi-annually, a sustained price move creates a predictable contract-reset event: the next renewal will price at current market levels, not the levels the operating plan assumed. A steel price that has risen 20 to 30% from the planning baseline is a reliable leading indicator of a component or equipment cost conversation arriving at the next contract cycle. For capital-intensive businesses, rising steel also increases the cost basis for new equipment, facility expansions, and infrastructure projects, a planning consideration that often gets underweighted until a project is already in procurement.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 2: COPPER ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Copper</div>
+        <div class="var-also-known">Also known as: "Dr. Copper," COMEX Copper Futures, HG Futures, High-Grade Copper</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · COMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Copper futures track the price of high-grade copper, priced in dollars per pound on the COMEX division of the New York Mercantile Exchange. Copper is one of the most electrically conductive metals and is essential in wiring, motors, electronics, plumbing, HVAC systems, electric vehicles, renewable energy infrastructure, and industrial machinery. Its ubiquity across nearly every sector of the economy has earned it the informal title "Dr. Copper," a reference to its reputation as an economic health indicator.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Copper futures are traded on <strong>COMEX</strong> (part of CME Group) in New York and on the <strong>London Metal Exchange (LME)</strong>, which is the global benchmark for base metals. Chile is by far the world's largest copper producer (roughly 25–30% of global supply), making Chilean mining output, labor conditions, and energy costs significant price drivers. China is the world's largest copper consumer — accounting for roughly 50–55% of global demand — meaning Chinese economic activity is the dominant demand-side factor.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">The "Dr. Copper" signal</div>
+        <div class="var-field-text">Copper's nickname reflects a genuine phenomenon: because copper demand spans construction, manufacturing, consumer electronics, and infrastructure investment simultaneously, sustained moves in copper prices tend to reflect real shifts in global economic activity rather than speculative or seasonal factors. A prolonged copper price rise signals genuine broad-based demand growth; a sustained decline can signal economic contraction before it appears in official statistics. This makes copper a useful macro context variable even for businesses with no direct copper exposure.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily on both COMEX and LME. LME inventory data (published daily) provides additional real-time signal on whether physical supply is tightening or building.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Copper is a cost signal for <strong>any business buying electrical systems, motors, electronics, HVAC equipment, wiring, plumbing, or anything containing a circuit board or electric motor</strong>. It is also a direct input cost for businesses in construction, utilities, data center infrastructure, and the full electric vehicle supply chain. Rising copper has historically been a reliable leading indicator of cost increases in electrical components arriving 60 to 180 days later, the time it takes for spot price moves to work through supply contracts and manufacturing lead times. Beyond direct cost impact, copper's role as a global economic barometer means a sustained copper price move — up or down — is worth incorporating into the macro assumptions underlying the demand forecast, not just the cost model. Consider: if copper is signaling that global industrial demand is accelerating, what does that mean for the customers you serve?</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 3: ALUMINUM ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Aluminum</div>
+        <div class="var-also-known">Also known as: Primary Aluminum, COMEX Aluminum Futures, LME Aluminum</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Aluminum futures track the price of primary aluminum — newly smelted metal as opposed to recycled aluminum. It is priced in dollars per pound and is the second most widely used metal in the world after steel. Aluminum's defining characteristics are its light weight, corrosion resistance, and versatility — properties that make it essential in transportation (aircraft, automobiles, trucks), packaging (cans, foil, food containers), construction (windows, curtain walls, roofing), and consumer electronics. Its production is extraordinarily energy-intensive, which creates a structural link between aluminum prices and energy costs.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Aluminum futures trade on <strong>COMEX</strong> (CME Group) in the US and on the <strong>London Metal Exchange (LME)</strong>, which is the global benchmark. China dominates global aluminum production — accounting for roughly 55–60% of world output. Chinese energy policy, production curtailments during power shortages, and export tariff changes therefore have an outsized influence on global aluminum prices. Russia is also a major producer, making geopolitical events a recurring price factor.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">The energy cost link</div>
+        <div class="var-field-text">Aluminum smelting requires enormous amounts of electricity: approximately 15,000 kilowatt-hours of power to produce a single metric ton of primary aluminum. This makes aluminum one of the most energy-intensive commodities in existence, and aluminum prices often move in tandem with electricity and natural gas prices. When energy costs spike, aluminum smelters face higher operating costs and may curtail production, tightening supply and pushing prices higher — meaning aluminum can compound energy cost pressure rather than simply reflecting it.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update daily. LME inventory data provides daily visibility into whether global aluminum stocks are building or drawing down — a useful leading indicator of near-term price direction.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Aluminum is a direct cost signal for <strong>packaging-intensive businesses (beverage cans, food containers, foil), transportation manufacturers and their suppliers, construction and building products companies, and any business buying consumer electronics or appliances</strong>. Because aluminum is downstream of energy costs, a period of sustained energy price increases can produce a compounding effect, with energy and aluminum rising together, compressing margins from two directions simultaneously. For companies using aluminum packaging, a meaningful aluminum price increase typically flows into can and container pricing within one to two supplier contract cycles. For businesses not buying aluminum directly, rising aluminum is a useful proxy for the health of the global manufacturing economy and the cost pressures facing industrial suppliers throughout the value chain.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- GROUP 2: PRECIOUS METALS                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="var-group-label precious">Precious Metals — Financial Condition Signals</div>
+
+
+  <!-- ═══════════════ VARIABLE 4: GOLD ═══════════════ -->
+  <div class="variable-card precious">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Gold</div>
+        <div class="var-also-known">Also known as: COMEX Gold Futures, XAU, Spot Gold</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · COMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Gold futures track the price of gold for delivery at COMEX specifications, priced in dollars per troy ounce. Gold is unlike every other variable in this report — it has very limited industrial demand relative to its price, and its value is driven almost entirely by its role as a <strong>store of value, safe-haven asset, and inflation hedge</strong>. Central banks hold gold as a reserve asset. Investors buy it when they distrust currencies, fear inflation, or anticipate financial instability. Gold price moves are therefore a direct read on what sophisticated market participants collectively believe about the stability of the monetary system.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Gold futures are traded on <strong>COMEX</strong> (CME Group). The spot gold price — the price for immediate delivery — is determined in the over-the-counter interbank market and published by financial data providers globally. The <strong>London Bullion Market Association (LBMA)</strong> publishes an official daily gold price fix widely used as a reference benchmark in contracts and valuations.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">What drives gold prices</div>
+        <div class="var-field-text">Gold moves on a different set of drivers than industrial commodities. The primary factors are: <strong>real interest rates</strong> (when inflation-adjusted yields on government bonds fall or go negative, gold becomes relatively more attractive); <strong>dollar strength</strong> (gold is priced in dollars, so a weaker dollar typically lifts gold prices in dollar terms); <strong>geopolitical risk</strong> (uncertainty drives safe-haven demand); and <strong>central bank buying</strong> (sustained purchases by central banks — particularly from China, Russia, India, and other non-Western nations — have been a significant price driver in recent years).</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Futures prices update continuously during market hours, daily. Gold is one of the most liquid commodities in the world and trades virtually around the clock across global markets.</div>
+      </div>
+      <div class="var-field planning-impact full-width precious-impact">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Gold does not directly affect most businesses' cost structures — but it is one of the most honest real-time reads available on <strong>whether financial conditions are tightening, whether inflation expectations are rising, and whether global economic confidence is deteriorating</strong>. A gold price climbing steadily and setting new highs is markets communicating something important: that a meaningful number of sophisticated investors believe that the purchasing power of currency is under threat, that interest rate policy may not be sufficient to contain inflation, or that geopolitical or financial system stress is elevated. For planning purposes, sustained gold strength is a prompt to stress-test the inflation and interest rate assumptions embedded in your operating plan — particularly your cost escalation assumptions, borrowing cost assumptions, and your capital expenditure discount rates. If gold is signaling something, it is usually worth checking before the quarterly re-forecast conversation.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 5: SILVER ═══════════════ -->
+  <div class="variable-card precious">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Silver</div>
+        <div class="var-also-known">Also known as: COMEX Silver Futures, XAG, Spot Silver, "The Poor Man's Gold"</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · COMEX</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Silver futures track the price of silver for COMEX delivery, priced in dollars per troy ounce. Silver is the most strategically unusual variable in this entire report: it is simultaneously a <strong>precious metal</strong> (sharing gold's safe-haven and inflation-hedge characteristics) and a significant <strong>industrial metal</strong> (with substantial real-world demand from electronics, solar panels, electric vehicles, medical devices, and photography). This dual identity means silver responds to both the financial condition signals that drive gold and the industrial demand signals that drive copper, making it a genuinely hybrid indicator unlike any other variable we track.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Silver futures trade on <strong>COMEX</strong> (CME Group). Physical silver pricing is referenced through the <strong>London Bullion Market Association (LBMA)</strong> daily fix. Mexico, Peru, and China are the world's largest silver-producing nations. Unlike gold, where mine supply is relatively price-inelastic, silver supply is partially tied to the production of other metals (it is often extracted as a byproduct of copper, zinc, and lead mining) — meaning silver supply doesn't always respond to price signals the way a standalone commodity would.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">The gold-silver ratio</div>
+        <div class="var-field-text">Market analysts often track the <strong>gold-silver ratio</strong> — how many ounces of silver it takes to buy one ounce of gold. Historically this ratio has averaged in the 50–80x range. When it rises significantly above that range, silver is considered undervalued relative to gold; when it falls sharply, silver is outperforming gold. A narrowing ratio (silver rising faster than gold) often signals that industrial demand is becoming the dominant force in precious metals markets — a sign that economic activity and manufacturing confidence are strengthening.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">The green energy demand factor</div>
+        <div class="var-field-text">Silver is an essential component in photovoltaic solar panels — approximately 20 grams of silver are used per panel — making it a direct beneficiary of global solar energy expansion. As government infrastructure programs and corporate sustainability commitments accelerate solar deployment, silver demand from the energy transition is a structural tailwind that can sustain price levels independent of the financial market dynamics that typically drive precious metals.</div>
+      </div>
+      <div class="var-field planning-impact full-width precious-impact">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Silver is worth watching for two distinct reasons depending on your business. <strong>For businesses with direct silver exposure</strong> — electronics manufacturers, solar suppliers, medical device companies, anyone using silver-containing components — price moves translate into direct input cost pressure, often with a lag of one to two supplier contract cycles. Silver's use in electronics means it appears in cost structures that most technology and consumer electronics businesses don't track explicitly until a spike forces the conversation. <strong>For businesses without direct silver exposure</strong>, silver functions as a hybrid economic signal: when silver is rising strongly alongside gold, it is confirming the financial stress narrative gold is telling; when silver is rising faster than gold and decoupling toward industrial drivers, it is signaling that global manufacturing and energy infrastructure demand is accelerating, intelligence worth incorporating into your demand and growth assumptions. Silver's dual nature makes it one of the most information-dense variables in the entire SignalRadar platform.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- GROUP 3: BROADER MARKET SIGNALS                       -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="var-group-label market">Broader Market Signals — Sector &amp; Supply-Chain Benchmarks</div>
+
+
+  <!-- ═══════════════ VARIABLE 6: DOW JONES U.S. BASIC MATERIALS INDEX ═══════════════ -->
+  <div class="variable-card market">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Dow Jones U.S. Basic Materials Index</div>
+        <div class="var-also-known">Also known as: DJUSBM, Basic Materials Sector Index</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · S&P Dow Jones Indices</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">This index tracks a basket of major US-listed basic materials companies — miners, chemical producers, industrial metals and mining firms, forestry and paper companies, and diversified materials conglomerates. Unlike the single-commodity futures tracked elsewhere in this report, it is an <strong>equity index</strong>: a read on how public stock markets are pricing the forward earnings power of the entire materials sector, not just today's spot commodity price.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Maintained by <strong>S&P Dow Jones Indices</strong>. Price and volume data is widely available through financial data providers including Yahoo Finance. The index rebalances periodically to reflect changes in the sector's largest publicly traded constituents.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Equity signal vs. commodity signal</div>
+        <div class="var-field-text">Because this is an equity index rather than a futures contract, it reflects <strong>forward-looking</strong> investor expectations rather than a current spot price. It can lead the individual commodity prices above when investors are pricing in future demand or supply shifts before they show up in physical markets, or it can lag when equity investors are simply reacting to realized commodity price moves. Watching the index alongside copper, aluminum, and steel prices helps distinguish which dynamic is in play in a given week.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Updates continuously during US equity market trading hours; the daily close is the reference point used in this report.</div>
+      </div>
+      <div class="var-field planning-impact full-width market-impact">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">This index is most useful as a <strong>confirmation signal</strong>. When the index and the underlying commodity prices (copper, aluminum, steel) are moving in the same direction, it strengthens confidence that a price move reflects genuine, broad-based fundamental demand rather than a single-commodity idiosyncratic event (a mine strike, a one-off tariff announcement). When the index and commodity prices diverge — for example, commodity prices spike but the equity index doesn't follow — that divergence can be an early tell that public markets expect the current commodity move to fade rather than persist, which is worth factoring into how much weight to put on a single-metric price signal when updating planning assumptions.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 7: G-X LITHIUM ETF ═══════════════ -->
+  <div class="variable-card market">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Global X Lithium &amp; Battery Tech ETF</div>
+        <div class="var-also-known">Also known as: G-X Lithium ETF, LIT, Lithium &amp; Battery Supply Chain ETF</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · NYSE Arca</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">An equity ETF tracking companies across the full lithium and battery supply chain — mining and extraction, refining and processing, and battery cell manufacturing. It is not a lithium metal futures contract; it is a basket of the publicly traded companies whose businesses depend on lithium economics, making it the most accessible market-based proxy for lithium market conditions.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Managed by <strong>Global X ETFs</strong> and traded on <strong>NYSE Arca</strong>. Price and volume data is available through Yahoo Finance and other standard market data providers.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Why lithium doesn't have its own futures contract</div>
+        <div class="var-field-text">Unlike copper or aluminum, lithium is not widely traded on a public exchange with a liquid futures market. Most lithium changes hands through long-term supply contracts and direct spot deals between miners, refiners, and battery manufacturers, priced off industry benchmarks rather than an exchange tape. Tracking the public companies across that supply chain — via this ETF — is the most practical way to get a continuously updated, market-based read on lithium sector conditions.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Updates continuously during US equity market trading hours; the daily close is the reference point used in this report.</div>
+      </div>
+      <div class="var-field planning-impact full-width market-impact">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Relevant to businesses in or adjacent to <strong>EV supply chains, battery manufacturing, renewable energy storage, and consumer electronics</strong>. A sustained decline in this ETF typically signals oversupply in the lithium market or softening EV demand — often a leading indicator of falling battery cell costs in the quarters ahead. A sustained rise signals tightening upstream supply or accelerating EV and grid-storage demand, which historically precedes battery cost pressure working its way into finished-product pricing. For businesses without direct battery exposure, this ETF is also a reasonable proxy for the pace of the broader energy-transition capital cycle, worth watching alongside other economic-transition indicators in your planning assumptions.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SOURCES REFERENCE -->
+  <div class="sources-block">
+    <div class="sources-header">Data Sources Reference</div>
+    <div class="sources-body">
+      <div class="source-item">
+        <div class="source-item-name">New York Mercantile Exchange (NYMEX) / COMEX</div>
+        <div class="source-item-desc">Both are divisions of CME Group. NYMEX hosts HRC steel and aluminum futures; COMEX hosts copper, gold, and silver futures.</div>
+        <a class="source-item-url" href="https://www.cmegroup.com/markets/metals.html" target="_blank">cmegroup.com/markets/metals</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">London Metal Exchange (LME)</div>
+        <br>
+        <div class="source-item-desc">The global benchmark exchange for base metals including copper and aluminum. LME prices and daily inventory data are widely used as the international reference for metals pricing and physical supply conditions.</div>
+        <a class="source-item-url" href="https://www.lme.com" target="_blank">lme.com</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">London Bullion Market Association (LBMA)</div>
+        <div class="source-item-desc">Publishes the daily gold and silver price fixes — reference benchmarks widely used in contracts, valuations, and central bank reserves. The LBMA fix is the institutional standard for precious metals pricing.</div>
+        <a class="source-item-url" href="https://www.lbma.org.uk" target="_blank">lbma.org.uk</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">S&P Global Platts / CRU Group</div>
+        <div class="source-item-desc">Trade publication price assessment services widely used for physical steel transaction pricing in North America. Platts and CRU weekly assessments reflect actual market transaction levels and supplement futures pricing for HRC steel.</div>
+        <a class="source-item-url" href="https://www.spglobal.com/commodityinsights" target="_blank">spglobal.com/commodityinsights</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">S&P Dow Jones Indices</div>
+        <div class="source-item-desc">Maintains and publishes the Dow Jones U.S. Basic Materials Index, the sector-level equity benchmark used in this report.</div>
+        <a class="source-item-url" href="https://www.spglobal.com/spdji" target="_blank">spglobal.com/spdji</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Global X ETFs / NYSE Arca</div>
+        <div class="source-item-desc">Global X manages the Lithium &amp; Battery Tech ETF (LIT), traded on NYSE Arca — the equity proxy used for lithium and battery supply-chain conditions.</div>
+        <a class="source-item-url" href="https://www.globalxetfs.com" target="_blank">globalxetfs.com</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Yahoo Finance</div>
+        <div class="source-item-desc">Provides real-time and historical price data for all seven variables tracked in this report.</div>
+        <a class="source-item-url" href="https://finance.yahoo.com" target="_blank">finance.yahoo.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER NOTE -->
+  <div class="faq-footer">
+    <strong>SignalRadar — Metals Packet · Variable Reference</strong><br>
+    All variables in this report draw on publicly available, free data updated daily. SignalRadar's platform processes historical and current values to identify early-shift signals relative to defined planning baselines. The platform's analysis of individual variables does not constitute investment advice. Variable definitions and planning implications are provided for educational and planning context only. Last updated: August 2026.
+  </div>
+
+</div><!-- end .faq-section -->
+
+</body>
+</html>

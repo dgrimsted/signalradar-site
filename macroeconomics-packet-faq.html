@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4705QM7GC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X4705QM7GC');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalRadar — Macroeconomics Packet · Variable Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --purple:        #632ca6;
+    --purple-mid:    #7d3fcb;
+    --purple-light:  #f0eaf8;
+    --purple-pale:   #f8f4fd;
+    --near-black:    #1a1a2e;
+    --gray-dark:     #444455;
+    --gray-mid:      #777788;
+    --gray-light:    #e8e4f0;
+    --gray-pale:     #f5f4f8;
+    --amber:         #c8960a;
+    --amber-bg:      #fffaee;
+    --green:         #1a7f5a;
+    --green-bg:      #edf7f2;
+    --red:           #c0392b;
+    --red-bg:        #fdf0ee;
+    --macro-accent:  #4a5a9a;
+    --macro-bg:      #f0f2fa;
+    --macro-border:  #c0c8e8;
+    --white:         #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    background: var(--gray-pale);
+    color: var(--near-black);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--near-black);
+    color: white;
+    padding: 40px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,44,166,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,90,154,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .logo-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: white;
+    letter-spacing: 0.02em;
+  }
+  .page-header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9aa8e0;
+    margin-bottom: 8px;
+  }
+  .page-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .page-header-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    line-height: 1.65;
+  }
+
+  /* ── EMBED WRAPPER ── */
+  .faq-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+
+  /* ── CATEGORY BADGE ── */
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--macro-bg);
+    border: 1px solid var(--macro-border);
+    border-radius: 6px;
+    padding: 6px 14px 6px 10px;
+    margin-bottom: 28px;
+  }
+  .category-badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--macro-accent);
+    flex-shrink: 0;
+  }
+  .category-badge-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--macro-accent);
+  }
+
+  /* ── SECTION INTRO ── */
+  .section-intro {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-left: 4px solid var(--macro-accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+  }
+  .section-intro-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--macro-accent);
+    margin-bottom: 8px;
+  }
+  .section-intro-text {
+    font-size: 14px;
+    color: var(--gray-dark);
+    line-height: 1.7;
+  }
+  .section-intro-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+
+  /* ── VARIABLE GROUP DIVIDERS ── */
+  .var-group-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin: 36px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gray-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .var-group-label::before {
+    content: '';
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--macro-accent);
+    flex-shrink: 0;
+  }
+
+  /* ── READING GUIDE ── */
+  .reading-guide {
+    background: var(--purple-light);
+    border: 1px solid rgba(99,44,166,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .reading-guide-icon {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .reading-guide-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+  .reading-guide-text {
+    font-size: 13px;
+    color: var(--gray-dark);
+    line-height: 1.65;
+  }
+
+  /* ── VARIABLE CARDS ── */
+  .variable-card {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+  .variable-card:hover {
+    box-shadow: 0 4px 20px rgba(74,90,154,0.10);
+  }
+
+  .var-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--gray-pale);
+  }
+  .var-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--near-black);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .var-also-known {
+    font-size: 12px;
+    color: var(--gray-mid);
+    font-style: italic;
+  }
+  .var-meta-chips {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .chip-freq {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+  .chip-freq.weekly {
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+  .chip-source {
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    font-size: 10px;
+  }
+
+  .var-body {
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+  }
+
+  @media (max-width: 640px) {
+    .var-body { grid-template-columns: 1fr; }
+    .var-header { grid-template-columns: 1fr; }
+    .var-meta-chips { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    .faq-section { padding: 24px 16px 48px; }
+    .page-header { padding: 28px 24px; }
+  }
+
+  .var-field-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 5px;
+  }
+  .var-field-text {
+    font-size: 13.5px;
+    color: var(--gray-dark);
+    line-height: 1.6;
+  }
+  .var-field-text strong {
+    color: var(--near-black);
+    font-weight: 600;
+  }
+  .var-field.full-width {
+    grid-column: 1 / -1;
+  }
+  .var-field.planning-impact {
+    grid-column: 1 / -1;
+    background: var(--macro-bg);
+    border: 1px solid var(--macro-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .var-field.planning-impact .var-field-label {
+    color: var(--macro-accent);
+  }
+  .var-field.planning-impact .var-field-text {
+    color: var(--near-black);
+    font-size: 13.5px;
+  }
+
+  /* ── SOURCES REFERENCE ── */
+  .sources-block {
+    margin-top: 36px;
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .sources-header {
+    background: var(--gray-pale);
+    border-bottom: 1px solid var(--gray-light);
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+  }
+  .sources-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .source-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--near-black);
+    margin-bottom: 2px;
+  }
+  .source-item-desc {
+    font-size: 12px;
+    color: var(--gray-mid);
+    line-height: 1.5;
+  }
+  .source-item-url {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--purple);
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin: 32px 0;
+  }
+
+  /* ── FOOTER NOTE ── */
+  .faq-footer {
+    margin-top: 40px;
+    font-size: 11.5px;
+    color: var(--gray-mid);
+    line-height: 1.6;
+    border-top: 1px solid var(--gray-light);
+    padding-top: 20px;
+  }
+  .faq-footer strong { color: var(--gray-dark); }
+
+  @media print {
+    body { background: white; }
+    .page-header { padding: 24px 32px; }
+    .variable-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- STANDALONE PAGE HEADER                              -->
+<!-- Remove when embedding in a landing page            -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="logo-row">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5"/>
+        <path d="M5 12 L8 8 L11 10 L15 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">SignalRadar</span>
+  </div>
+  <div class="page-header-eyebrow">Category Reference · Macroeconomics</div>
+  <div class="page-header-title">Macroeconomics Packet<br>Variable Reference Guide</div>
+  <div class="page-header-desc">What every variable in the Macroeconomics Packet measures, where the data comes from, how often it updates, and what a move in each signal means for the assumptions sitting underneath every other report.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!-- EMBED START — .faq-section is the component root   -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="faq-section">
+
+  <div class="category-badge">
+    <div class="category-badge-dot"></div>
+    <span class="category-badge-text">Macroeconomics Packet</span>
+  </div>
+
+  <!-- SECTION INTRO -->
+  <div class="section-intro" id="methodology">
+    <div class="section-intro-label">About This Report Category</div>
+    <div class="section-intro-text">
+      Every other SignalRadar report tracks a specific commodity or market. This one tracks the conditions those markets operate inside of — inflation expectations, global trade and shipping demand, dollar strength, and the labor market. These four signals don't map to a single line item in your cost structure the way copper or diesel do. Instead, they sit upstream of nearly everything: the interest rate your borrowing costs, the escalation clause in your supplier contracts, the price of every dollar-denominated commodity, and the tightness of the labor market you're hiring into.<br><br>
+      The SignalRadar <strong>Macroeconomics Packet</strong> tracks four publicly available macro and financial-condition variables. Together they give you early visibility into shifts in the broader planning environment — the kind of shifts that quietly invalidate a set of assumptions before anyone notices which specific line item to blame.<br><br>
+      <strong>How these reports are framed:</strong> Every report in this series is written from a specific point of view — as if it were being delivered directly to the executive team at Acme Engine, a fictional global engine manufacturer we use as a consistent narrative anchor, grounded in the real dynamics of large-scale engine and equipment manufacturers. None of these four variables is a line item on Acme's income statement the way steel or diesel is, so here the executive team takes this input and interacts with and directs its finance and treasury organization — stress-testing borrowing costs, escalation clauses, or currency assumptions, or simply carrying the signal into the next planning cycle if no immediate action is warranted. That's a deliberate choice: it shows not just that a signal moved, but how a real business's leadership would actually use it — the same translation SignalRadar would offer using your own metrics, your own team structure, and your own business. See this framing at work in <a href="https://signalradar.ai/macroeconomics-packet-landing.html">this week's Macroeconomics Packet report →</a>.
+    </div>
+  </div>
+
+  <!-- READING GUIDE -->
+  <div class="reading-guide">
+    <div class="reading-guide-icon">📖</div>
+    <div>
+      <div class="reading-guide-label">How to read this guide</div>
+      <div class="reading-guide-text">Each variable below is described in plain terms — no economics or trading experience required. For each one you'll find: what it measures, who publishes the data, how often it updates, and most importantly, <strong>what a meaningful move in that variable likely means for planning assumptions based on cost structures and other impacted metrics</strong>. Two of the four variables here are market-based signals (real money, priced continuously); the other two are real-economy data releases (measured and published on a fixed schedule). Both types matter — market signals tend to move first, real-economy data confirms. Use this as a reference when reading your weekly Macroeconomics Packet and want to understand the "so what" behind a signal.</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- GROUP 1: MARKET-BASED SIGNALS                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="var-group-label">Market-Based Signals — Priced Continuously</div>
+
+
+  <!-- ═══════════════ VARIABLE 1: 5-YEAR BREAKEVEN INFLATION RATE ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">5-Year Breakeven Inflation Rate</div>
+        <div class="var-also-known">Also known as: T5YIE, 5-Year Breakeven, Market-Implied Inflation Expectations</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">FRED · US Treasury</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">The breakeven rate is calculated by subtracting the yield on 5-Year Treasury Inflation-Protected Securities (TIPS) from the yield on a standard 5-Year Treasury note. The gap between the two represents the average annual inflation rate that bond investors need to see over the next five years for an inflation-protected bond to "break even" against a regular one. In plain terms: it is the bond market's own, continuously updated inflation forecast, expressed as a single percentage.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Calculated and published daily by the <strong>Federal Reserve Bank of St. Louis</strong> via its FRED economic data system, using US Treasury yield data as the underlying input. Both the nominal and TIPS yields it's derived from are auctioned and traded in the US Treasury market.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Market-based vs. survey-based inflation views</div>
+        <div class="var-field-text">Most inflation expectation measures come from surveys — asking consumers or economists what they think inflation will be. The breakeven rate is different: it reflects real money staked on an outcome by investors in the Treasury market, which is widely considered a more disciplined, faster-reacting signal than opinion-based surveys. It also updates daily, versus monthly or quarterly for most survey-based measures.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Daily on US Treasury market business days, reflecting the prior day's bond market close.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">This is the most direct available signal for <strong>cost escalation assumptions, wage planning, and contract indexing</strong>. A sustained rise means the bond market is pricing in more persistent inflation than previously expected — a prompt to stress-test supplier price escalation clauses, wage growth assumptions, and any contracts indexed to CPI or similar benchmarks. A sustained decline signals the opposite: markets expect inflation pressure to ease, which can support holding the line on price increases and refinancing assumptions. Because this variable moves daily and reflects forward expectations rather than backward-looking data (like CPI), it's one of the fastest way to sense a shift in the inflation narrative before it becomes consensus.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 2: ICE US DOLLAR INDEX ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">ICE US Dollar Index Futures</div>
+        <div class="var-also-known">Also known as: DXY, US Dollar Index, Dollar Index Futures</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Yahoo Finance · ICE</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">The US Dollar Index measures the value of the US dollar against a weighted basket of six major foreign currencies: the euro (the largest weight, at roughly 57.6%), Japanese yen, British pound, Canadian dollar, Swedish krona, and Swiss franc. It is the standard, most widely cited benchmark for "dollar strength" in financial markets, with a methodology tracing back to 1973.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Index futures are traded on <strong>ICE (Intercontinental Exchange)</strong>. Price and historical data are widely available through financial data providers including Yahoo Finance.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Why dollar strength cuts both ways</div>
+        <div class="var-field-text">A stronger dollar makes imports and foreign-sourced materials cheaper in dollar terms — good news for import-heavy supply chains — but makes US exports less price-competitive abroad and compresses the reported value of overseas revenue for US multinationals when translated back to dollars. A weaker dollar does the reverse, and because most globally traded commodities (oil, metals, agricultural goods) are priced in dollars, a weaker dollar also tends to push those commodity prices higher in dollar terms — an inverse relationship worth remembering when reading SignalRadar's other report packets.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Index futures trade nearly continuously, Sunday evening through Friday afternoon ET. Daily settlement price is the reference point used in this report.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">Relevant to <strong>any business with import costs, foreign-currency revenue, or exposure to dollar-priced commodities</strong> (which, given the Metals, Energy, and Agriculture packets, is most of them). A sustained dollar rally warrants a review of import cost assumptions (favorable) and overseas revenue translation (unfavorable) — and, via the inverse relationship, can act as a headwind on globally traded commodity prices even when nothing about physical supply and demand has changed. A sustained dollar decline works in the opposite direction on all three fronts. For planning purposes, a 5%+ move in the index over a planning quarter is generally significant enough to warrant revisiting these assumptions explicitly rather than treating currency as a background constant.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- GROUP 2: REAL-ECONOMY SIGNALS                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="var-group-label">Real-Economy Signals — Measured on a Fixed Schedule</div>
+
+
+  <!-- ═══════════════ VARIABLE 3: BALTIC DRY INDEX ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Baltic Dry Index</div>
+        <div class="var-also-known">Also known as: BDI, Baltic Exchange Dry Index, Global Shipping Rate Index</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq">Daily</span>
+        <span class="chip chip-source">Baltic Exchange</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">The Baltic Dry Index measures the cost of shipping dry bulk raw materials — iron ore, coal, grain, and similar commodities — across major global shipping routes, using a composite of vessel classes (Capesize, Panamax, Supramax) and routes. Because dry bulk shipping has no unified, liquid futures market the way oil does, this index is the closest available real-time read on the balance between global raw-material shipping demand and available vessel supply.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Published daily by the <strong>Baltic Exchange</strong>, a London-based maritime market data and index provider, based on daily assessed rates submitted by a panel of international shipbrokers across the major dry bulk routes.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Why it's considered an unusually "clean" leading indicator</div>
+        <div class="var-field-text">Dry bulk shipping demand reflects raw materials on the move — ahead of the finished-goods production and trade that will eventually follow. Because there's minimal speculative or derivative trading distorting the signal (unlike most financial indices, which can be influenced by positioning unrelated to physical fundamentals), the Baltic Dry Index has a long track record of moving ahead of broader global trade and industrial activity data, making it one of the more "economically pure" indicators available.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text">Published daily (weekdays) by the Baltic Exchange.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">A rising index signals tightening global shipping capacity relative to demand — typically meaning rising trade volumes, and a leading indicator of upward pressure on ocean freight costs and lead-time risk for any business with international supply chains. A falling index signals softening global shipping demand, which can bring near-term freight cost relief but is also, more importantly, an early tell of slowing global industrial and trade activity — information worth folding into demand forecasts well before it shows up in trade statistics or GDP data. Because the index reacts quickly to real shifts in physical trade activity, a sustained multi-week move in either direction is more informative than any single day's reading.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ VARIABLE 4: INITIAL CLAIMS ═══════════════ -->
+  <div class="variable-card">
+    <div class="var-header">
+      <div>
+        <div class="var-name">Initial Jobless Claims</div>
+        <div class="var-also-known">Also known as: ICSA, Initial Claims, Weekly Unemployment Insurance Claims</div>
+      </div>
+      <div class="var-meta-chips">
+        <span class="chip chip-freq weekly">Weekly</span>
+        <span class="chip chip-source">FRED · US Dept. of Labor</span>
+      </div>
+    </div>
+    <div class="var-body">
+      <div class="var-field">
+        <div class="var-field-label">What it is</div>
+        <div class="var-field-text">Initial claims counts the number of individuals filing for unemployment insurance for the first time in a given week, aggregated nationally from state unemployment offices. It is one of the most closely watched, most timely leading indicators of labor market direction available — released well ahead of the monthly jobs report and reflecting real-time filings rather than a retrospective survey.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Who publishes it</div>
+        <div class="var-field-text">Published weekly by the <strong>US Department of Labor</strong>, aggregating filings from state unemployment insurance offices nationwide. Historical and current data is hosted on the Federal Reserve Bank of St. Louis's <strong>FRED</strong> system.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Why it leads other labor market data</div>
+        <div class="var-field-text">Because claims are filed in real time by individuals who have just lost a job — rather than reconstructed later through a survey, as the monthly payrolls report is — initial claims tends to be one of the first data series to move when labor market conditions shift, whether in a layoff wave or a hiring recovery. Economists watch the 4-week moving average in particular, since the weekly figure alone can be noisy around holidays and seasonal factors.</div>
+      </div>
+      <div class="var-field">
+        <div class="var-field-label">Update frequency</div>
+        <div class="var-field-text"><strong>Weekly</strong> — released every Thursday morning for the prior week, one of the most reliably scheduled economic data releases.</div>
+      </div>
+      <div class="var-field planning-impact full-width">
+        <div class="var-field-label">What a move means for planning</div>
+        <div class="var-field-text">A sustained rise in initial claims signals softening labor demand — relevant to hiring plans, wage growth assumptions, and, for consumer-facing businesses, an early warning sign of softening household spending power, since job losses typically precede pullbacks in discretionary spending. A sustained decline signals a tightening labor market, which can preview wage cost pressure and increased hiring competition for skilled roles. Because this is a weekly, high-frequency release, a multi-week trend is far more informative for planning purposes than any single week's print, which can be noisy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SOURCES REFERENCE -->
+  <div class="sources-block">
+    <div class="sources-header">Data Sources Reference</div>
+    <div class="sources-body">
+      <div class="source-item">
+        <div class="source-item-name">Federal Reserve Economic Data (FRED)</div>
+        <div class="source-item-desc">Maintained by the St. Louis Fed. Hosts the T5YIE breakeven inflation series, the ICSA initial claims series, and thousands of other economic time-series used across SignalRadar's platform.</div>
+        <a class="source-item-url" href="https://fred.stlouisfed.org" target="_blank">fred.stlouisfed.org</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">US Treasury Department</div>
+        <div class="source-item-desc">Source of the nominal and TIPS Treasury yields used to calculate the 5-Year Breakeven Inflation Rate.</div>
+        <a class="source-item-url" href="https://home.treasury.gov" target="_blank">home.treasury.gov</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">ICE (Intercontinental Exchange)</div>
+        <div class="source-item-desc">Trades and maintains the US Dollar Index futures contract, the global benchmark for dollar strength against major currencies.</div>
+        <a class="source-item-url" href="https://www.ice.com" target="_blank">ice.com</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Baltic Exchange</div>
+        <div class="source-item-desc">London-based maritime data provider. Publishes the Baltic Dry Index daily based on shipbroker-assessed rates across major dry bulk shipping routes.</div>
+        <a class="source-item-url" href="https://www.balticexchange.com" target="_blank">balticexchange.com</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">US Department of Labor</div>
+        <div class="source-item-desc">Publishes weekly initial unemployment insurance claims data, aggregated from state unemployment offices nationwide.</div>
+        <a class="source-item-url" href="https://www.dol.gov" target="_blank">dol.gov</a>
+      </div>
+      <div class="source-item">
+        <div class="source-item-name">Yahoo Finance</div>
+        <div class="source-item-desc">Provides real-time and historical price data for the US Dollar Index futures contract tracked in this report.</div>
+        <a class="source-item-url" href="https://finance.yahoo.com" target="_blank">finance.yahoo.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER NOTE -->
+  <div class="faq-footer">
+    <strong>SignalRadar — Macroeconomics Packet · Variable Reference</strong><br>
+    All variables in this report draw on publicly available, free data updated daily or weekly. SignalRadar's platform processes historical and current values to identify early-shift signals relative to defined planning baselines. The platform's analysis of individual variables does not constitute investment advice. Variable definitions and planning implications are provided for educational and planning context only. Last updated: August 2026.
+  </div>
+
+</div><!-- end .faq-section -->
+
+</body>
+</html>
