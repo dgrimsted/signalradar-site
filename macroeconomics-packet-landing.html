@@ -187,19 +187,53 @@
     .hero-image-block {
       padding: 20px 0 20px 32px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 32px;
       background: rgba(0,0,0,0.12);
     }
+
+    /* ── LIVE REPORT CTA (below hero image) ── */
+    .hero-live-cta {
+      display: block;
+      width: 100%;
+      background: var(--gold);
+      color: var(--charcoal) !important;
+      text-align: center;
+      padding: 16px 20px;
+      border-radius: 4px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .hero-live-cta:hover {
+      background: var(--gold-light);
+      text-decoration: none;
+    }
+    .hero-live-cta-sub {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      color: var(--charcoal-2);
+      margin-top: 5px;
+      opacity: 0.85;
+    }
+
     .hero-report-wrap {
       position: relative;
       width: 100%;
       transform: rotate(2.5deg);
-      transition: transform 0.4s ease;
-      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.6)) drop-shadow(0 2px 8px rgba(200,134,10,0.2));
-    }
-    .hero-report-wrap:hover {
-      transform: rotate(0deg) scale(1.01);
+      filter:
+        drop-shadow(0 2px 6px rgba(0,0,0,0.4))
+        drop-shadow(0 22px 52px rgba(0,0,0,0.6))
+        drop-shadow(0 3px 12px rgba(200,134,10,0.25));
     }
     .hero-report-img {
       width: 100%;
@@ -647,6 +681,11 @@
                 onerror="this.style.opacity='0.3'; this.alt='[Report image — upload macroeconomics-report-preview.jpg to /images/]';"
               >
             </div>
+            <!-- PLACEHOLDER: swap href for the live reports.signalradar.ai link once Phase 3 is confirmed -->
+            <a href="https://reports.signalradar.ai/macroeconomics" class="hero-live-cta">
+              See This Week's Macroeconomics Packet →
+              <span class="hero-live-cta-sub">Live report, updated weekly</span>
+            </a>
           </div>
         </div>
 
@@ -668,12 +707,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/macroeconomics/inflation-breakeven/">5-Year Breakeven Inflation Rate</a>
+                <a href="https://reports.signalradar.ai/macroeconomics">5-Year Breakeven Inflation Rate</a>
               </div>
               <p class="metric-desc">Track the bond market's own inflation forecast, derived from Treasury yields, with 16-week advance signals on whether inflation expectations are rising or cooling.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/macroeconomics/inflation-breakeven/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/macroeconomics" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/macroeconomics-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -691,12 +730,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/macroeconomics/baltic-dry-index/">Baltic Dry Index</a>
+                <a href="https://reports.signalradar.ai/macroeconomics">Baltic Dry Index</a>
               </div>
               <p class="metric-desc">Monitor the cost of shipping raw bulk materials worldwide, with 16-week advance signals that surface shifts in global trade volume before they show up in official trade data.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/macroeconomics/baltic-dry-index/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/macroeconomics" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/macroeconomics-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -714,12 +753,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/macroeconomics/dollar-index/">ICE US Dollar Index Futures</a>
+                <a href="https://reports.signalradar.ai/macroeconomics">ICE US Dollar Index Futures</a>
               </div>
               <p class="metric-desc">Track the dollar's strength against a basket of major currencies, with 16-week advance signals on import costs, overseas revenue, and dollar-priced commodity pressure.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/macroeconomics/dollar-index/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/macroeconomics" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/macroeconomics-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -737,12 +776,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/macroeconomics/initial-claims/">Initial Jobless Claims</a>
+                <a href="https://reports.signalradar.ai/macroeconomics">Initial Jobless Claims</a>
               </div>
               <p class="metric-desc">Track new unemployment insurance filings, one of the most timely leading indicators of labor-market direction, with 16-week advance signals for demand and hiring-plan assumptions.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/macroeconomics/initial-claims/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/macroeconomics" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/macroeconomics-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>

@@ -216,20 +216,53 @@
     .hero-image-block {
       padding: 20px 0 20px 32px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 32px;
       background: rgba(0,0,0,0.12);
+    }
+
+    /* ── LIVE REPORT CTA (below hero image) ── */
+    .hero-live-cta {
+      display: block;
+      width: 100%;
+      background: var(--gold);
+      color: var(--charcoal) !important;
+      text-align: center;
+      padding: 16px 20px;
+      border-radius: 4px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .hero-live-cta:hover {
+      background: var(--gold-light);
+      text-decoration: none;
+    }
+    .hero-live-cta-sub {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      color: var(--charcoal-2);
+      margin-top: 5px;
+      opacity: 0.85;
     }
 
     .hero-report-wrap {
       position: relative;
       width: 100%;
       transform: rotate(2.5deg);
-      transition: transform 0.4s ease;
-      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.6)) drop-shadow(0 2px 8px rgba(200,134,10,0.2));
-    }
-    .hero-report-wrap:hover {
-      transform: rotate(0deg) scale(1.01);
+      filter:
+        drop-shadow(0 2px 6px rgba(0,0,0,0.4))
+        drop-shadow(0 22px 52px rgba(0,0,0,0.6))
+        drop-shadow(0 3px 12px rgba(200,134,10,0.25));
     }
     .hero-report-img {
       width: 100%;
@@ -741,6 +774,11 @@
                 onerror="this.style.opacity='0.3'; this.alt='[Report image — upload metals-report-preview.jpg to /images/]';"
               >
             </div>
+            <!-- PLACEHOLDER: swap href for the live reports.signalradar.ai link once Phase 3 is confirmed -->
+            <a href="https://reports.signalradar.ai/metals" class="hero-live-cta">
+              See This Week's Metals Packet →
+              <span class="hero-live-cta-sub">Live report, updated weekly</span>
+            </a>
           </div>
         </div>
 
@@ -765,12 +803,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/metals/copper/">US Copper Closing Price</a>
+                <a href="https://reports.signalradar.ai/metals">US Copper Closing Price</a>
               </div>
               <p class="metric-desc">Track global copper price trends with 16-week advance signals from geopolitical events, mining disruptions, and construction demand patterns that move prices.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/metals/copper/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/metals" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/metals-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -788,12 +826,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/metals/aluminum/">Aluminum Futures</a>
+                <a href="https://reports.signalradar.ai/metals">Aluminum Futures</a>
               </div>
               <p class="metric-desc">Monitor aluminum futures with 16-week advance signals from global bauxite production, energy costs, and geopolitical tensions in key mining regions.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/metals/aluminum/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/metals" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/metals-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -811,12 +849,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/metals/silver/">COMEX Silver Futures</a>
+                <a href="https://reports.signalradar.ai/metals">COMEX Silver Futures</a>
               </div>
               <p class="metric-desc">Track silver price movements with 16-week advance signals including geopolitical risk premiums, industrial demand from technology sectors, and currency effects.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/metals/silver/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/metals" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/metals-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -834,12 +872,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/metals/steel/">U.S. Midwest Hot-Rolled Steel</a>
+                <a href="https://reports.signalradar.ai/metals">U.S. Midwest Hot-Rolled Steel</a>
               </div>
               <p class="metric-desc">Monitor steel prices with 16-week advance signals from energy costs, geopolitical disruptions affecting ore supply, and construction sector demand patterns.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/metals/steel/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/metals" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/metals-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -857,12 +895,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/metals/gold/">COMEX Gold Futures</a>
+                <a href="https://reports.signalradar.ai/metals">COMEX Gold Futures</a>
               </div>
               <p class="metric-desc">Track gold as a financial-condition signal, with 16-week advance signals from real interest rates, dollar strength, geopolitical risk, and central bank buying.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/metals/gold/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/metals" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/metals-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -880,12 +918,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/metals/basic-materials-index/">Dow Jones U.S. Basic Materials Index</a>
+                <a href="https://reports.signalradar.ai/metals">Dow Jones U.S. Basic Materials Index</a>
               </div>
               <p class="metric-desc">A broader read on the materials sector — mining, chemicals, and industrial metals producers — with 16-week advance signals on how equity markets are pricing the whole complex, not just one metal.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/metals/basic-materials-index/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/metals" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/metals-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
@@ -903,12 +941,12 @@
           <div class="metric-info">
             <div>
               <div class="metric-name">
-                <a href="/reports/metals/lithium/">Global X Lithium &amp; Battery Tech ETF</a>
+                <a href="https://reports.signalradar.ai/metals">Global X Lithium &amp; Battery Tech ETF</a>
               </div>
               <p class="metric-desc">Track the lithium and battery-supply-chain complex, with 16-week advance signals tied to EV demand cycles, battery manufacturing capacity, and upstream mining supply.</p>
             </div>
             <div class="metric-links">
-              <a href="/reports/metals/lithium/" class="metric-link">View Full Report →</a>
+              <a href="https://reports.signalradar.ai/metals" class="metric-link">View Full Report →</a>
               <a href="https://signalradar.ai/metals-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
             </div>
           </div>
