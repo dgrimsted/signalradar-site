@@ -9,7 +9,7 @@
       gtag('js', new Date());
       gtag('config', 'G-X4705QM7GC');
     </script>
- 
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="External intelligence for anticipatory planning.">
@@ -198,14 +198,38 @@ nav {
   font-style: normal;
 }
 
+.hero-bridge {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--near-black);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hero-sub {
   font-size: 18px;
   color: var(--gray);
   line-height: 1.6;
   margin-bottom: 36px;
-  max-width: 640px;
+  max-width: 660px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* ── TRANSITION LEAD (used before mechanism steps) ── */
+.transition-lead {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--purple);
+  margin: 40px 0 20px;
+}
+
+.eyebrow-lg {
+  font-size: 20px;
+  margin-bottom: 16px;
 }
 
 .hero-ctas {
@@ -215,45 +239,49 @@ nav {
   align-items: center;
 }
 
-/* ── PROBLEM SECTION ── */
-.problem-grid {
+/* ── COMPARE (BEFORE/AFTER) ── */
+.compare-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
+  gap: 20px;
+  margin: 24px 0 40px;
 }
 
-.problem-example {
+.compare-card {
+  border-radius: 8px;
+  padding: 24px 26px;
+}
+
+.compare-card.before {
   background: var(--off-white);
-  border-left: 4px solid var(--purple);
-  padding: 24px 28px;
-  border-radius: 6px;
-  margin-top: 24px;
+  border-left: 4px solid var(--light-gray);
 }
 
-.problem-example-label {
+.compare-card.after {
+  background: var(--purple-pale);
+  border-left: 4px solid var(--purple);
+}
+
+.compare-label {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--purple);
   margin-bottom: 12px;
 }
 
-.problem-example-quote {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--near-black);
-  line-height: 1.5;
+.compare-card.before .compare-label { color: var(--gray); }
+.compare-card.after .compare-label { color: var(--purple); }
+
+.compare-quote {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.55;
   font-style: italic;
-  margin-bottom: 12px;
 }
 
-.problem-example-context {
-  font-size: 14px;
-  color: var(--gray);
-  line-height: 1.6;
-}
+.compare-card.before .compare-quote { color: var(--gray); }
+.compare-card.after .compare-quote { color: var(--near-black); }
 
 /* ── SOLUTION SECTION ── */
 .solution-statement {
@@ -334,17 +362,19 @@ nav {
 
 .reports-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 32px;
   margin-top: 40px;
 }
 
 .report-card {
+  display: block;
   background: var(--white);
   border: 1px solid var(--light-gray);
   border-radius: 8px;
   overflow: hidden;
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .report-card:hover {
@@ -355,7 +385,7 @@ nav {
 
 .report-thumb {
   width: 100%;
-  height: 240px;
+  height: 260px;
   overflow: hidden;
   background: var(--off-white);
 }
@@ -383,6 +413,14 @@ nav {
   font-size: 13px;
   color: var(--gray);
   line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.report-cta {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+  letter-spacing: 0.01em;
 }
 
 .reports-signup {
@@ -518,7 +556,7 @@ footer {
   .section { padding: 56px 20px; }
   .hero { padding: 64px 20px; }
   .hero h1 { font-size: 40px; }
-  .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+  .compare-grid { grid-template-columns: 1fr; gap: 16px; }
   .steps-grid { grid-template-columns: 1fr; gap: 20px; }
   .reports-grid { grid-template-columns: 1fr; gap: 24px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -561,108 +599,83 @@ footer {
 <div class="hero">
   <div class="hero-inner">
     <span class="eyebrow">External Intelligence for Anticipatory Planning</span>
-    <h1>Stop explaining why you missed your quarter. Start seeing what's about to move your numbers. <em>Connect external signals to your plan while there's time to act.</em></h1>
+    <h1>The signals exist before the results do. <em>Most plans just don't see them yet.</em></h1>
+    <p class="hero-bridge">
+      Too many executive teams are still blindsided by surprises — plans missed, quarters spent explaining why the numbers didn't hit.
+    </p>
     <p class="hero-sub">
-      Every planning meeting should start from shared intelligence about what's changing in the world—not an investigation into how the forecast missed.
+      SignalRadar connects external movements in commodity markets, customer conditions, and macro data to the specific assumptions your plan depends on — before the quarter confirms what changed. What would you do if you knew earlier how those assumptions were shifting, while there's still time to act?
+    </p>
+    <p class="hero-sub">
+      This week's free intelligence reports show examples of the kind of information that could make your next planning meeting more effective.
     </p>
     <div class="hero-ctas">
       <a class="btn-primary" href="https://signalradar.ai/contact.html">Schedule a conversation</a>
-      <a class="btn-secondary" href="#free-reports">See weekly intelligence reports</a>
+      <a class="btn-secondary" href="#free-reports">See this week's free reports →</a>
     </div>
   </div>
 </div>
 
 
 <!-- ══════════════════════════════════════════════
-     THE PROBLEM
+     STAKES → PROOF → MECHANISM (single arc)
 ══════════════════════════════════════════════ -->
-<div class="bg-white">
+<div class="bg-white" id="how-it-works">
 <div class="section">
-  
-  <div class="problem-grid">
-    <div>
-      <span class="eyebrow">The familiar pattern</span>
-      <h2 class="section-title">"We didn't see it coming" is no longer acceptable.</h2>
-      <p class="section-body">
-        Your plan was built on assumptions. Some of them changed this week. 
-        The signals existed—in commodity markets, customer earnings, regulatory filings. 
-        They pointed to the impact weeks before it showed up in your numbers.
-      </p>
-      
-      <div class="problem-example">
-        <div class="problem-example-label">Every quarter, somewhere</div>
-        <div class="problem-example-quote">"The supplier cost increase didn't appear in the P&L without warning."</div>
-        <div class="problem-example-context">
-          The supplier's cost pressures were building in commodity markets and trade data for weeks before the invoice price changed. The signals were there. They just weren't connected to your planning assumptions until after the fact.
-        </div>
-      </div>
+
+  <span class="eyebrow eyebrow-lg">The cost of finding out late</span>
+  <h2 class="section-title">What if the planning meeting started with "here's what changed — let's decide what to do," instead of the investigation into who missed what?</h2>
+  <p class="section-body">
+    Every plan is built on assumptions about the outside world — commodity costs, customer demand, freight, monetary conditions. When those assumptions move, the P&amp;L doesn't tell you for weeks. The signals that move first — prices, filings, earnings calls, shipping data — are already public. Most companies just aren't watching them until the quarter forces the question.
+  </p>
+
+  <p class="section-body" style="margin-top: 28px; font-weight: 600; color: var(--near-black);">
+    Same variance. Two different meetings.
+  </p>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Without the Signal-to-Plan Connection</div>
+      <div class="compare-quote">"Diesel costs were up significantly — how and why did we miss that, and whose fault was it?"</div>
     </div>
-    
-    <div>
-      <span class="eyebrow">The signal-to-planning gap</span>
-      <p class="section-body" style="margin-bottom: 24px;">
-        Traditional planning infrastructure looks in the wrong direction. Your dashboards show what already happened inside your organization. Your forecasts are built from internal data that updates only <em>after</em> external conditions have shifted.
-      </p>
-      <p class="section-body" style="margin-bottom: 24px;">
-        The connection between external signals and internal assumptions—the bridge that makes early detection possible—typically doesn't exist until someone manually builds it. And by then, it's reactive rather than anticipatory.
-      </p>
-      <p class="section-body">
-        <strong>The question isn't whether you could see the signals. It's whether you will.</strong>
-      </p>
+    <div class="compare-card after">
+      <div class="compare-label">With the Signal-to-Plan Connection</div>
+      <div class="compare-quote">"Diesel is trending above our Q3 assumption and projected to hold. Here's the freight scenario at 10% above plan, and the levers we want to discuss."</div>
     </div>
   </div>
 
   <div class="solution-statement">
     <p>
-      <strong>We work with CFOs and FP&A teams</strong> to build the signal-to-planning connection systematically—connecting external movements to the specific variables you actually monitor, flagged when they cross the threshold into material relevance for your business.
+      <strong>The gap isn't access to data.</strong> It's the missing connection between external signals and the specific line items in your plan. Without it, planning meetings default to reconstructing what happened — often coupled with defensiveness and finger-pointing. With it, they start from what's already changing, and the conversation moves straight to what to do about it.
     </p>
   </div>
 
-</div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════
-     HOW IT WORKS
-══════════════════════════════════════════════ -->
-<div class="bg-offwhite" id="how-it-works">
-<div class="section">
-
-  <span class="eyebrow">How it works</span>
-  <h2 class="section-title">Detection, connection, and intelligence—delivered early enough to matter.</h2>
-  <p class="section-body">
-    SignalRadar augments your planning tools. It adds an external intelligence layer that surfaces 
-    changes in the signals your plan depends on before your internal metrics catch up to them.
+  <p class="transition-lead">
+    Here's how that connection gets built:
   </p>
 
   <div class="steps-grid">
     <div class="step-card">
       <div class="step-number">1</div>
-      <div class="step-title">Detect external movements</div>
+      <div class="step-title">Detect</div>
       <div class="step-body">
-        Continuous monitoring of commodity markets, regulatory filings, customer earnings, 
-        supply chain signals, monetary and other macroeconomic conditions. When external pressures build, 
-        you see it before it appears in your P&L.
+        Continuous monitoring of a massive set of external signals — commodity markets, customer conditions, and macro data — including the specific ones we determine your plan actually depends on.
       </div>
     </div>
-    
+
     <div class="step-card">
       <div class="step-number">2</div>
-      <div class="step-title">Connect to your assumptions</div>
+      <div class="step-title">Connect</div>
       <div class="step-body">
-        External signals are mapped to the specific planning variables you monitor—not generic 
-        industry sentiment, but direct connections to your raw material and energy costs, input prices, 
-        customer demand assumptions, margin forecasts or whatever metrics are most critical to your business.
+        We map how external changes could impact your specific planning assumptions — so what you see is what the change means for <em>your</em> plan, not generic industry sentiment.
       </div>
     </div>
-    
+
     <div class="step-card">
       <div class="step-number">3</div>
-      <div class="step-title">Surface before the quarter confirms</div>
+      <div class="step-title">Surface</div>
       <div class="step-body">
-        Intelligence arrives weekly, flagging when external movements cross your materiality 
-        thresholds. Planning meetings start from "here's what's changing" instead of 
-        "let's figure out what happened."
+        Delivered weekly, in your business context — including why a change may matter. When a signal crosses your materiality threshold, you see it sooner.
       </div>
     </div>
   </div>
@@ -685,51 +698,66 @@ footer {
   </div>
 
   <p class="section-body" style="margin-bottom: 40px;">
-    Each week, SignalRadar publishes free external intelligence across key commodity 
-    and cost categories. These are examples of what the platform can do for your business— 
-    once applied to the specific metrics that actually move your plan.
+    That's not hypothetical — it's live. Every week, SignalRadar publishes free intelligence across four categories: Metals, Energy, Agriculture, and Macroeconomics. Each report is written from the point of view of a global engine and equipment manufacturer's executive team — so as you read it, picture your own metrics in that same seat, and how that kind of insight would land in your next planning meeting.
   </p>
 
   <div class="reports-grid">
-    
-    <!-- Energy Costs -->
-    <div class="report-card">
-      <div class="report-thumb">
-        <img src="images/energy-report-preview.jpg" alt="Energy Costs Weekly Intelligence Report">
-      </div>
-      <div class="report-card-body">
-        <div class="report-title">Energy Costs</div>
-        <div class="report-desc">
-          Crude oil, natural gas, and refined products impact on your operational costs
-        </div>
-      </div>
-    </div>
 
-    <!-- Industrial Metals -->
-    <div class="report-card">
+    <!-- Metals Packet -->
+    <a class="report-card" href="https://signalradar.ai/metals-packet-landing.html">
       <div class="report-thumb">
-        <img src="images/metals-report-preview.jpg" alt="Industrial Metals Weekly Intelligence Report">
+        <img src="images/metals-report-preview.jpg" alt="Metals Packet Weekly Intelligence Report">
       </div>
       <div class="report-card-body">
-        <div class="report-title">Industrial Metals</div>
+        <div class="report-title">Metals Packet</div>
         <div class="report-desc">
-          Steel, copper, and aluminum price movements affecting your margin assumptions
+          Copper, aluminum, steel, gold, and silver — seven tracked variables spanning direct cost inputs and broader economic condition signals.
         </div>
+        <div class="report-cta">View the Metals Packet →</div>
       </div>
-    </div>
+    </a>
 
-    <!-- Agricultural Commodities -->
-    <div class="report-card">
+    <!-- Energy Packet -->
+    <a class="report-card" href="https://signalradar.ai/energy-packet-landing.html">
       <div class="report-thumb">
-        <img src="images/agricultural-report-preview.jpg" alt="Agricultural Commodities Weekly Intelligence Report">
+        <img src="images/energy-report-preview.jpg" alt="Energy Packet Weekly Intelligence Report">
       </div>
       <div class="report-card-body">
-        <div class="report-title">Agricultural Commodities</div>
+        <div class="report-title">Energy Packet</div>
         <div class="report-desc">
-          Corn, wheat, cocoa, and crop price signals driving your input costs
+          Crude oil, natural gas, gasoline, and diesel — seven tracked variables covering both forward pricing and real retail costs that flow into freight and operations.
         </div>
+        <div class="report-cta">View the Energy Packet →</div>
       </div>
-    </div>
+    </a>
+
+    <!-- Agriculture Packet -->
+    <a class="report-card" href="https://signalradar.ai/agriculture-packet-landing.html">
+      <div class="report-thumb">
+        <img src="images/agricultural-report-preview.jpg" alt="Agriculture Packet Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Agriculture Packet</div>
+        <div class="report-desc">
+          Corn, wheat, soybeans, coffee, and sugar — five tracked variables driving ingredient costs and consumer food-price pressure.
+        </div>
+        <div class="report-cta">View the Agriculture Packet →</div>
+      </div>
+    </a>
+
+    <!-- Macroeconomics Packet -->
+    <a class="report-card" href="https://signalradar.ai/macroeconomics-packet-landing.html">
+      <div class="report-thumb">
+        <img src="images/macroeconomics-report-preview.jpg" alt="Macroeconomics Packet Weekly Intelligence Report">
+      </div>
+      <div class="report-card-body">
+        <div class="report-title">Macroeconomics Packet</div>
+        <div class="report-desc">
+          Inflation expectations, global shipping demand, dollar strength, and the labor market — four tracked variables that sit upstream of every other report.
+        </div>
+        <div class="report-cta">View the Macroeconomics Packet →</div>
+      </div>
+    </a>
 
   </div>
 
@@ -738,7 +766,7 @@ footer {
   </div>
 
   <div class="reports-launch">
-    <div class="reports-launch-text">Free weekly intelligence reports launching Summer 2026</div>
+    <div class="reports-launch-text">Free weekly intelligence reports launching on or before Labor Day 2026</div>
   </div>
 
 </div>
@@ -770,14 +798,14 @@ footer {
         External intelligence for anticipatory planning
       </p>
     </div>
-    
+
     <div class="footer-col">
       <h4>Product</h4>
       <a href="#how-it-works">How It Works</a>
       <a href="#free-reports">Free Reports</a>
       <a href="https://signalradar.ai/resources.html">Resources</a>
     </div>
-    
+
     <div class="footer-col">
       <h4>Company</h4>
       <a href="https://signalradar.ai/blog.html">Blog</a>
@@ -786,7 +814,7 @@ footer {
        <a href="https://signalradar.ai/privacy.html">Privacy Policy</a>
     </div>
   </div>
-  
+
   <div class="footer-bottom">
     <p class="footer-copy">
       © 2026 SignalRadar. All rights reserved.
