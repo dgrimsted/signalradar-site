@@ -3561,12 +3561,14 @@ function renderPredictors(rows){
   const wrap = document.getElementById('predictorRows');
   if(!wrap) return;
   const list = Array.isArray(rows) ? rows.slice() : [];
-  list.sort((a,b)=> Math.abs(parseFloat(b.coefficient||0)) - Math.abs(parseFloat(a.coefficient||0)));
+  // impact = ABS(coefficient), written by pipeline; fall back to computing it
+  const getImpact = r => parseFloat(r.impact || 0) || Math.abs(parseFloat(r.coefficient || 0));
+  list.sort((a,b)=> getImpact(b) - getImpact(a));
   const top = list.slice(0,6);
-  const total = top.reduce((s,r)=> s + Math.abs(parseFloat(r.coefficient||0)), 0) || 1;
+  const total = top.reduce((s,r)=> s + getImpact(r), 0) || 1;
   wrap.innerHTML = '';
   top.forEach((r, idx)=>{
-    const pct = Math.round((Math.abs(parseFloat(r.coefficient||0)) / total) * 100);
+    const pct = Math.round((getImpact(r) / total) * 100);
     const row = document.createElement('div');
     row.className = 'projswap-row';
     const label = document.createElement('div');
@@ -3628,6 +3630,80 @@ async function loadImages(measureCode){
       map.src = FALLBACK_MAP;
     }
   }
+}
+
+// ── Forecast-date filter ──────────────────────────────────────────────────────
+// Called once after CSV load (to init picker) and again on date change.
+function applyForecastDateFilter() {
+  const fd = APP.selectedForecastDate || '';
+  const raw = APP.raw || APP.all;
+  const hasDates = (raw.channels || []).some(r => r.forecast_date && r.forecast_date.length === 10);
+  if (fd && hasDates) {
+    APP.all = {
+      channels: (raw.channels || []).filter(r => (r.forecast_date || '').slice(0,10) === fd),
+      executive_predictors: (raw.executive_predictors || []).filter(r => (r.forecast_date || '').slice(0,10) === fd),
+      drivers: raw.drivers,
+      disruptions: raw.disruptions,
+      predictors_fallback: raw.predictors_fallback,
+    };
+  } else {
+    APP.all = raw;
+  }
+  _buildMeasures();
+}
+
+function _buildMeasures() {
+  const data = APP.all;
+  var PKG_FALLBACK_BY_DT = {
+    'BZ=F':'Energy','CL=F':'Energy','HO=F':'Energy','NG=F':'Energy','RB=F':'Energy',
+    'GASREGCOVW':'Energy','GASDESW':'Energy','AAA_GAS':'Energy','AAA_DIESEL':'Energy',
+    'GC=F':'Metals','SI=F':'Metals','HG=F':'Metals','ALI=F':'Metals',
+    'HRC=F':'Metals','S&PCOMMODITY16':'Metals','LIT-US':'Metals',
+    'ZC=F':'Agriculture','ZS=F':'Agriculture','ZW=F':'Agriculture','KC=F':'Agriculture',
+    'SB=F':'Agriculture','CT=F':'Agriculture','OJ=F':'Agriculture','CC=F':'Agriculture',
+    'T5YIE':'Macro Economics','DX-Y.NYB':'Macro Economics',
+    'BALTIC_DRY':'Macro Economics','ICSA':'Macro Economics'
+  };
+  const channelMeasures = [];
+  const seenDt = new Set();
+  (data.channels || []).forEach(ch => {
+    const dt = normalizeDtCode(ch.DT_CODE || ch.dt_code);
+    if (!dt || seenDt.has(dt)) return;
+    seenDt.add(dt);
+    var _csvPkg = String(ch.Package || ch.package || '').trim();
+    var _fallbackPkg = PKG_FALLBACK_BY_DT[dt] || '';
+    channelMeasures.push({
+      dt_code: dt,
+      measure_name: ch.CHANNEL || ch.channel || dt,
+      display_name: ch.CHANNEL || ch.channel || dt,
+      package: _csvPkg || _fallbackPkg,
+      sort_order: String(channelMeasures.length + 1),
+      is_active: '1'
+    });
+  });
+
+  var PARAMS = new URLSearchParams(window.location.search);
+  var pkgRaw = (PARAMS.get('package') || '').trim();
+  function _normPkg(v){ return String(v||'').toLowerCase().replace(/[\s\-_]+/g, ''); }
+  var PKG_CANONICAL = {
+    'macro':'macroeconomics','macroeconomics':'macroeconomics',
+    'metals':'metals','agriculture':'agriculture','agri':'agriculture','energy':'energy'
+  };
+  function _canonPkg(v){ var k = _normPkg(v); return PKG_CANONICAL[k] || k; }
+  var pkgKey = _canonPkg(pkgRaw);
+  var _measures = channelMeasures.length ? channelMeasures : FALLBACK.measures;
+  if (pkgRaw) {
+    var _filtered = _measures.filter(function(m){ return _canonPkg(m.package) === pkgKey; });
+    if (_filtered.length) { _measures = _filtered; APP.activePackage = pkgRaw; }
+    else { console.warn('[package filter] No measures matched package =', pkgRaw, '- showing all'); }
+  }
+  APP.measures = _measures;
+  if (APP.measures.length) {
+    const currentValid = APP.measures.some(m => normalizeDtCode(m.dt_code) === normalizeDtCode(APP.currentMeasureCode));
+    if (!currentValid) APP.currentMeasureCode = normalizeDtCode(APP.measures[0].dt_code);
+  }
+  bindMeasureControls();
+  renderMeasure(APP.currentMeasureCode);
 }
 
 function bindMeasureControls(){
@@ -3737,86 +3813,57 @@ async function loadDashboard() {
     ]);
 
     // Normalize predictors.csv rows to the same shape as executive_predictors rows
-    const predictors_fallback = (predictorsRaw || []).map(r => Object.assign({}, r, {
-      dt_code: r.dt_code || r.DT_CODE || r.Y_DT_CODE || r.y_dt_code,
-      coefficient: (r.coefficient !== undefined && r.coefficient !== '') ? r.coefficient : r.impact,
-      variable: r.variable || r.category
-    }));
-    /* Per-DT_CODE package fallback — used when channels.csv doesn't yet have
-       the Package column. Once v24_insights_only_v6.py runs with the new SQL,
-       the CSV's Package field takes precedence. */
-    var PKG_FALLBACK_BY_DT = {
-      'BZ=F':'Energy', 'CL=F':'Energy', 'HO=F':'Energy', 'NG=F':'Energy',
-      'RB=F':'Energy', 'GASREGCOVW':'Energy', 'GASDESW':'Energy',
-      'GC=F':'Metals', 'SI=F':'Metals', 'HG=F':'Metals', 'ALI=F':'Metals',
-      'HRC=F':'Metals', 'S&PCOMMODITY16':'Metals', 'LIT-US':'Metals',
-      'ZC=F':'Agriculture', 'ZS=F':'Agriculture', 'ZW=F':'Agriculture',
-      'KC=F':'Agriculture', 'SB=F':'Agriculture', 'CC=F':'Agriculture',
-      'T5YIE':'Macro Economics', 'DX-Y.NYB':'Macro Economics',
-      'BALTIC_DRY':'Macro Economics', 'ICSA':'Macro Economics'
-    };
-        const data = { channels, drivers, disruptions, executive_predictors: executivePredictors, predictors_fallback };
-    APP.all = data;
-    const channelMeasures = [];
-    const seenDt = new Set();
-    (data.channels || []).forEach(ch => {
-      const dt = normalizeDtCode(ch.DT_CODE || ch.dt_code);
-      if (!dt || seenDt.has(dt)) return;
-      seenDt.add(dt);
-      var _csvPkg = String(ch.Package || ch.package || '').trim();
-      var _fallbackPkg = PKG_FALLBACK_BY_DT[dt] || '';
-      channelMeasures.push({
-        dt_code: dt,
-        measure_name: ch.CHANNEL || ch.channel || dt,
-        display_name: ch.CHANNEL || ch.channel || dt,
-        package: _csvPkg || _fallbackPkg,
-        sort_order: String(channelMeasures.length + 1),
-        is_active: '1'
+    const predictors_fallback = (predictorsRaw || []).map(r => {
+      const coef = (r.coefficient !== undefined && r.coefficient !== '') ? r.coefficient : r.impact;
+      const imp  = (r.impact !== undefined && r.impact !== '') ? r.impact : Math.abs(parseFloat(coef || 0));
+      return Object.assign({}, r, {
+        dt_code: r.dt_code || r.DT_CODE || r.Y_DT_CODE || r.y_dt_code,
+        coefficient: coef,
+        impact: imp,
+        variable: r.variable || r.category
       });
     });
+        const data = { channels, drivers, disruptions, executive_predictors: executivePredictors, predictors_fallback };
+    APP.raw = data;
+    APP.all = data;
 
-    /* ── Package-filter support (URL ?package=<name>) ──
-       Both the URL value and the data value are run through a shared
-       canonical-label table so that synonyms (e.g. "Macro" vs "Macro Economics")
-       resolve to the same key for comparison. */
-    var PARAMS = new URLSearchParams(window.location.search);
-    var pkgRaw = (PARAMS.get('package') || '').trim();
-    function _normPkg(v){ return String(v||'').toLowerCase().replace(/[\s\-_]+/g, ''); }
-    var PKG_CANONICAL = {
-      'macro':          'macroeconomics',
-      'macroeconomics': 'macroeconomics',
-      'metals':         'metals',
-      'agriculture':    'agriculture',
-      'agri':           'agriculture',
-      'energy':         'energy'
-    };
-    function _canonPkg(v){ var k = _normPkg(v); return PKG_CANONICAL[k] || k; }
-    var pkgKey = _canonPkg(pkgRaw);
-    var _measures = channelMeasures.length ? channelMeasures : FALLBACK.measures;
-    if (pkgRaw) {
-      var _filtered = _measures.filter(function(m){ return _canonPkg(m.package) === pkgKey; });
-      if (_filtered.length) {
-        _measures = _filtered;
-        APP.activePackage = pkgRaw;
-      } else {
-        console.warn('[package filter] No measures matched package =', pkgRaw, '- showing all');
+    // ── Forecast-date picker init ─────────────────────────────────────────────
+    (function initDatePicker() {
+      const allDates = [...new Set(
+        (data.channels || [])
+          .map(r => (r.forecast_date || '').toString().trim().slice(0, 10))
+          .filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d))
+      )].sort().reverse(); // newest first
+      APP.allForecastDates = allDates;
+      APP.selectedForecastDate = allDates[0] || '';
+
+      // Only render picker when there are multiple dates to choose from
+      const navEl = document.querySelector('.measureNav');
+      if (navEl && allDates.length >= 1) {
+        const existing = document.getElementById('forecastDateWrap');
+        if (existing) existing.remove();
+        const wrap = document.createElement('div');
+        wrap.id = 'forecastDateWrap';
+        wrap.style.cssText = 'display:flex;align-items:center;gap:8px;margin:4px 0 2px;';
+        const opts = allDates.map(d => {
+          const label = new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+          return `<option value="${d}">${label}</option>`;
+        }).join('');
+        wrap.innerHTML = `<label style="flex:0 0 auto;font-size:11px;font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.08em;">Forecast</label>
+          <select id="forecastDateSelect" class="measureSelect" style="flex:none;width:auto;min-width:155px;font-size:12px;padding:6px 28px 6px 10px;">${opts}</select>`;
+        navEl.insertAdjacentElement('afterend', wrap);
+        document.getElementById('forecastDateSelect').addEventListener('change', function() {
+          APP.selectedForecastDate = this.value;
+          applyForecastDateFilter();
+        });
       }
-    }
-    APP.measures = _measures;
+    })();
 
-    /* Badge is updated per-measure inside renderMeasure(); nothing to do here. */
-
-    if (APP.measures.length) {
-      const currentValid = APP.measures.some(m => normalizeDtCode(m.dt_code) === normalizeDtCode(APP.currentMeasureCode));
-      if (!currentValid) {
-        APP.currentMeasureCode = normalizeDtCode(APP.measures[0].dt_code);
-      }
-    }
-    bindMeasureControls();
-    renderMeasure(APP.currentMeasureCode);
+    applyForecastDateFilter();
   } catch(e) {
     if (CONFIG.ALLOW_EMBEDDED_FALLBACK) {
       console.warn('Blob fetch failed; using embedded fallback data.', e);
+      APP.raw = FALLBACK;
       APP.all = FALLBACK;
       APP.measures = FALLBACK.measures;
       if (APP.measures && APP.measures.length) {
