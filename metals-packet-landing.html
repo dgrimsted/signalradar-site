@@ -786,6 +786,27 @@
               See This Week's Metals Packet →
               <span class="hero-live-cta-sub">Live report, updated weekly</span>
             </a>
+        <a href="#recent-signals" class="hero-recent-link">
+  See recent signals from this report ↓
+</a>
+
+<style>
+.hero-recent-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+.hero-recent-link:hover {
+  color: #d4a843;
+}
+</style>
+    
           </div>
         </div>
 
@@ -1079,6 +1100,236 @@
       </div>
     </div>
   </section>
+  <section class="recent-signals-section" id="recent-signals">
+  <div class="section-wrap">
+
+    <div class="recent-signals-header">
+      <h2 class="recent-signals-title">Recent Signals</h2>
+      <span class="recent-signals-sub">What we've been tracking — updated weekly</span>
+    </div>
+
+    <div class="recent-signals-grid">
+
+
+      <!-- ✏ CARD 1 — MOST RECENT POST
+           Update the four ✏ values below -->
+      <div class="signal-card signal-card--primary">
+
+        <!-- ✏ DATE — format: Month D, YYYY -->
+        <span class="signal-date">September 4, 2026</span>
+
+        <!-- ✏ HEADLINE — the hook, one line -->
+        <p class="signal-headline">
+          "Copper's about to spike." "Copper's about to dip." Same market. Same week.
+        </p>
+
+        <!-- ✏ SNIPPET — first 2-3 sentences of the LinkedIn post -->
+        <p class="signal-snippet">
+          Two things are being said about copper in the same market this week. Both have credible arguments behind them. That's exactly the kind of signal that matters for planning assumptions.
+        </p>
+
+        <!-- ✏ LINKEDIN_URL — paste direct link to the LinkedIn post -->
+        <a href="https://www.linkedin.com/posts/PASTE-COPPER-POST-URL-HERE"
+           target="_blank"
+           rel="noopener"
+           class="signal-link">
+          Read more on LinkedIn →
+        </a>
+
+      </div>
+      <!-- END CARD 1 --> 
+     <!-- ✏ CARD 2 — PREVIOUS POST
+           Update the four ✏ values below -->
+      <div class="signal-card signal-card--secondary">
+
+        <!-- ✏ DATE -->
+        <span class="signal-date">September 2, 2026</span>
+
+        <!-- ✏ HEADLINE -->
+        <p class="signal-headline">
+          Everyone's watching tariffs for aluminum's next move. New smelters in Indonesia already made theirs.
+        </p>
+
+        <!-- ✏ SNIPPET -->
+        <p class="signal-snippet">
+          Everyone's watching for a U.S.-Canada tariff decision to tell them where aluminum goes next. New supply out of Indonesia already made its move — and it doesn't need a headline to show up.
+        </p>
+
+        <!-- ✏ LINKEDIN_URL -->
+        <a href="https://www.linkedin.com/posts/PASTE-ALUMINUM-POST-URL-HERE"
+           target="_blank"
+           rel="noopener"
+           class="signal-link">
+          Read more on LinkedIn →
+        </a>
+
+      </div>
+      <!-- END CARD 2 -->
+ <!-- ✏ CARD 3 — OLDEST OF THE THREE
+           Update the four ✏ values below
+           When a new post is added, delete this card entirely
+           and paste a fresh copy above Card 1 -->
+      <div class="signal-card signal-card--tertiary">
+
+        <!-- ✏ DATE -->
+        <span class="signal-date">[Date]</span>
+
+        <!-- ✏ HEADLINE -->
+        <p class="signal-headline">
+          [Headline of third most recent post]
+        </p>
+
+        <!-- ✏ SNIPPET -->
+        <p class="signal-snippet">
+          [First 2–3 sentences of the post — paste directly from LinkedIn.]
+        </p>
+
+        <!-- ✏ LINKEDIN_URL -->
+        <a href="https://www.linkedin.com/posts/PASTE-POST-URL-HERE"
+           target="_blank"
+           rel="noopener"
+           class="signal-link">
+          Read more on LinkedIn →
+        </a>
+
+      </div>
+      <!-- END CARD 3 -->
+
+
+    </div><!-- end recent-signals-grid -->
+
+    <p class="recent-signals-note">
+      Signals are published weekly and reflect current market conditions. Older posts may no longer reflect live data.
+    </p>
+
+  </div><!-- end section-wrap -->
+</section>
+
+<style>
+/* Recent Signals Section */
+.recent-signals-section {
+  background: #f5f0e8;
+  padding: 56px 0 48px;
+}
+
+.recent-signals-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #2c3e6b;
+}
+
+.recent-signals-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.3px;
+}
+
+.recent-signals-sub {
+  font-size: 13px;
+  color: #888;
+  font-weight: 400;
+}
+
+.recent-signals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Base card */
+.signal-card {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #e0d8c8;
+}
+
+/* Card hierarchy via top border color */
+.signal-card--primary {
+  border-top: 3px solid #2c3e6b;
+}
+
+.signal-card--secondary {
+  border-top: 3px solid #5a6a8a;
+}
+
+.signal-card--tertiary {
+  border-top: 3px solid #b0b8c8;
+  background: #faf8f4;
+  opacity: 0.82;
+}
+
+.signal-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  letter-spacing: 0.3px;
+}
+
+.signal-headline {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.4;
+}
+
+.signal-card--tertiary .signal-headline {
+  color: #4a4a6a;
+}
+
+.signal-snippet {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.65;
+  flex: 1;
+}
+
+.signal-card--tertiary .signal-snippet {
+  color: #777;
+}
+
+.signal-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2c3e6b;
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color 0.2s;
+}
+
+.signal-link:hover {
+  color: #d4a843;
+}
+
+.recent-signals-note {
+  font-size: 12px;
+  color: #aaa;
+  text-align: center;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .recent-signals-grid {
+    grid-template-columns: 1fr;
+  }
+  .recent-signals-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+</style>
 
   <!-- ============================================================
        CTAs
