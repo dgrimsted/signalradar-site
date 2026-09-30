@@ -10,9 +10,13 @@
    < 600) are untouched and keep the mobile layout. */
 (function(){
   try{
-    var shorter = Math.min(window.screen.width, window.screen.height);
-    var landscape = window.matchMedia("(orientation: landscape)").matches;
-    if (landscape && shorter >= 600 && shorter <= 1200){
+    var mm = window.matchMedia;
+    var coarse   = mm("(pointer: coarse)").matches;   // touch, not a mouse
+    var noHover  = mm("(hover: none)").matches;        // excludes desktop + touch-laptops with a trackpad
+    var landscape= mm("(orientation: landscape)").matches;
+    var shorter  = Math.min(window.screen.width, window.screen.height); // phones < 600, big monitors > 1200
+    // Only a real touch TABLET, held in LANDSCAPE, gets the desktop-style layout.
+    if (coarse && noHover && landscape && shorter >= 600 && shorter <= 1200){
       document.getElementById("vpMeta").setAttribute("content","width=1440");
       document.documentElement.classList.add("srTabletDesktop");
     }
