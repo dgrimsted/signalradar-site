@@ -3344,10 +3344,10 @@ function applyChannelContent(measureCode){
   setHtml('sub1', 'External Pressure Intelligence');
   setHtml('sub2', `${label}`);
   setHtml('signalPill', riskPillFromChannel(ch));
-  setHtml('headline', ch.NewsHeadline || ch.newsheadline || '');
+  setHtml('headline', ch.NewsHeadline_ai || ch.NewsHeadline || ch.newsheadline || '');
   setHtml('asOf', formatTodayDate());
   setHtml('mainDetails', '');
-  applyInlineNarrative(ch.NewsSummary || ch.newssummary || '');
+  applyInlineNarrative(ch.NewsSummary_ai || ch.NewsSummary || ch.newssummary || '');
   setHtml('footerLabel', 'SIGNALRADAR INTELLIGENCE');
   setHtml('footerText', `${label} is one signal. Your business has dozens. Connect this intelligence to your margins and reforecast cycle.`);
   setHtml('btn1', `See how this signal hits your margins →`);
@@ -3439,18 +3439,32 @@ function applyMetricCardsFromChannel(ch){
   }
   setHtml('m3Value', confidenceText.trim());
   (function(){
-    // v26: weather-themed reliability -> AI CONVICTION rating (color-coded); drop the sun icon.
-    // Sets m3Value + v24cSunDelta then returns, so the old bias-band code below is skipped.
+    // v26: AI CONVICTION rating (color-coded) when THIS row has an AI forecast;
+    // otherwise fall back to the exact v25 reliability word + bias band + sun icon,
+    // so a code not yet run through the AI pipeline shows the v25 confidence rather
+    // than a blank. The AI branch sets m3Value/v24cSunDelta then returns (skipping
+    // the old bias-band code); the fallback branch ends at the original "if(!d) return"
+    // so that bias-band code runs unchanged.
     var conv = String(ch.rec_conviction||'').toLowerCase();
     var cmap = { low:['LOW','#8a7f6b'], med:['MEDIUM','#9a6a12'], medium:['MEDIUM','#9a6a12'], high:['HIGH','#3f7b4a'] };
     var m = cmap[conv];
-    var wEl = document.getElementById('m3Value');
+    if (m) {
+      var wEl = document.getElementById('m3Value');
+      var dc = document.getElementById('v24cSunDelta');
+      var icon = document.querySelector('.v24c-sunIcon');
+      if (icon) icon.style.display = 'none';
+      if (wEl) { wEl.textContent = m[0]; wEl.style.color = m[1]; }
+      if (dc) { dc.textContent = 'CONVICTION'; dc.style.color = m[1]; dc.style.fontWeight = '700'; dc.style.letterSpacing = '.04em'; }
+      var lbl = document.getElementById('m3Label'); if (lbl) lbl.textContent = 'CONVICTION';
+      return;
+    }
+    // No AI forecast for this row -> exact v25 confidence look.
+    var lbl0 = document.getElementById('m3Label'); if (lbl0) lbl0.textContent = 'FORECAST CONFIDENCE';
+    var plain = String(ch.reliability||'').toUpperCase().trim();
+    var word = plain.split(/[\s,]/)[0] || plain;
+    setHtml('m3Value', word);
     var d = document.getElementById('v24cSunDelta');
-    var icon = document.querySelector('.v24c-sunIcon');
-    if (icon) icon.style.display = 'none';
-    if (wEl) { wEl.textContent = m ? m[0] : '—'; wEl.style.color = m ? m[1] : '#9A8E7B'; }
-    if (d) { d.textContent = 'CONVICTION'; d.style.color = m ? m[1] : '#9A8E7B'; d.style.fontWeight = '700'; d.style.letterSpacing = '.04em'; }
-    return;
+    if (!d) return;
     // New backend: MarketSignalForecastBias (= avgBestAbsPctError*100, already a percent).
     // Show the full bias as the \u00b1 confidence band.
     var biasRaw = ch.MarketSignalForecastBias ?? ch.marketsignalforecastbias ?? ch.MarketSignalForecastMAPE ?? '';
@@ -3489,14 +3503,14 @@ function buildSourcePills(raw) {
 
 function applyOverviewFromChannel(ch){
   // LEFT panel (panel1, 2/3 wide): signals not yet reflected in the model
-  const wisdomText = String(ch.KeyInsightsText || ch.keyinsightstext || '');
+  const wisdomText = String(ch.KeyInsightsText_ai || ch.KeyInsightsText || ch.keyinsightstext || '');
   setHtml('panel1Label', 'Betting markets, futures contracts, and latest news that can disrupt');
   setHtml('panel1SubLabel', '');
   setPanelText('panel1Line1', renderWisdomHtml(wisdomText));
 
   // RIGHT panel (panel23, 1/3 wide): company impact analysis
   const wtmHeadline = String(ch.WhatThisMeansHeadline || ch.whatthismeansheadline || '');
-  const wtmText     = String(ch.WhatThisMeansText     || ch.whatthismeanstext     || '');
+  const wtmText     = String(ch.WhatThisMeansText_ai     || ch.WhatThisMeansText     || ch.whatthismeanstext     || '');
   setHtml('panel23Label', 'WHAT THIS MEANS FOR <span>Acme Engine</span>');
   setHtml('panel23Title', wtmHeadline);
   setPanelText('panel23Line1', renderCompanyImpactHtml(wtmText));
@@ -4226,17 +4240,30 @@ document.addEventListener('DOMContentLoaded', loadDashboard);
     var box = document.getElementById('aiCompareBox');
     var rangeSec = document.querySelector('.v24c-rangeSection');
     var code = String(ch.DT_CODE||ch.dt_code||'').toUpperCase();
-    // v26: the card is ALWAYS the AI-enhanced ("RECOMMENDED") design; missing AI data shows nulls.
-    if(rangeSec) rangeSec.style.display='none';
-    if(box) box.style.display='';
 
     var cur = num(ch.currentprice);
     var mathAvg = num(ch.average16WeekProjection); if(!isFinite(mathAvg)) mathAvg = num(ch.averageprojection);
     var recAvg = num(ch.rec_avg_16w);
     var hasRec = isFinite(recAvg) && String(ch.rec_avg_16w==null?'':ch.rec_avg_16w).trim()!=='';
+
+    // v26: a row WITHOUT an AI-enhanced forecast falls back to the EXACT v25
+    // math-hero look — the SAME projection / trend numbers v25 shows, never blanks
+    // or dashes. initTrendProjection has already rendered the v25 math hero above,
+    // so we just restore the expected-range section, hide the AI compare box, and
+    // leave that render in place. Only rows WITH a rec_avg_16w get the AI hero.
+    if(!hasRec){
+      if(box) box.style.display='none';
+      if(rangeSec) rangeSec.style.display='';
+      window.__aiRec = null;
+      return;
+    }
+
+    if(rangeSec) rangeSec.style.display='none';
+    if(box) box.style.display='';
+
     var recTrend = num(ch.rec_trend_pct);
-    if(hasRec && !isFinite(recTrend) && isFinite(cur) && cur>0) recTrend = (recAvg-cur)/cur*100;
-    var up = (hasRec && isFinite(recTrend)) ? (recTrend>=0) : null;
+    if(!isFinite(recTrend) && isFinite(cur) && cur>0) recTrend = (recAvg-cur)/cur*100;
+    var up = isFinite(recTrend) ? (recTrend>=0) : null;
 
     var pctEl = document.getElementById('projBigPct');
     if(pctEl){
