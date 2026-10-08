@@ -2128,16 +2128,47 @@
 .v25-forces-wrap .projswap-row:last-child .projswap-label,
 .v25-forces-wrap .projswap-row:last-child .projswap-barbg,
 .v25-forces-wrap .projswap-row:last-child .projswap-pct { border-bottom: none !important; }
-/* panel23 (WTM): match trend card shadow + border */
+/* panel23 (WTM) — Option A "Purple Spotlight": brand-purple header makes the money panel the clear standout */
 .overviewRow #panel23 {
-  box-shadow: 0 6px 18px rgba(91,72,45,.18), 0 2px 4px rgba(91,72,45,.10) !important;
-  border: 1.5px solid #D2B18A !important;
+  box-shadow: 0 8px 22px rgba(99,44,166,.26), 0 2px 6px rgba(99,44,166,.14) !important;
+  border: 2px solid #632ca6 !important;
+  background: #FBF8FE !important;
 }
+/* Purple gradient header band + white label */
+.overviewRow #panel23 .oPanelHeaderAmber {
+  background: linear-gradient(135deg, #632ca6 0%, #7d49c9 100%) !important;
+  border-bottom-color: rgba(99,44,166,.35) !important;
+}
+.overviewRow #panel23 .oPanelHeaderAmber .oLabel,
+.overviewRow #panel23 .oPanelHeaderAmber .oLabel span { color: #ffffff !important; }
+.overviewRow #panel23 .oExpandBtn { background: rgba(255,255,255,.22) !important; color: #ffffff !important; }
+.overviewRow #panel23 .oExpandBtn:hover { background: rgba(255,255,255,.34) !important; }
+/* "Why it matters" badge in the header */
+.overviewRow #panel23 .wtmBadge {
+  flex-shrink: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(255,255,255,.20);
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 999px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+/* Body wash + purple takeaway accent */
+.overviewRow #panel23 .oPanelBody { background: #FBF8FE !important; }
 .overviewRow #panel23 .oWisdomText {
   font-size: 0.86rem !important;
   line-height: 1.62 !important;
 }
-.overviewRow #panel23 .ciAction { border-left: none !important; }
+.overviewRow #panel23 .ciAction {
+  border-left: 3px solid #632ca6 !important;
+  background: rgba(99,44,166,.07) !important;
+}
 
 /* ── V25 tablet layout (721px – 1100px) ─────────────────────────────────────
    Reorders sections to match mobile priority sequence:
@@ -2753,7 +2784,7 @@ if (document.readyState === 'loading') {
 </div>
 <div class="overview o23" id="panel23">
 <div class="oPanelHeader oPanelHeaderAmber">
-<div class="oLabel" id="panel23Label">WHAT THIS MEANS FOR <span>Acme Engine</span></div>
+<div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;"><div class="oLabel" id="panel23Label">WHAT THIS MEANS FOR <span>Acme Engine</span></div><span class="wtmBadge">Why it matters</span></div>
 <button class="oExpandBtn" onclick="openPanelOverlay('panel23')" title="View full analysis"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="7,1 10,1 10,4"/><line x1="10" y1="1" x2="6" y2="5"/><polyline points="4,10 1,10 1,7"/><line x1="1" y1="10" x2="5" y2="6"/></svg></button>
 </div>
 <div class="oPanelBody">
