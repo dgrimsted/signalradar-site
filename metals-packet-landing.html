@@ -1100,236 +1100,6 @@
       </div>
     </div>
   </section>
-  <section class="recent-signals-section" id="recent-signals">
-  <div class="section-wrap">
-
-    <div class="recent-signals-header">
-      <h2 class="recent-signals-title">Recent Signals</h2>
-      <span class="recent-signals-sub">What we've been tracking — updated weekly</span>
-    </div>
-
-    <div class="recent-signals-grid">
-
-
-      <!-- ✏ CARD 1 — MOST RECENT POST
-           Update the four ✏ values below -->
-      <div class="signal-card signal-card--primary">
-
-        <!-- ✏ DATE — format: Month D, YYYY -->
-        <span class="signal-date">September 4, 2026</span>
-
-        <!-- ✏ HEADLINE — the hook, one line -->
-        <p class="signal-headline">
-          "Copper's about to spike." "Copper's about to dip." Same market. Same week.
-        </p>
-
-        <!-- ✏ SNIPPET — first 2-3 sentences of the LinkedIn post -->
-        <p class="signal-snippet">
-          Two things are being said about copper in the same market this week. Both have credible arguments behind them. That's exactly the kind of signal that matters for planning assumptions.
-        </p>
-
-        <!-- ✏ LINKEDIN_URL — paste direct link to the LinkedIn post -->
-        <a href="https://lnkd.in/p/gxquffWH"
-           target="_blank"
-           rel="noopener"
-           class="signal-link">
-          Read more on LinkedIn →
-        </a>
-
-      </div>
-      <!-- END CARD 1 --> 
-     <!-- ✏ CARD 2 — PREVIOUS POST
-           Update the four ✏ values below -->
-      <div class="signal-card signal-card--secondary">
-
-        <!-- ✏ DATE -->
-        <span class="signal-date">September 2, 2026</span>
-
-        <!-- ✏ HEADLINE -->
-        <p class="signal-headline">
-          Everyone's watching tariffs for aluminum's next move. New smelters in Indonesia already made theirs.
-        </p>
-
-        <!-- ✏ SNIPPET -->
-        <p class="signal-snippet">
-          Everyone's watching for a U.S.-Canada tariff decision to tell them where aluminum goes next. New supply out of Indonesia already made its move — and it doesn't need a headline to show up.
-        </p>
-
-        <!-- ✏ LINKEDIN_URL -->
-        <a href="https://lnkd.in/p/guW8G2KK"
-           target="_blank"
-           rel="noopener"
-           class="signal-link">
-          Read more on LinkedIn →
-        </a>
-
-      </div>
-      <!-- END CARD 2 -->
- <!-- ✏ CARD 3 — OLDEST OF THE THREE
-           Update the four ✏ values below
-           When a new post is added, delete this card entirely
-           and paste a fresh copy above Card 1 -->
-      <div class="signal-card signal-card--tertiary">
-
-        <!-- ✏ DATE -->
-        <span class="signal-date">SOON</span>
-
-        <!-- ✏ HEADLINE -->
-        <p class="signal-headline">
-          Coming soon ... 
-        </p>
-
-        <!-- ✏ SNIPPET -->
-        <p class="signal-snippet">
-          as new signal posts are shared we'll add to this page
-        </p>
-
-        <!-- ✏ LINKEDIN_URL -->
-        <a href="https://lnkd.in/p/guW8G2KK"
-           target="_blank"
-           rel="noopener"
-           class="signal-link">
-          Read more on LinkedIn →
-        </a>
-
-      </div>
-      <!-- END CARD 3 -->
-
-
-    </div><!-- end recent-signals-grid -->
-
-    <p class="recent-signals-note">
-      Signals are published weekly and reflect current market conditions. Older posts may no longer reflect live data.
-    </p>
-
-  </div><!-- end section-wrap -->
-</section>
-
-<style>
-/* Recent Signals Section */
-.recent-signals-section {
-  background: #f5f0e8;
-  padding: 56px 0 48px;
-}
-
-.recent-signals-header {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  margin-bottom: 32px;
-  padding-bottom: 14px;
-  border-bottom: 2px solid #2c3e6b;
-}
-
-.recent-signals-title {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a2e;
-  letter-spacing: -0.3px;
-}
-
-.recent-signals-sub {
-  font-size: 13px;
-  color: #888;
-  font-weight: 400;
-}
-
-.recent-signals-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-/* Base card */
-.signal-card {
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border: 1px solid #e0d8c8;
-}
-
-/* Card hierarchy via top border color */
-.signal-card--primary {
-  border-top: 3px solid #2c3e6b;
-}
-
-.signal-card--secondary {
-  border-top: 3px solid #5a6a8a;
-}
-
-.signal-card--tertiary {
-  border-top: 3px solid #b0b8c8;
-  background: #faf8f4;
-  opacity: 0.82;
-}
-
-.signal-date {
-  font-size: 11px;
-  font-weight: 600;
-  color: #999;
-  letter-spacing: 0.3px;
-}
-
-.signal-headline {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  color: #1a1a2e;
-  line-height: 1.4;
-}
-
-.signal-card--tertiary .signal-headline {
-  color: #4a4a6a;
-}
-
-.signal-snippet {
-  margin: 0;
-  font-size: 13px;
-  color: #555;
-  line-height: 1.65;
-  flex: 1;
-}
-
-.signal-card--tertiary .signal-snippet {
-  color: #777;
-}
-
-.signal-link {
-  font-size: 12px;
-  font-weight: 600;
-  color: #2c3e6b;
-  text-decoration: none;
-  margin-top: 4px;
-  transition: color 0.2s;
-}
-
-.signal-link:hover {
-  color: #d4a843;
-}
-
-.recent-signals-note {
-  font-size: 12px;
-  color: #aaa;
-  text-align: center;
-  margin: 0;
-}
-
-/* Responsive */
-@media (max-width: 720px) {
-  .recent-signals-grid {
-    grid-template-columns: 1fr;
-  }
-  .recent-signals-header {
-    flex-direction: column;
-    gap: 4px;
-  }
-}
-</style>
 
   <!-- ============================================================
        CTAs
@@ -1346,7 +1116,462 @@
       </div>
     </div>
   </section>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
 
+<style>
+  :root {
+    --bg-section: #f7f6f3;
+    --bg-card: #ffffff;
+    --bg-panel: #f0ede8;
+    --border: #e0ddd6;
+    --border-strong: #b8b3aa;
+    --border-panel: #c8c3bb;
+    --fg-primary: #1a1917;
+    --fg-secondary: #5c5750;
+    --fg-muted: #8c877f;
+    --accent: #2d5f3f;
+    --tag-bg: #e8f0eb;
+    --tag-fg: #1e4229;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-section: #141210;
+      --bg-card: #1e1c19;
+      --bg-panel: #252220;
+      --border: #2e2b26;
+      --border-strong: #4a4640;
+      --border-panel: #3a3730;
+      --fg-primary: #f0ede8;
+      --fg-secondary: #a8a29a;
+      --fg-muted: #6b6560;
+      --accent: #5a9e72;
+      --tag-bg: #1a2e20;
+      --tag-fg: #7ec499;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg-section: #141210;
+    --bg-card: #1e1c19;
+    --bg-panel: #252220;
+    --border: #2e2b26;
+    --border-strong: #4a4640;
+    --border-panel: #3a3730;
+    --fg-primary: #f0ede8;
+    --fg-secondary: #a8a29a;
+    --fg-muted: #6b6560;
+    --accent: #5a9e72;
+    --tag-bg: #1a2e20;
+    --tag-fg: #7ec499;
+    color-scheme: dark;
+  }
+
+  .signals-section {
+    background: var(--bg-section);
+    padding: 3rem 1.5rem 3.5rem;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  .signals-header { margin-bottom: 2rem; }
+
+  .signals-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .signals-title {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(1.4rem, 3vw, 1.75rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+    line-height: 1.25;
+  }
+
+  .signals-subtitle {
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+    margin: 0;
+    font-style: italic;
+  }
+
+  .signals-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .signals-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+  }
+
+  .signals-cards-grid + .signals-cards-grid {
+    border-top: none;
+    border-radius: 0;
+    margin-top: 0;
+  }
+
+  .signals-cards-grid:only-of-type { border-radius: 4px; }
+
+  .signal-card {
+    background: var(--bg-card);
+    padding: 1.25rem 1.375rem;
+    cursor: pointer;
+    transition: background 0.12s ease;
+    position: relative;
+  }
+
+  .signal-card:hover {
+    background: color-mix(in srgb, var(--bg-card) 85%, var(--bg-section));
+  }
+
+  .signal-card.is-active { background: var(--bg-panel); }
+
+  .signal-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .signal-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--fg-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .signal-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    padding: 0.2em 0.5em;
+    border-radius: 2px;
+  }
+
+  .signal-headline {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    line-height: 1.35;
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+
+  .signal-snippet {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--fg-secondary);
+    margin: 0 0 0.75rem;
+  }
+
+  .signal-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: opacity 0.1s ease;
+  }
+
+  .signal-toggle:hover { opacity: 0.7; }
+
+  .signals-expansion-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-top: none;
+    padding: 1.5rem 1.75rem;
+    display: none;
+  }
+
+  .signals-expansion-panel.is-open { display: block; }
+
+  .expansion-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .expansion-headline {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    line-height: 1.3;
+    margin: 0 0 1rem;
+    text-wrap: balance;
+  }
+
+  .expansion-body {
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: var(--fg-primary);
+    white-space: pre-wrap;
+    margin: 0 0 1rem;
+    max-width: 68ch;
+  }
+
+  .expansion-close {
+    background: none;
+    border: none;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+    cursor: pointer;
+    padding: 0;
+    letter-spacing: 0.03em;
+    transition: color 0.1s ease;
+  }
+
+  .expansion-close:hover { color: var(--fg-primary); }
+
+  .signals-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .signals-report-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.15s ease;
+  }
+
+  .signals-report-link:hover { opacity: 0.7; }
+  .signals-report-link::after { content: ' →'; }
+
+  @media (max-width: 560px) {
+    .signals-section { padding: 2rem 1rem 2.5rem; }
+    .signals-cards-grid { grid-template-columns: 1fr; }
+    .signal-card { padding: 1rem; }
+    .signals-expansion-panel { padding: 1.25rem 1rem; }
+  }
+</style>
+
+<!-- RECENT SIGNALS SECTION — Metals Landing Page -->
+<section class="signals-section" id="recent-signals">
+  <div class="signals-header">
+    <p class="signals-eyebrow">Recent Signals</p>
+    <h2 class="signals-title">What we've been tracking — updated weekly</h2>
+    <p class="signals-subtitle">Select any signal to read the full analysis</p>
+  </div>
+
+  <div class="signals-grid">
+
+    <!-- ROW 1: Cards 1 & 2 -->
+    <div class="signals-cards-grid" id="row1-grid">
+
+      <!-- Card 1: Steel (top left = most recent) -->
+      <article class="signal-card" data-row="1" data-card="1"
+               data-headline="Forecasting isn't picking the number. It's deciding how much of it to trust with real money."
+               data-tag="Steel" data-date="Oct 4, 2026"
+               data-full="Steel is forecast to fall 19.5% over the next 16 weeks. That's the kind of number that finds its way into a budget and stays there.
+
+SignalRadar's model has Midwest hot-rolled coil going from $1,276 a short ton to a 16-week average of about $1,027, as tighter financial conditions slow capital spending and construction. On direction, the report agrees with itself. On size, it doesn't.
+
+The crowd sees steady demand, not a collapse: Kalshi traders give 69% odds that U.S. manufacturing construction spending is still above $160 billion in December. Meanwhile, the standoff in the Strait of Hormuz is lifting fuel and freight costs, which mills tend to pass straight through in their &quot;extras.&quot; The report's outside-signals range lands at $1,050 to $1,125.
+
+So, the useful advice isn't &quot;steel is going down.&quot; It's how to buy into a decline you only partly trust: secure a base layer of Q4–Q1 volume now, and keep 20–25% of needs flexible in case cost inflation holds prices above $1,100.
+
+Relief that's real in the forecast can still arrive late on the invoice."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 4, 2026</span>
+          <span class="signal-tag">Steel</span>
+        </div>
+        <h3 class="signal-headline">Forecasting isn't picking the number. It's deciding how much of it to trust with real money.</h3>
+        <p class="signal-snippet">Steel is forecast to fall 19.5%. The same report says don't budget all of it.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+
+      <!-- Card 2: Silver (top right) -->
+      <article class="signal-card" data-row="1" data-card="2"
+               data-headline="COMEX silver inventories just fell below 80 million ounces for the first time in two years. The model still says wait for $54."
+               data-tag="Silver" data-date="Oct 4, 2026"
+               data-full="&quot;The forecast says it's getting cheaper, so let's wait.&quot;
+
+It's a reasonable instinct, and this week silver tests it. SignalRadar's model projects COMEX silver falling 11.4%, from $60.87 to a 16-week average of $53.90, driven by higher Treasury yields and a firmer dollar. On rates alone, the logic holds.
+
+The rest of the report argues with it. COMEX registered silver inventories have slipped below 80 million ounces for the first time in two years, which means fewer deliverable bars if industrial users start securing metal. The futures curve climbs gently, from $61.30 in October to $63.45 by next August. On Polymarket, traders give only a 32% chance that silver even touches $56 this month, and 9% chance for $52.
+
+The report's conclusion is unusually blunt for a model calling a decline: assume prices closer to $61 than $54, and secure coverage before year-end rather than waiting for a fall the market isn't pricing.
+
+For most manufacturers, silver is a small line: contacts, sensors, electronics. Small lines are exactly where &quot;let's wait&quot; goes unchallenged."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 4, 2026</span>
+          <span class="signal-tag">Silver</span>
+        </div>
+        <h3 class="signal-headline">COMEX silver inventories just fell below 80 million ounces for the first time in two years. The model still says wait for $54.</h3>
+        <p class="signal-snippet">The forecast says it's getting cheaper, "so let's wait" — a logical choice. This week silver gives you reason to really question that sentence.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+    </div><!-- /#row1-grid -->
+
+    <!-- Row 1 expansion panel -->
+    <div class="signals-expansion-panel" id="row1-panel" role="region" aria-live="polite">
+      <p class="expansion-label" id="row1-panel-tag"></p>
+      <h3 class="expansion-headline" id="row1-panel-headline"></h3>
+      <p class="expansion-body" id="row1-panel-body"></p>
+      <button class="expansion-close" onclick="closePanel(1)">Close ✕</button>
+    </div>
+
+    <!-- ROW 2: Cards 3 & 4 -->
+    <div class="signals-cards-grid" id="row2-grid" style="border-top: none; border-radius: 0 0 4px 4px; margin-top: 1px;">
+
+      <!-- Card 3: Lithium (bottom left) -->
+      <article class="signal-card" data-row="2" data-card="3"
+               data-headline="Lithium's 16-week ETF projection is up 43%. For once, the rest of the report doesn't argue."
+               data-tag="Lithium" data-date="Sep 30, 2026"
+               data-full="Lithium's 16-week projection is up 43%. Yes, forty-three, and for once the rest of the report doesn't argue with it.
+
+SignalRadar's model has the G-X Lithium ETF rising from $68.28 to a 16-week average near $97.62. Normally this is where I'd tell you the futures curve or the betting markets disagree. This week they mostly don't.
+
+CATL's Jianxiawo mine in Sichuan, slated to be one of the largest new sources of spodumene, remains closed pending environmental approval, and analysts expect the gap to run well into 2027. Prediction markets put 81% odds on Tesla's Q3 deliveries landing between 475,000 and 500,000, the high end of the board.
+
+What's missing is a forward curve. There's no futures market here to show what buyers are actually paying for later delivery. The confidence comes from news and demand bets, not from committed money.
+
+The threats are real too. Rising yields hit long-duration growth themes first, and the report names them as the main near-term risk.
+
+If battery costs are in your plan, the report's advice is to lock volumes now. It thinks the window to buy below $80 may close within weeks. Just know which legs that view is standing on."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Sep 30, 2026</span>
+          <span class="signal-tag">Lithium</span>
+        </div>
+        <h3 class="signal-headline">Lithium's 16-week ETF projection is up 43%. For once, the rest of the report doesn't argue.</h3>
+        <p class="signal-snippet">If battery costs are key to your plans, locking volumes now might be wise — the report suggests the window to buy below $80 may close within weeks.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+
+      <!-- Card 4: Copper (bottom right = oldest) -->
+      <article class="signal-card" data-row="2" data-card="4"
+               data-headline="A 4% price drop isn't always a signal. Sometimes it's just a headline with a shelf life."
+               data-tag="Copper" data-date="Sep 21, 2026"
+               data-full="Copper dropped 4% this week after Washington postponed a decision on Section 232 tariffs. That's the kind of move that reads as a clean signal — tariff risk off the table, prices adjust down, done.
+
+The futures market didn't get the same memo. Copper for December delivery is still pricing above today's spot, and prices keep climbing into next summer. Commercial buyers — the ones actually taking delivery, not just reacting to headlines — are paying up to lock in supply, not backing away from it. China's demand is holding steadier than the hawkish-rate narrative would suggest, and Chilean supply constraints haven't gone anywhere.
+
+So which one's the real signal: the 4% headline drop, or the curve that shrugged it off? Acme's exposure here sits mostly in alternators, harnesses, and electrical assemblies rather than core engine blocks, which makes this more of a &quot;don't overreact&quot; moment than a &quot;lock everything now&quot; one. The better read is to treat the pullback as a tactical window, not evidence that copper's turned a corner.
+
+A four-percent move on one headline is data. It isn't the whole story."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Sep 21, 2026</span>
+          <span class="signal-tag">Copper</span>
+        </div>
+        <h3 class="signal-headline">A 4% price drop isn't always a signal. Sometimes it's just a headline with a shelf life.</h3>
+        <p class="signal-snippet">Some signals movement can read as a "clean" signal — tariff risk off the table, prices adjust down, done. And yet ...</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+    </div><!-- /#row2-grid -->
+
+    <!-- Row 2 expansion panel -->
+    <div class="signals-expansion-panel" id="row2-panel" role="region" aria-live="polite">
+      <p class="expansion-label" id="row2-panel-tag"></p>
+      <h3 class="expansion-headline" id="row2-panel-headline"></h3>
+      <p class="expansion-body" id="row2-panel-body"></p>
+      <button class="expansion-close" onclick="closePanel(2)">Close ✕</button>
+    </div>
+
+  </div><!-- /.signals-grid -->
+
+  <div class="signals-footer">
+    <a class="signals-report-link" href="https://reports.signalradar.ai/dashboard.php?report=metals" target="_blank" rel="noopener">
+      From this week's Metals report
+    </a>
+  </div>
+</section>
+
+<script>
+  var activeCard = { 1: null, 2: null };
+
+  function openPanel(card) {
+    var row = parseInt(card.dataset.row);
+    var panel = document.getElementById('row' + row + '-panel');
+
+    if (activeCard[row] === card) { closePanel(row); return; }
+
+    if (activeCard[row]) {
+      activeCard[row].classList.remove('is-active');
+      var prevBtn = activeCard[row].querySelector('.signal-toggle');
+      if (prevBtn) prevBtn.textContent = 'Read more +';
+    }
+
+    var headline = card.dataset.headline || '';
+    var tag = card.dataset.tag || '';
+    var date = card.dataset.date || '';
+    var full = (card.dataset.full || '')
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, '&');
+
+    document.getElementById('row' + row + '-panel-tag').textContent = tag + '  ·  ' + date;
+    document.getElementById('row' + row + '-panel-headline').textContent = headline;
+    document.getElementById('row' + row + '-panel-body').textContent = full;
+
+    panel.classList.add('is-open');
+    card.classList.add('is-active');
+    activeCard[row] = card;
+
+    var btn = card.querySelector('.signal-toggle');
+    if (btn) btn.textContent = 'Read less −';
+
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function closePanel(row) {
+    var panel = document.getElementById('row' + row + '-panel');
+    panel.classList.remove('is-open');
+    if (activeCard[row]) {
+      activeCard[row].classList.remove('is-active');
+      var btn = activeCard[row].querySelector('.signal-toggle');
+      if (btn) btn.textContent = 'Read more +';
+      activeCard[row] = null;
+    }
+  }
+
+  document.querySelectorAll('.signal-card[role="button"]').forEach(function(card) {
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openPanel(card);
+      }
+    });
+  });
+</script>
   <!-- ============================================================
        FOOTER
   ============================================================ -->
