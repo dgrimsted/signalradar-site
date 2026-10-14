@@ -980,6 +980,506 @@
       </div>
     </div>
   </section>
+<title>Energy Recent Signals</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+
+<style>
+  /* Layout: 2x2 grid of cards, full-width expansion panel below each row */
+
+  :root {
+    --bg-section: #f7f5f0;
+    --bg-card: #ffffff;
+    --bg-panel: #f0ebe0;
+    --border: #e0d9cc;
+    --border-strong: #b8ae9e;
+    --border-panel: #c8beae;
+    --fg-primary: #1a1712;
+    --fg-secondary: #5c5448;
+    --fg-muted: #8c8278;
+    --accent: #8b4e10;
+    --tag-bg: #f0e4d0;
+    --tag-fg: #6b3508;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-section: #141108;
+      --bg-card: #1e1a10;
+      --bg-panel: #252018;
+      --border: #2e2818;
+      --border-strong: #4a4030;
+      --border-panel: #3a3220;
+      --fg-primary: #f0ead8;
+      --fg-secondary: #a89880;
+      --fg-muted: #6b6050;
+      --accent: #d4884a;
+      --tag-bg: #2e1e08;
+      --tag-fg: #e0a060;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg-section: #141108;
+    --bg-card: #1e1a10;
+    --bg-panel: #252018;
+    --border: #2e2818;
+    --border-strong: #4a4030;
+    --border-panel: #3a3220;
+    --fg-primary: #f0ead8;
+    --fg-secondary: #a89880;
+    --fg-muted: #6b6050;
+    --accent: #d4884a;
+    --tag-bg: #2e1e08;
+    --tag-fg: #e0a060;
+    color-scheme: dark;
+  }
+
+  .signals-section {
+    background: var(--bg-section);
+    padding: 3rem 1.5rem 3.5rem;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  .signals-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  .signals-header {
+    margin-bottom: 2rem;
+  }
+
+  .signals-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .signals-title {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(1.4rem, 3vw, 1.75rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+    line-height: 1.25;
+  }
+
+  .signals-subtitle {
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* Grid wrapper — each .signals-row holds one row of cards + its expansion panel */
+  .signals-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .signals-row {
+    display: contents;
+  }
+
+  .signals-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+  }
+
+  .signals-cards-grid + .signals-cards-grid {
+    border-top: none;
+    border-radius: 0;
+    margin-top: 0;
+  }
+
+  .signals-cards-grid:last-of-type:not(:first-of-type) {
+    border-radius: 0 0 4px 4px;
+  }
+
+  .signals-cards-grid:only-of-type {
+    border-radius: 4px;
+  }
+
+  .signal-card {
+    background: var(--bg-card);
+    padding: 1.25rem 1.375rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.12s ease;
+    position: relative;
+  }
+
+  .signal-card:hover {
+    background: color-mix(in srgb, var(--bg-card) 85%, var(--bg-section));
+  }
+
+  .signal-card.is-active {
+    background: var(--bg-panel);
+  }
+
+  .signal-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .signal-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--fg-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .signal-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    padding: 0.2em 0.5em;
+    border-radius: 2px;
+  }
+
+  .signal-headline {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    line-height: 1.35;
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+
+  .signal-snippet {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--fg-secondary);
+    margin: 0 0 0.75rem;
+  }
+
+  .signal-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: opacity 0.1s ease;
+  }
+
+  .signal-toggle:hover { opacity: 0.7; }
+
+  /* Expansion panel — full width, appears between rows */
+  .signals-expansion-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-top: none;
+    padding: 1.5rem 1.75rem 1.5rem;
+    display: none;
+  }
+
+  .signals-expansion-panel.is-open {
+    display: block;
+  }
+
+  .expansion-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .expansion-headline {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    line-height: 1.3;
+    margin: 0 0 1rem;
+    text-wrap: balance;
+  }
+
+  .expansion-body {
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: var(--fg-primary);
+    white-space: pre-wrap;
+    margin: 0 0 1rem;
+    max-width: 68ch;
+  }
+
+  .expansion-close {
+    background: none;
+    border: none;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+    cursor: pointer;
+    padding: 0;
+    letter-spacing: 0.03em;
+    transition: color 0.1s ease;
+  }
+
+  .expansion-close:hover { color: var(--fg-primary); }
+
+  /* Footer row */
+  .signals-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .signals-report-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.15s ease;
+  }
+
+  .signals-report-link:hover { opacity: 0.7; }
+
+  .signals-report-link::after {
+    content: ' →';
+  }
+
+  /* Phone: stack to single column */
+  @media (max-width: 560px) {
+    .signals-section { padding: 2rem 0 2.5rem; }
+    .signals-inner { padding: 0 1rem; }
+    .signals-cards-grid { grid-template-columns: 1fr; }
+    .signal-card { padding: 1rem; }
+    .signals-expansion-panel { padding: 1.25rem 1rem; }
+  }
+</style>
+
+<!-- RECENT SIGNALS SECTION — Energy Landing Page -->
+<section class="signals-section" id="recent-signals">
+  <div class="signals-inner">
+  <div class="signals-header">
+    <p class="signals-eyebrow">Recent Signals</p>
+    <h2 class="signals-title">What we've been tracking — updated weekly</h2>
+    <p class="signals-subtitle">Select any signal to read the full analysis</p>
+  </div>
+
+  <div class="signals-grid">
+
+    <!-- ROW 1: Cards 1 & 2 -->
+    <div class="signals-cards-grid" id="row1-grid">
+
+      <!-- Card 1: Gasoline (top left = most recent, Oct 14) -->
+      <article class="signal-card" data-row="1" data-card="1"
+               data-headline="A forecast decline isn't a savings target."
+               data-tag="Gasoline" data-date="Oct 14, 2026"
+               data-full="Midwest gasoline inventories just hit a record low. If your budget is counting on cheaper fuel, plan on 10 to 15 cents of relief, not 20.
+
+SignalRadar's model projects the U.S. average price of regular gasoline easing from $4.33 a gallon to a 16-week average near $4.13. That's a real decline, and Polymarket traders give 42% odds that at least one state sees gas under $3.75 by October 31.
+
+But the report's newest item cuts the other way. Gasoline stocks in the Midwest slid to a record-low 41.8 million barrels in late September, just as a Gulf hurricane threatens refineries. Wholesale tightness reaches the pump within two to four weeks. The report's alternative read expects a plateau closer to $4.20–$4.25 unless inventories rebuild quickly.
+
+So the useful move isn't to argue with the forecast. It's to stop treating the full decline as a savings target. The report suggests keeping relief assumptions modest and holding a contingency, or escalation clauses, in case regional shortages spread.
+
+Prices here are as of October 14; the live report moves with the market."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 14, 2026</span>
+          <span class="signal-tag">Gasoline</span>
+        </div>
+        <h3 class="signal-headline">A forecast decline isn't a savings target.</h3>
+        <p class="signal-snippet">If your budget is counting on cheaper fuel, plan on 10 to 15 cents of relief, not 20.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+
+      <!-- Card 2: WTI Crude (top right, Oct 13) -->
+      <article class="signal-card" data-row="1" data-card="2"
+               data-headline="&lsquo;We&rsquo;ll lock it in when it gets cheaper&rsquo; is a plan with no date on it."
+               data-tag="WTI Crude" data-date="Oct 13, 2026"
+               data-full="Oil prices don't travel in straight lines. Budgets usually assume they do.
+
+SignalRadar's model projects WTI crude falling 19% over the next 16 weeks, from $94.14 a barrel to an average near $76. Tighter financial conditions and softer demand make the case, and the futures curve agrees on the direction: about $91 for January, $89 for March, under $82 by next September.
+
+Now look at what traders are betting this month. Polymarket gives 41% odds that WTI hits $100 before October is out, and 37% that it drops below $85. That's not a market expecting a smooth glide. It's a market braced for a swing in either direction before the trend shows up.
+
+That matters if you fix costs or set customer pricing before year-end. A plan that waits for $76 has to survive the trip there. The report's alternative read thinks the forecast is about $5 too low anyway.
+
+Its suggestion is practical: lock in at least half of Q1–Q2 needs now, and average in the rest if a spike above $95 shows up.
+
+Prices here are as of October 13. The live report keeps moving with the market, which is rather the point."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 13, 2026</span>
+          <span class="signal-tag">WTI Crude</span>
+        </div>
+        <h3 class="signal-headline">'We'll lock it in when it gets cheaper' is a plan with no date on it.</h3>
+        <p class="signal-snippet">SignalRadar's model projects WTI crude falling 19% .... Now look at what traders are betting this month.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+    </div><!-- /#row1-grid -->
+
+    <!-- Row 1 expansion panel -->
+    <div class="signals-expansion-panel" id="row1-panel" role="region" aria-live="polite">
+      <p class="expansion-label" id="row1-panel-tag"></p>
+      <h3 class="expansion-headline" id="row1-panel-headline"></h3>
+      <p class="expansion-body" id="row1-panel-body"></p>
+      <button class="expansion-close" onclick="closePanel(1)">Close ✕</button>
+    </div>
+
+    <!-- ROW 2: Cards 3 & 4 -->
+    <div class="signals-cards-grid" id="row2-grid" style="border-top: none; border-radius: 0 0 4px 4px; margin-top: 1px;">
+
+      <!-- Card 3: Brent Crude (bottom left, Oct 7) -->
+      <article class="signal-card" data-row="2" data-card="3"
+               data-headline="Brent Crude's relief is real. It's just scheduled for January."
+               data-tag="Brent Crude" data-date="Oct 7, 2026"
+               data-full="Brent Crude's projected price drop is already on the futures board.
+
+SignalRadar's model has Brent averaging $92.30 a barrel over the next 16 weeks, down 12.3% from $105.28 today. For once the futures curve backs it. January delivery trades at $93.44, and prices slide almost $20 over the next year as traders bet that today's Middle East premium fades.
+
+The catch is in the near-term months. Drone and missile attacks have disrupted Saudi Arabia's East-West pipeline, the route that moves crude away from the vulnerable Gulf. That's holding November at $102.67, and the report estimates spot could run $5–$8 above the curve for as long as the outage lasts.
+
+Which means most Q4 plans are going to be wrong in a very particular way. They will be wrong about when the relief arrives, not where oil ends up. Freight, surcharges, and fuel-linked contracts get invoiced in November and December, not on the average.
+
+The report suggests locking in part of Q1 2027 now, while January still sits in the low $90s and the risk premium is concentrated up front. The forecast and the curve agree on the destination. Your cash flow cares about the route.
+
+Remember SignalRadar's free reports are just to give you an idea of the kind of insight that can be generated – the real value comes when we run your key metrics through the SignalRadar process."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 7, 2026</span>
+          <span class="signal-tag">Brent Crude</span>
+        </div>
+        <h3 class="signal-headline">Brent Crude's relief is real. It's just scheduled for January.</h3>
+        <p class="signal-snippet">Brent Crude's projected price drop is already on the futures board.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+
+      <!-- Card 4: Natural Gas (bottom right = oldest, Sep 23) -->
+      <article class="signal-card" data-row="2" data-card="4"
+               data-headline="Natural gas is supposed to inch higher. The winter strip says it's going to jump."
+               data-tag="Natural Gas" data-date="Sep 23, 2026"
+               data-full="SignalRadar's baseline calls for a modest climb in Natural Gas — $2.90 to a 16-week average near $2.95, roughly 3% higher. Reasonable, until you look at what traders are paying for December delivery: $3.48, an 18% premium to that average. They're not betting on &quot;modest.&quot;
+
+The catalyst is concrete: a partial closure of the Strait of Hormuz alongside real damage to Qatar's LNG export capacity has tightened the Atlantic basin balance right as U.S. storage sits below seasonal norms. Prediction markets now put a 68% probability on prices clearing $3.00 this week alone.
+
+For anyone budgeting winter energy costs off a &quot;slightly higher&quot; baseline, the forward curve is telling a different story — and forward curves are where the money actually sits."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Sep 23, 2026</span>
+          <span class="signal-tag">Natural Gas</span>
+        </div>
+        <h3 class="signal-headline">Natural gas is supposed to inch higher. The winter strip says it's going to jump.</h3>
+        <p class="signal-snippet">For anyone budgeting winter energy costs off a "slightly higher" baseline, the forward curve is telling a different story.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+    </div><!-- /#row2-grid -->
+
+    <!-- Row 2 expansion panel -->
+    <div class="signals-expansion-panel" id="row2-panel" role="region" aria-live="polite">
+      <p class="expansion-label" id="row2-panel-tag"></p>
+      <h3 class="expansion-headline" id="row2-panel-headline"></h3>
+      <p class="expansion-body" id="row2-panel-body"></p>
+      <button class="expansion-close" onclick="closePanel(2)">Close ✕</button>
+    </div>
+
+  </div><!-- /.signals-grid -->
+
+  <div class="signals-footer">
+    <a class="signals-report-link" href="https://reports.signalradar.ai/dashboard.php?report=energy" target="_blank" rel="noopener">
+      From this week's Energy report
+    </a>
+  </div>
+  </div><!-- /.signals-inner -->
+</section>
+
+<script>
+  var activeCard = { 1: null, 2: null };
+
+  function openPanel(card) {
+    var row = parseInt(card.dataset.row);
+    var panel = document.getElementById('row' + row + '-panel');
+
+    // If same card clicked again, close
+    if (activeCard[row] === card) {
+      closePanel(row);
+      return;
+    }
+
+    // Deactivate previous card in this row
+    if (activeCard[row]) {
+      activeCard[row].classList.remove('is-active');
+      var prevBtn = activeCard[row].querySelector('.signal-toggle');
+      if (prevBtn) prevBtn.textContent = 'Read more +';
+    }
+
+    // Fill and open panel
+    var headline = card.dataset.headline || '';
+    var tag = card.dataset.tag || '';
+    var date = card.dataset.date || '';
+    var full = (card.dataset.full || '')
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, '&')
+      .replace(/&lsquo;/g, '‘')
+      .replace(/&rsquo;/g, '’');
+
+    document.getElementById('row' + row + '-panel-tag').textContent = tag + '  ·  ' + date;
+    document.getElementById('row' + row + '-panel-headline').textContent = headline;
+    document.getElementById('row' + row + '-panel-body').textContent = full;
+
+    panel.classList.add('is-open');
+    card.classList.add('is-active');
+    activeCard[row] = card;
+
+    var btn = card.querySelector('.signal-toggle');
+    if (btn) btn.textContent = 'Read less −';
+
+    // Smooth scroll to panel
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function closePanel(row) {
+    var panel = document.getElementById('row' + row + '-panel');
+    panel.classList.remove('is-open');
+    if (activeCard[row]) {
+      activeCard[row].classList.remove('is-active');
+      var btn = activeCard[row].querySelector('.signal-toggle');
+      if (btn) btn.textContent = 'Read more +';
+      activeCard[row] = null;
+    }
+  }
+
+  // Keyboard support
+  document.querySelectorAll('.signal-card[role="button"]').forEach(function(card) {
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openPanel(card);
+      }
+    });
+  });
+</script>
 
   <footer class="footer">
     <div class="footer-logo">Signal<span>Radar</span></div>
