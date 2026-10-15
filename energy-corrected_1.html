@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X4705QM7GC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X4705QM7GC');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Packet | SignalRadar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold:        #C8860A;
+      --gold-light:  #E09E20;
+      --gold-pale:   #F5E8C8;
+      --purple:      #1E1248;
+      --purple-2:    #2A1A5E;
+      --purple-3:    #160D38;
+      --charcoal:    #1C1C1C;
+      --charcoal-2:  #2A2A2A;
+      --charcoal-3:  #3A3A3A;
+      --cream:       #F7F3ED;
+      --cream-2:     #EDE8DF;
+      --white:       #FFFFFF;
+      --text-dark:   #1C1C1C;
+      --text-mid:    #4A4A4A;
+      --text-light:  #7A7A7A;
+      --red:         #C0392B;
+      --green:       #2E7D32;
+      --border:      rgba(200,134,10,0.25);
+      --shadow-gold: 0 4px 24px rgba(200,134,10,0.18);
+      --shadow-card: 0 2px 16px rgba(0,0,0,0.10);
+      --r:           6px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { display: block; max-width: 100%; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--charcoal);
+      border-bottom: 1px solid rgba(200,134,10,0.3);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      height: 58px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--white); letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); text-decoration: none; }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: var(--r);
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+
+    .hero {
+      background: var(--purple);
+      background-image:
+        radial-gradient(ellipse 70% 80% at 30% 50%, var(--purple-2) 0%, var(--purple-3) 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 0 0 0 0;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-topbar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 60%, transparent 100%);
+    }
+    .hero-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    .hero-headline-row {
+      padding: 36px 0 24px;
+      border-bottom: 1px solid rgba(200,134,10,0.2);
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--gold);
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5vw, 58px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-title-deco {
+      position: absolute; right: 40px; top: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px; font-weight: 700;
+      color: rgba(200,134,10,0.06);
+      line-height: 1;
+      user-select: none; pointer-events: none;
+      letter-spacing: -0.04em;
+    }
+    .hero-body-row {
+      display: grid;
+      grid-template-columns: 45fr 55fr;
+      gap: 0;
+      min-height: 300px;
+    }
+    .hero-text-block {
+      padding: 28px 36px 36px 0;
+      border-right: 1px solid rgba(200,134,10,0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-text-inner {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+    }
+    .hero-body-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.82);
+      font-weight: 300;
+    }
+    .hero-body-text strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+    .hero-read-cue {
+      margin-top: 18px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .hero-read-cue::after {
+      content: '↓';
+      font-size: 14px;
+    }
+    .hero-read-cue.external::after {
+      content: '→';
+    }
+    .hero-image-block {
+      padding: 20px 0 20px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      background: rgba(0,0,0,0.12);
+    }
+
+    /* ── LIVE REPORT CTA (below hero image) ── */
+    .hero-live-cta {
+      display: block;
+      width: 100%;
+      background: var(--gold);
+      color: var(--charcoal) !important;
+      text-align: center;
+      padding: 16px 20px;
+      border-radius: 4px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .hero-live-cta:hover {
+      background: var(--gold-light);
+      text-decoration: none;
+    }
+    .hero-recent-link {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .hero-recent-link:hover { color: var(--gold-light); }
+    .hero-live-cta-sub {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      color: var(--charcoal-2);
+      margin-top: 5px;
+      opacity: 0.85;
+    }
+
+    .hero-report-wrap {
+      position: relative;
+      width: 100%;
+      transform: rotate(2.5deg);
+      filter:
+        drop-shadow(0 2px 6px rgba(0,0,0,0.4))
+        drop-shadow(0 22px 52px rgba(0,0,0,0.6))
+        drop-shadow(0 3px 12px rgba(200,134,10,0.25));
+    }
+    .hero-report-img {
+      width: 100%;
+      border-radius: 3px;
+      border: 1px solid rgba(200,134,10,0.3);
+    }
+    .hero-report-wrap::before {
+      content: '';
+      position: absolute;
+      top: -4px; left: -4px;
+      width: 28px; height: 28px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      border-radius: 2px 0 0 0;
+      pointer-events: none;
+    }
+    .hero-report-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; right: -4px;
+      width: 28px; height: 28px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      border-radius: 0 0 2px 0;
+      pointer-events: none;
+    }
+
+    .section-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    .section-header {
+      display: flex; align-items: baseline; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.15;
+    }
+
+    .metrics-section {
+      padding: 40px 0 36px;
+      background: var(--cream);
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .metric-card {
+      background: var(--white);
+      border: 1px solid var(--cream-2);
+      border-top: 3px solid var(--gold);
+      border-radius: var(--r);
+      box-shadow: var(--shadow-card);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .metric-card:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,0.13);
+      transform: translateY(-2px);
+    }
+    .metric-info {
+      padding: 18px 16px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .metric-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px; font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .metric-name a {
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+    .metric-name a:hover { color: var(--gold); text-decoration: none; }
+    .metric-desc {
+      font-size: 12.5px;
+      color: var(--text-mid);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 12px;
+    }
+    .metric-links {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .metric-link {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--gold);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .metric-link:hover { text-decoration: underline; }
+    .metric-link-secondary {
+      font-size: 11.5px;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+    .metric-link-secondary:hover { color: var(--text-mid); text-decoration: underline; }
+    .metric-thumb {
+      width: 200px;
+      min-width: 200px;
+      background: var(--cream);
+      border-left: 1px solid var(--cream-2);
+      display: flex;
+      align-items: center;
+      padding: 8px;
+    }
+    .metric-thumb img {
+      width: 100%;
+      height: auto;
+      border-radius: 3px;
+    }
+
+    .how-section {
+      padding: 56px 0 60px;
+      background: var(--cream-2);
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .how-sub {
+      font-size: 16px;
+      color: var(--text-mid);
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .schematic {
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      grid-template-rows: auto auto auto;
+      background: var(--cream);
+      border: 1px solid rgba(200,134,10,0.2);
+      border-radius: var(--r);
+      padding: 28px 20px;
+      position: relative;
+    }
+    .schematic::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,134,10,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,134,10,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      border-radius: var(--r);
+      pointer-events: none;
+    }
+    .sc-top    { grid-column: 2; grid-row: 1; display:flex; flex-direction:column; align-items:center; padding-bottom:14px; position:relative; z-index:1; }
+    .sc-img    { grid-column: 2; grid-row: 2; padding: 0 16px; position:relative; z-index:1; }
+    .sc-bottom { grid-column: 2; grid-row: 3; display:flex; flex-direction:column; align-items:center; padding-top:14px; position:relative; z-index:1; }
+    .sc-left   { grid-column: 1; grid-row: 1/4; display:flex; flex-direction:column; justify-content:space-around; padding-right:10px; position:relative; z-index:1; }
+    .sc-right  { grid-column: 3; grid-row: 1/4; display:flex; flex-direction:column; justify-content:space-around; padding-left:10px; position:relative; z-index:1; }
+    .sc-callout {
+      background: var(--white);
+      border: 1px solid rgba(200,134,10,0.3);
+      border-left: 3px solid var(--gold-light);
+      padding: 10px 13px;
+      margin-bottom: 18px;
+      cursor: default;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .sc-callout:last-child { margin-bottom: 0; }
+    .sc-callout:hover {
+      border-color: var(--gold);
+      border-left-color: var(--gold);
+      box-shadow: 0 2px 10px rgba(200,134,10,0.14);
+    }
+    .sc-callout.gold-accent {
+      border-color: var(--gold);
+      border-left-color: var(--gold);
+      background: #fdf6e8;
+    }
+    .sc-callout.gold-accent:hover { box-shadow: 0 2px 10px rgba(200,134,10,0.22); }
+    .sc-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 3px;
+    }
+    .sc-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--purple);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      line-height: 1.35;
+      margin-bottom: 5px;
+    }
+    .sc-callout.gold-accent .sc-title { color: var(--gold); }
+    .sc-desc { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
+    .sc-premium {
+      margin-top: 7px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(200,134,10,0.25);
+      font-size: 11px;
+      color: var(--gold);
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .sc-img img {
+      width: 100%;
+      display: block;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 3px;
+    }
+    .sc-svg-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+      overflow: visible;
+    }
+    .sc-line        { stroke: rgba(30,18,72,0.45); stroke-width: 2; fill: none; stroke-linecap: round; }
+    .sc-line.gold   { stroke: rgba(200,134,10,0.65); }
+    .sc-dot         { fill: rgba(30,18,72,0.55); }
+    .sc-dot.gold    { fill: rgba(200,134,10,0.75); }
+    .sc-vline { width: 2px; background: rgba(200,134,10,0.45); }
+    .sc-rdot  { width: 14px; height: 14px; flex-shrink: 0; }
+
+    .value-band {
+      background: var(--charcoal);
+      padding: 40px 0;
+    }
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(200,134,10,0.15);
+    }
+    .value-cell {
+      background: var(--charcoal-2);
+      padding: 28px 32px;
+    }
+    .value-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .value-headline.gold {
+      color: var(--gold);
+    }
+    .value-body {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+    }
+
+    .cta-section {
+      padding: 52px 0;
+      background: var(--cream);
+    }
+    .cta-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+    }
+    .cta-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px; font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.15;
+    }
+    .cta-sub {
+      font-size: 15px;
+      color: var(--text-mid);
+      max-width: 520px;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: var(--r);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+      border: none; cursor: pointer;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      text-decoration: none;
+      color: var(--white);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--charcoal);
+      padding: 13px 28px;
+      border-radius: var(--r);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      border: 2px solid var(--charcoal);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      background: var(--charcoal);
+      color: var(--white);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(200,134,10,0.2);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 900px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero-inner { padding: 0 20px; }
+      .hero-body-row { grid-template-columns: 1fr; }
+      .hero-text-block { padding: 20px 0 24px; border-right: none; border-bottom: 1px solid rgba(200,134,10,0.2); }
+      .hero-image-block { padding: 20px 0; }
+      .hero-report-wrap { transform: none; }
+      .hero-title-deco { display: none; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .value-grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 12px; text-align: center; }
+      .section-wrap { padding: 0 20px; }
+    }
+    @media (max-width: 600px) {
+      .metric-thumb { width: 140px; min-width: 140px; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">Signal<span>Radar</span></div>
+    <ul class="nav-links">
+      <li><a href="https://signalradar.ai">Home</a></li>
+      <li><a href="https://signalradar.ai/about.html">About Us</a></li>
+      <li><a href="https://signalradar.ai/resources.html">Resources</a></li>
+      <li><a href="https://signalradar.ai/contact.html" class="nav-cta">Schedule a Call</a></li>
+    </ul>
+  </nav>
+
+    <section class="hero">
+      <div class="hero-topbar"></div>
+      <div class="hero-inner">
+
+        <div class="hero-headline-row">
+          <div class="hero-eyebrow">Free Intelligence Report Series</div>
+          <h1 class="hero-title">Energy<br><em>Packet</em></h1>
+          <div class="hero-title-deco">NRG</div>
+        </div>
+
+        <div class="hero-body-row">
+          <div class="hero-text-block">
+            <div class="hero-text-inner">
+              <p class="hero-body-text">
+                The Energy Packet tracks the external signals that move crude oil and refined
+                fuel prices &mdash; <strong>Brent and WTI crude, RBOB gasoline, heating oil,
+                natural gas, diesel, and retail gasoline</strong> &mdash; providing
+                <strong>16-week projections</strong> that reflect advance notice of shipping
+                disruptions, production shocks, and ever-changing news impacts.<br><br>
+                These free reports are simply examples. To show how SignalRadar connects
+                external signals to a real operating business, we use a fictional company,
+                <strong>Acme Engine</strong>, as the narrative anchor throughout. Energy touches
+                Acme in two directions at once: as a direct cost of running its own operations,
+                and as a demand signal for the diesel and natural gas engines it sells into
+                freight, construction, and industrial markets. You can imagine what SignalRadar
+                could surface using <strong>your own key metrics and company context.</strong>
+              </p>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:18px;">
+                <a href="#how-to-read" class="hero-read-cue" style="margin-top:0;">See how to read this report</a>
+                <a href="https://signalradar.ai/energy-packet-faq.html#methodology" class="hero-read-cue external" style="margin-top:0;">Curious how these narratives are built?</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-image-block">
+            <div class="hero-report-wrap">
+              <img
+                src="https://signalradar.ai/images/energy-report-preview.jpg"
+                alt="Sample Energy Packet Intelligence Report"
+                class="hero-report-img"
+                onerror="this.style.opacity='0.3'; this.alt='[Report image — upload energy-report-preview.jpg to /images/]';"
+              >
+            </div>
+            <!-- Live link: reports.signalradar.ai gated dashboard, Energy package -->
+            <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="hero-live-cta">
+              See This Week's Energy Packet →
+              <span class="hero-live-cta-sub">Live report, updated weekly</span>
+            </a>
+            <a href="#recent-signals" class="hero-recent-link">
+              See recent signals from this report ↓
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  <section class="metrics-section">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-label">Tracked Metrics</span>
+        <div class="section-rule"></div>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 20px;">Seven Fuels. One Energy Packet.</h2>
+
+      <div class="metrics-grid">
+
+        <!-- Diesel -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="https://reports.signalradar.ai/dashboard.php?package=Energy">US Diesel Sales Price</a>
+              </div>
+              <p class="metric-desc">Track wholesale diesel pricing with 16-week advance signals from export bans, refinery outages, and shipping-corridor disruption that move freight and logistics costs.</p>
+            </div>
+            <div class="metric-links">
+              <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/energy-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/Diesel_16_week.png"
+              alt="US Diesel 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- Natural Gas -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="https://reports.signalradar.ai/dashboard.php?package=Energy">NYMEX Natural Gas Futures</a>
+              </div>
+              <p class="metric-desc">Monitor natural gas futures with 16-week advance signals from domestic production levels, LNG export demand, and winter-strip forward pricing.</p>
+            </div>
+            <div class="metric-links">
+              <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/energy-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/NaturalGas_16_week.png"
+              alt="Natural Gas 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- WTI -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="https://reports.signalradar.ai/dashboard.php?package=Energy">NYMEX WTI Crude Oil Futures</a>
+              </div>
+              <p class="metric-desc">Track the US crude benchmark with 16-week advance signals from OPEC+ supply decisions, domestic production, and pipeline or refinery disruptions.</p>
+            </div>
+            <div class="metric-links">
+              <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/energy-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/WTI_16_week.png"
+              alt="WTI Crude 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- Brent -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="https://reports.signalradar.ai/dashboard.php?package=Energy">ICE Brent Crude Oil Futures</a>
+              </div>
+              <p class="metric-desc">Track the global crude benchmark with 16-week advance signals from Middle East shipping-corridor risk, geopolitical tension, and global demand shifts.</p>
+            </div>
+            <div class="metric-links">
+              <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/energy-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/Brent_16_week.png"
+              alt="Brent Crude 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- Heating Oil -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="https://reports.signalradar.ai/dashboard.php?package=Energy">NYMEX Heating Oil Futures</a>
+              </div>
+              <p class="metric-desc">Monitor heating oil futures with 16-week advance signals from seasonal demand, refinery output shifts, and crude feedstock disruption.</p>
+            </div>
+            <div class="metric-links">
+              <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/energy-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/HeatingOil_16_week.png"
+              alt="Heating Oil 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- RBOB Gasoline -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="https://reports.signalradar.ai/dashboard.php?package=Energy">NYMEX RBOB Gasoline Futures</a>
+              </div>
+              <p class="metric-desc">Track wholesale gasoline futures with 16-week advance signals from refinery utilization, seasonal blend changeovers, and crude price pass-through.</p>
+            </div>
+            <div class="metric-links">
+              <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/energy-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/RBOB_16_week.png"
+              alt="RBOB Gasoline 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+        <!-- Regular Conventional Gas -->
+        <div class="metric-card">
+          <div class="metric-info">
+            <div>
+              <div class="metric-name">
+                <a href="https://reports.signalradar.ai/dashboard.php?package=Energy">US Regular Conventional Gas Price</a>
+              </div>
+              <p class="metric-desc">Track retail pump pricing with 16-week advance signals showing how upstream crude and wholesale moves eventually reach the consumer price.</p>
+            </div>
+            <div class="metric-links">
+              <a href="https://reports.signalradar.ai/dashboard.php?package=Energy" class="metric-link">View Full Report →</a>
+              <a href="https://signalradar.ai/energy-packet-faq.html" class="metric-link-secondary">Variable Guide →</a>
+            </div>
+          </div>
+          <div class="metric-thumb">
+            <img
+              src="https://signalradar.ai/images/RegularGas_16_week.png"
+              alt="Regular Conventional Gas 16-Week Trend Projection"
+              onerror="this.style.opacity='0.2';"
+            >
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="how-section" id="how-to-read">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-label">Report Guide</span>
+        <div class="section-rule"></div>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 10px;">How to Read the Report</h2>
+      <p class="how-sub">Seven integrated sections &mdash; each connected to its location in the report</p>
+
+      <div class="schematic" id="schematic-wrap">
+
+        <div class="sc-top">
+          <div class="sc-callout" id="sc-box-2" style="max-width:300px;text-align:center;margin-bottom:0;">
+            <div class="sc-num">Section 02</div>
+            <div class="sc-title">16-Week Price Projection</div>
+            <div class="sc-desc">Directional forecast with expected price range &mdash; the quantitative headline of the report</div>
+          </div>
+          <div style="height:18px;"></div>
+        </div>
+
+        <div class="sc-left">
+          <div class="sc-callout" id="sc-box-1">
+            <div class="sc-num">Section 01</div>
+            <div class="sc-title">Signal Narrative</div>
+            <div class="sc-desc">Current market context driving price movement &mdash; the analytical setup for everything that follows</div>
+          </div>
+          <div class="sc-callout" id="sc-box-5">
+            <div class="sc-num">Section 05</div>
+            <div class="sc-title">Geographic Disruption Map</div>
+            <div class="sc-desc">Active global events and their supply pressure origins &mdash; location intelligence behind the signal</div>
+          </div>
+        </div>
+
+        <div class="sc-img">
+          <div style="position:relative;" id="sc-img-wrap">
+            <img src="https://signalradar.ai/images/energy-report-preview.jpg"
+                 id="sc-report-img"
+                 alt="SignalRadar Energy Packet Intelligence Report"
+                 onerror="this.src='https://signalradar.ai/images/WTI_16_week.png';">
+          </div>
+        </div>
+
+        <div class="sc-right">
+          <div class="sc-callout" id="sc-box-6">
+            <div class="sc-num">Section 03</div>
+            <div class="sc-title">An Alternative Perspective</div>
+            <div class="sc-desc">Alternative market perspectives on price direction &mdash; real-money conviction vs. model forecast</div>
+          </div>
+          <div class="sc-callout" id="sc-box-4">
+            <div class="sc-num">Section 04</div>
+            <div class="sc-title">News Driving This Signal</div>
+            <div class="sc-desc">Major macro themes ranked by volume impact &mdash; the live news layer behind the model</div>
+          </div>
+          <div class="sc-callout" id="sc-box-3">
+            <div class="sc-num">Section 06</div>
+            <div class="sc-title">Top Forces Behind the Projection</div>
+            <div class="sc-desc">Structural analysis: ranked categories of influence on the signal</div>
+          </div>
+        </div>
+
+        <div class="sc-bottom">
+          <div style="height:18px;"></div>
+          <div class="sc-callout gold-accent" id="sc-box-7" style="max-width:380px;text-align:center;margin-top:0;">
+            <div class="sc-num" style="color:#a07030;">Section 07</div>
+            <div class="sc-title">What This Means for Acme Engine</div>
+            <div class="sc-desc" style="color:#5a4010;">See how a global engine manufacturer reads this signal &mdash; component costs, supplier exposure, and reforecast timing, made concrete</div>
+            <div class="sc-premium">&#9670;&nbsp; Free report: generalized industry context &nbsp;&bull;&nbsp; Premium: tailored to your company, margins &amp; planning cycle</div>
+          </div>
+        </div>
+
+        <svg id="sc-lines" class="sc-svg-overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="value-band">
+    <div class="section-wrap">
+      <div class="value-grid">
+        <div class="value-cell">
+          <div class="value-headline gold">Weeks of advance notice</div>
+          <p class="value-body">External signals surface weeks before disruptions reach your internal dashboards. SignalRadar moves you from reactive to anticipatory.</p>
+        </div>
+        <div class="value-cell">
+          <div class="value-headline gold">Seven fuels tracked in this packet</div>
+          <p class="value-body">Brent, WTI, RBOB gasoline, heating oil, natural gas, diesel, and retail gasoline — each with 16-week projections tied to real-world external signals. Let us create a package for you!</p>
+        </div>
+        <div class="value-cell">
+          <div class="value-headline gold">These are just examples</div>
+          <p class="value-body">Free reports demonstrate the methodology. The real power is mapping this same external intelligence approach to your specific business metrics and reforecast cycle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     RECENT SIGNALS SECTION — Energy Landing Page
+     Placement: after value-band, before CTA
+     ═══════════════════════════════════════════════════════════════ -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+
+<style>
+  :root {
+    --bg-section: #f7f5f0;
+    --bg-card: #ffffff;
+    --bg-panel: #f0ebe0;
+    --border: #e0d9cc;
+    --border-strong: #b8ae9e;
+    --border-panel: #c8beae;
+    --fg-primary: #1a1712;
+    --fg-secondary: #5c5448;
+    --fg-muted: #8c8278;
+    --accent: #8b4e10;
+    --tag-bg: #f0e4d0;
+    --tag-fg: #6b3508;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-section: #141108;
+      --bg-card: #1e1a10;
+      --bg-panel: #252018;
+      --border: #2e2818;
+      --border-strong: #4a4030;
+      --border-panel: #3a3220;
+      --fg-primary: #f0ead8;
+      --fg-secondary: #a89880;
+      --fg-muted: #6b6050;
+      --accent: #d4884a;
+      --tag-bg: #2e1e08;
+      --tag-fg: #e0a060;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg-section: #141108;
+    --bg-card: #1e1a10;
+    --bg-panel: #252018;
+    --border: #2e2818;
+    --border-strong: #4a4030;
+    --border-panel: #3a3220;
+    --fg-primary: #f0ead8;
+    --fg-secondary: #a89880;
+    --fg-muted: #6b6050;
+    --accent: #d4884a;
+    --tag-bg: #2e1e08;
+    --tag-fg: #e0a060;
+    color-scheme: dark;
+  }
+
+  .signals-section {
+    background: var(--bg-section);
+    padding: 3rem 1.5rem 3.5rem;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  .signals-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  .signals-header {
+    margin-bottom: 2rem;
+  }
+
+  .signals-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .signals-title {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(1.4rem, 3vw, 1.75rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+    line-height: 1.25;
+  }
+
+  .signals-subtitle {
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+    margin: 0;
+    font-style: italic;
+  }
+
+  .signals-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .signals-row {
+    display: contents;
+  }
+
+  .signals-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+  }
+
+  .signals-cards-grid + .signals-cards-grid {
+    border-top: none;
+    border-radius: 0;
+    margin-top: 0;
+  }
+
+  .signals-cards-grid:last-of-type:not(:first-of-type) {
+    border-radius: 0 0 4px 4px;
+  }
+
+  .signals-cards-grid:only-of-type {
+    border-radius: 4px;
+  }
+
+  .signal-card {
+    background: var(--bg-card);
+    padding: 1.25rem 1.375rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.12s ease;
+    position: relative;
+  }
+
+  .signal-card:hover {
+    background: color-mix(in srgb, var(--bg-card) 85%, var(--bg-section));
+  }
+
+  .signal-card.is-active {
+    background: var(--bg-panel);
+  }
+
+  .signal-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .signal-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--fg-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .signal-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    padding: 0.2em 0.5em;
+    border-radius: 2px;
+  }
+
+  .signal-headline {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    line-height: 1.35;
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+
+  .signal-snippet {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--fg-secondary);
+    margin: 0 0 0.75rem;
+  }
+
+  .signal-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: opacity 0.1s ease;
+  }
+
+  .signal-toggle:hover { opacity: 0.7; }
+
+  .signals-expansion-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-top: none;
+    padding: 1.5rem 1.75rem 1.5rem;
+    display: none;
+  }
+
+  .signals-expansion-panel.is-open {
+    display: block;
+  }
+
+  .expansion-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .expansion-headline {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 600;
+    color: var(--fg-primary);
+    line-height: 1.3;
+    margin: 0 0 1rem;
+    text-wrap: balance;
+  }
+
+  .expansion-body {
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: var(--fg-primary);
+    white-space: pre-wrap;
+    margin: 0 0 1rem;
+    max-width: 68ch;
+  }
+
+  .expansion-close {
+    background: none;
+    border: none;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+    cursor: pointer;
+    padding: 0;
+    letter-spacing: 0.03em;
+    transition: color 0.1s ease;
+  }
+
+  .expansion-close:hover { color: var(--fg-primary); }
+
+  .signals-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .signals-report-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.15s ease;
+  }
+
+  .signals-report-link:hover { opacity: 0.7; }
+
+  .signals-report-link::after {
+    content: ' →';
+  }
+
+  @media (max-width: 560px) {
+    .signals-section { padding: 2rem 0 2.5rem; }
+    .signals-inner { padding: 0 1rem; }
+    .signals-cards-grid { grid-template-columns: 1fr; }
+    .signal-card { padding: 1rem; }
+    .signals-expansion-panel { padding: 1.25rem 1rem; }
+  }
+</style>
+
+<section class="signals-section" id="recent-signals">
+  <div class="signals-inner">
+  <div class="signals-header">
+    <p class="signals-eyebrow">Recent Signals</p>
+    <h2 class="signals-title">What we've been tracking — updated weekly</h2>
+    <p class="signals-subtitle">Select any signal to read the full analysis</p>
+  </div>
+
+  <div class="signals-grid">
+
+    <!-- ROW 1: Cards 1 & 2 -->
+    <div class="signals-cards-grid" id="row1-grid">
+
+      <!-- Card 1: Gasoline (top left = most recent, Oct 14) -->
+      <article class="signal-card" data-row="1" data-card="1"
+               data-headline="A forecast decline isn't a savings target."
+               data-tag="Gasoline" data-date="Oct 14, 2026"
+               data-full="Midwest gasoline inventories just hit a record low. If your budget is counting on cheaper fuel, plan on 10 to 15 cents of relief, not 20.
+
+SignalRadar's model projects the U.S. average price of regular gasoline easing from $4.33 a gallon to a 16-week average near $4.13. That's a real decline, and Polymarket traders give 42% odds that at least one state sees gas under $3.75 by October 31.
+
+But the report's newest item cuts the other way. Gasoline stocks in the Midwest slid to a record-low 41.8 million barrels in late September, just as a Gulf hurricane threatens refineries. Wholesale tightness reaches the pump within two to four weeks. The report's alternative read expects a plateau closer to $4.20–$4.25 unless inventories rebuild quickly.
+
+So the useful move isn't to argue with the forecast. It's to stop treating the full decline as a savings target. The report suggests keeping relief assumptions modest and holding a contingency, or escalation clauses, in case regional shortages spread.
+
+Prices here are as of October 14; the live report moves with the market."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 14, 2026</span>
+          <span class="signal-tag">Gasoline</span>
+        </div>
+        <h3 class="signal-headline">A forecast decline isn't a savings target.</h3>
+        <p class="signal-snippet">If your budget is counting on cheaper fuel, plan on 10 to 15 cents of relief, not 20.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+
+      <!-- Card 2: WTI Crude (top right, Oct 13) -->
+      <article class="signal-card" data-row="1" data-card="2"
+               data-headline="&lsquo;We&rsquo;ll lock it in when it gets cheaper&rsquo; is a plan with no date on it."
+               data-tag="WTI Crude" data-date="Oct 13, 2026"
+               data-full="Oil prices don't travel in straight lines. Budgets usually assume they do.
+
+SignalRadar's model projects WTI crude falling 19% over the next 16 weeks, from $94.14 a barrel to an average near $76. Tighter financial conditions and softer demand make the case, and the futures curve agrees on the direction: about $91 for January, $89 for March, under $82 by next September.
+
+Now look at what traders are betting this month. Polymarket gives 41% odds that WTI hits $100 before October is out, and 37% that it drops below $85. That's not a market expecting a smooth glide. It's a market braced for a swing in either direction before the trend shows up.
+
+That matters if you fix costs or set customer pricing before year-end. A plan that waits for $76 has to survive the trip there. The report's alternative read thinks the forecast is about $5 too low anyway.
+
+Its suggestion is practical: lock in at least half of Q1–Q2 needs now, and average in the rest if a spike above $95 shows up.
+
+Prices here are as of October 13. The live report keeps moving with the market, which is rather the point."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 13, 2026</span>
+          <span class="signal-tag">WTI Crude</span>
+        </div>
+        <h3 class="signal-headline">'We'll lock it in when it gets cheaper' is a plan with no date on it.</h3>
+        <p class="signal-snippet">SignalRadar's model projects WTI crude falling 19% .... Now look at what traders are betting this month.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+    </div><!-- /#row1-grid -->
+
+    <!-- Row 1 expansion panel -->
+    <div class="signals-expansion-panel" id="row1-panel" role="region" aria-live="polite">
+      <p class="expansion-label" id="row1-panel-tag"></p>
+      <h3 class="expansion-headline" id="row1-panel-headline"></h3>
+      <p class="expansion-body" id="row1-panel-body"></p>
+      <button class="expansion-close" onclick="closePanel(1)">Close ✕</button>
+    </div>
+
+    <!-- ROW 2: Cards 3 & 4 -->
+    <div class="signals-cards-grid" id="row2-grid" style="border-top: none; border-radius: 0 0 4px 4px; margin-top: 1px;">
+
+      <!-- Card 3: Brent Crude (bottom left, Oct 7) -->
+      <article class="signal-card" data-row="2" data-card="3"
+               data-headline="Brent Crude's relief is real. It's just scheduled for January."
+               data-tag="Brent Crude" data-date="Oct 7, 2026"
+               data-full="Brent Crude's projected price drop is already on the futures board.
+
+SignalRadar's model has Brent averaging $92.30 a barrel over the next 16 weeks, down 12.3% from $105.28 today. For once the futures curve backs it. January delivery trades at $93.44, and prices slide almost $20 over the next year as traders bet that today's Middle East premium fades.
+
+The catch is in the near-term months. Drone and missile attacks have disrupted Saudi Arabia's East-West pipeline, the route that moves crude away from the vulnerable Gulf. That's holding November at $102.67, and the report estimates spot could run $5–$8 above the curve for as long as the outage lasts.
+
+Which means most Q4 plans are going to be wrong in a very particular way. They will be wrong about when the relief arrives, not where oil ends up. Freight, surcharges, and fuel-linked contracts get invoiced in November and December, not on the average.
+
+The report suggests locking in part of Q1 2027 now, while January still sits in the low $90s and the risk premium is concentrated up front. The forecast and the curve agree on the destination. Your cash flow cares about the route.
+
+Remember SignalRadar's free reports are just to give you an idea of the kind of insight that can be generated – the real value comes when we run your key metrics through the SignalRadar process."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Oct 7, 2026</span>
+          <span class="signal-tag">Brent Crude</span>
+        </div>
+        <h3 class="signal-headline">Brent Crude's relief is real. It's just scheduled for January.</h3>
+        <p class="signal-snippet">Brent Crude's projected price drop is already on the futures board.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+
+      <!-- Card 4: Natural Gas (bottom right = oldest, Sep 23) -->
+      <article class="signal-card" data-row="2" data-card="4"
+               data-headline="Natural gas is supposed to inch higher. The winter strip says it's going to jump."
+               data-tag="Natural Gas" data-date="Sep 23, 2026"
+               data-full="SignalRadar's baseline calls for a modest climb in Natural Gas — $2.90 to a 16-week average near $2.95, roughly 3% higher. Reasonable, until you look at what traders are paying for December delivery: $3.48, an 18% premium to that average. They're not betting on &quot;modest.&quot;
+
+The catalyst is concrete: a partial closure of the Strait of Hormuz alongside real damage to Qatar's LNG export capacity has tightened the Atlantic basin balance right as U.S. storage sits below seasonal norms. Prediction markets now put a 68% probability on prices clearing $3.00 this week alone.
+
+For anyone budgeting winter energy costs off a &quot;slightly higher&quot; baseline, the forward curve is telling a different story — and forward curves are where the money actually sits."
+               onclick="openPanel(this)" role="button" tabindex="0">
+        <div class="signal-meta">
+          <span class="signal-date">Sep 23, 2026</span>
+          <span class="signal-tag">Natural Gas</span>
+        </div>
+        <h3 class="signal-headline">Natural gas is supposed to inch higher. The winter strip says it's going to jump.</h3>
+        <p class="signal-snippet">For anyone budgeting winter energy costs off a "slightly higher" baseline, the forward curve is telling a different story.</p>
+        <button class="signal-toggle" tabindex="-1" aria-hidden="true">Read more +</button>
+      </article>
+    </div><!-- /#row2-grid -->
+
+    <!-- Row 2 expansion panel -->
+    <div class="signals-expansion-panel" id="row2-panel" role="region" aria-live="polite">
+      <p class="expansion-label" id="row2-panel-tag"></p>
+      <h3 class="expansion-headline" id="row2-panel-headline"></h3>
+      <p class="expansion-body" id="row2-panel-body"></p>
+      <button class="expansion-close" onclick="closePanel(2)">Close ✕</button>
+    </div>
+
+  </div><!-- /.signals-grid -->
+
+  <div class="signals-footer">
+    <a class="signals-report-link" href="https://reports.signalradar.ai/dashboard.php?report=energy" target="_blank" rel="noopener">
+      From this week's Energy report
+    </a>
+  </div>
+  </div><!-- /.signals-inner -->
+</section>
+
+<script>
+  var activeCard = { 1: null, 2: null };
+
+  function openPanel(card) {
+    var row = parseInt(card.dataset.row);
+    var panel = document.getElementById('row' + row + '-panel');
+
+    if (activeCard[row] === card) {
+      closePanel(row);
+      return;
+    }
+
+    if (activeCard[row]) {
+      activeCard[row].classList.remove('is-active');
+      var prevBtn = activeCard[row].querySelector('.signal-toggle');
+      if (prevBtn) prevBtn.textContent = 'Read more +';
+    }
+
+    var headline = card.dataset.headline || '';
+    var tag = card.dataset.tag || '';
+    var date = card.dataset.date || '';
+    var full = (card.dataset.full || '')
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, '&')
+      .replace(/&lsquo;/g, '‘')
+      .replace(/&rsquo;/g, '’');
+
+    document.getElementById('row' + row + '-panel-tag').textContent = tag + '  ·  ' + date;
+    document.getElementById('row' + row + '-panel-headline').textContent = headline;
+    document.getElementById('row' + row + '-panel-body').textContent = full;
+
+    panel.classList.add('is-open');
+    card.classList.add('is-active');
+    activeCard[row] = card;
+
+    var btn = card.querySelector('.signal-toggle');
+    if (btn) btn.textContent = 'Read less −';
+
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function closePanel(row) {
+    var panel = document.getElementById('row' + row + '-panel');
+    panel.classList.remove('is-open');
+    if (activeCard[row]) {
+      activeCard[row].classList.remove('is-active');
+      var btn = activeCard[row].querySelector('.signal-toggle');
+      if (btn) btn.textContent = 'Read more +';
+      activeCard[row] = null;
+    }
+  }
+
+  document.querySelectorAll('.signal-card[role="button"]').forEach(function(card) {
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openPanel(card);
+      }
+    });
+  });
+</script>
+<!-- ═══ END RECENT SIGNALS SECTION ═══ -->
+
+  <section class="cta-section">
+    <div class="section-wrap">
+      <div class="cta-inner">
+        <h2 class="cta-headline">Ready to connect external intelligence to enable your team to engage in anticipatory planning?</h2>
+        <p class="cta-sub">Schedule a conversation to explore what SignalRadar could surface using your own key metrics and planning cycle.</p>
+        <div class="cta-buttons">
+          <a href="https://signalradar.ai/contact.html" class="btn-primary">Schedule a Conversation</a>
+          <a href="https://reports.signalradar.ai/signup.php" class="btn-secondary">Sign Up for Free Reports</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">Signal<span>Radar</span></div>
+    <div class="footer-tagline">External intelligence for anticipatory planning.</div>
+    <div class="footer-copy">© 2026 SignalRadar. All rights reserved.</div>
+  </footer>
+
+  <script>
+  const HOTSPOTS = {
+    1: { lx: 0.15, ly: 0.30 },
+    2: { lx: 0.60, ly: 0.18 },
+    3: { lx: 0.58, ly: 0.78 },
+    4: { lx: 0.50, ly: 0.47 },
+    5: { lx: 0.22, ly: 0.76 },
+    6: { lx: 0.88, ly: 0.22 },
+    7: { lx: 0.88, ly: 0.76 }
+  };
+
+  const GOLD_SECTIONS = new Set([7]);
+  const DOT_R = 4;
+
+  function drawLines() {
+    const wrap   = document.getElementById('schematic-wrap');
+    const imgEl  = document.getElementById('sc-report-img');
+    const svg    = document.getElementById('sc-lines');
+
+    if (!wrap || !imgEl || !svg) return;
+
+    const wrapR  = wrap.getBoundingClientRect();
+    const imgR   = imgEl.getBoundingClientRect();
+
+    svg.innerHTML = '';
+
+    svg.setAttribute('width',  wrapR.width);
+    svg.setAttribute('height', wrapR.height);
+    svg.setAttribute('viewBox', `0 0 ${wrapR.width} ${wrapR.height}`);
+
+    const rel = (x, y) => ({
+      x: x - wrapR.left,
+      y: y - wrapR.top
+    });
+
+    function imgTarget(n) {
+      const hs = HOTSPOTS[n];
+      return {
+        x: imgR.left + hs.lx * imgR.width,
+        y: imgR.top  + hs.ly * imgR.height
+      };
+    }
+
+    function boxEdge(boxEl, side) {
+      const r = boxEl.getBoundingClientRect();
+      const cx = (r.left + r.right) / 2;
+      const cy = (r.top  + r.bottom) / 2;
+      if (side === 'right')  return { x: r.right,  y: cy };
+      if (side === 'left')   return { x: r.left,   y: cy };
+      if (side === 'bottom') return { x: cx,        y: r.bottom };
+      if (side === 'top')    return { x: cx,        y: r.top };
+    }
+
+    function drawConnector(n, boxEl, side) {
+      const isGold = GOLD_SECTIONS.has(n);
+      const color  = isGold ? 'rgba(200,134,10,0.70)' : 'rgba(30,18,72,0.42)';
+      const dotFill = isGold ? 'rgba(200,134,10,0.85)' : 'rgba(30,18,72,0.60)';
+
+      const tgt = rel(imgTarget(n).x, imgTarget(n).y);
+      const src = rel(boxEdge(boxEl, side).x, boxEdge(boxEl, side).y);
+
+      let stubX = src.x;
+      if (side === 'right')  stubX = src.x + 10;
+      if (side === 'left')   stubX = src.x - 10;
+
+      let stubY = src.y;
+      if (side === 'bottom') stubY = src.y + 10;
+      if (side === 'top')    stubY = src.y - 10;
+
+      const d = (side === 'left' || side === 'right')
+        ? `M ${src.x} ${src.y} L ${stubX} ${src.y} L ${tgt.x} ${tgt.y}`
+        : `M ${src.x} ${src.y} L ${src.x} ${stubY} L ${tgt.x} ${tgt.y}`;
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('stroke', color);
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(path);
+
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', tgt.x);
+      dot.setAttribute('cy', tgt.y);
+      dot.setAttribute('r', DOT_R);
+      dot.setAttribute('fill', dotFill);
+      svg.appendChild(dot);
+    }
+
+    drawConnector(1, document.getElementById('sc-box-1'), 'right');
+    drawConnector(5, document.getElementById('sc-box-5'), 'right');
+    drawConnector(3, document.getElementById('sc-box-3'), 'left');
+    drawConnector(4, document.getElementById('sc-box-4'), 'left');
+    drawConnector(6, document.getElementById('sc-box-6'), 'left');
+    drawConnector(2, document.getElementById('sc-box-2'), 'bottom');
+    drawConnector(7, document.getElementById('sc-box-7'), 'top');
+  }
+
+  window.addEventListener('load', () => { setTimeout(drawLines, 100); });
+  window.addEventListener('resize', drawLines);
+  document.getElementById('sc-report-img').addEventListener('load', () => { setTimeout(drawLines, 50); });
+  </script>
+
+</body>
+</html>
