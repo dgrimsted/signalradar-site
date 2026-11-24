@@ -3210,6 +3210,29 @@ function applyPanelClips(){
 function normalizeDtCode(value){
   return String(value == null ? '' : value).trim().toUpperCase();
 }
+// Date-aware variant for the news-driver cards and disruption events, which are now
+// stored per forecast_date. Picks the selected period's rows; if a period has none
+// (e.g. not yet backfilled), falls back to the newest stored period on/before the
+// selected date, then the newest overall, then legacy undated rows.
+function filterByMeasureForDate(rows, measureCode, fd){
+  const all = filterByMeasure(rows, measureCode);
+  if (!all.length) return all;
+  const norm = d => String(d==null?'':d).trim().slice(0,10);
+  const isDate = d => /^\d{4}-\d{2}-\d{2}$/.test(d);
+  const target = norm(fd);
+  const exact = all.filter(r => norm(r.forecast_date) === target && target);
+  if (exact.length) return exact;
+  const dated = all.filter(r => isDate(norm(r.forecast_date)));
+  const pick = pool => {
+    const maxd = pool.reduce((m,r)=>{ const d=norm(r.forecast_date); return d>m?d:m; }, '');
+    return pool.filter(r => norm(r.forecast_date) === maxd);
+  };
+  const onBefore = target ? dated.filter(r => norm(r.forecast_date) <= target) : [];
+  if (onBefore.length) return pick(onBefore);
+  if (dated.length)    return pick(dated);
+  return all; // legacy undated (NULL forecast_date) bucket
+}
+
 function filterByMeasure(rows, measureCode){
   const code = normalizeDtCode(measureCode || CONFIG.DEFAULT_DT_CODE);
   return (rows||[]).filter(r => normalizeDtCode(r.dt_code || CONFIG.DEFAULT_DT_CODE) === code);
@@ -3872,8 +3895,8 @@ function renderMeasure(measureCode){
     }
   } catch(_){}
   const data = APP.all;
-  const drivers = filterByMeasure(data.drivers, code);
-  const disruptions = filterByMeasure(data.disruptions, code);
+  const drivers = filterByMeasureForDate(data.drivers, code, APP.selectedForecastDate);
+  const disruptions = filterByMeasureForDate(data.disruptions, code, APP.selectedForecastDate);
   const ch = getChannelRow(code) || {};
   // Use executive_predictors first; fall back to normalized predictors.csv when empty
   let predictors = filterByMeasure(data.executive_predictors || [], code);
